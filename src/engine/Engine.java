@@ -14,7 +14,7 @@ public final class Engine
     // singleton pattern
     private Engine() {
 	registerCommand(new CmdHello());    
-	
+	registerCommand(new CmdImgCapture());
     }
     
     public static Engine getInstance() {

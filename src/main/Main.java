@@ -2,6 +2,7 @@ package main;
 
 import engine.Engine;
 import engine.ICommand;
+import java.util.Scanner;
 
 public class Main
 {
@@ -10,6 +11,12 @@ public class Main
 	// example
 	ICommand cmd = Engine.getInstance().getCommand("hello");
 	cmd.execute("Ahmad", 5);
+	// example for image capture
+	Scanner input=new Scanner(System.in);
+	System.out.println("enter image name:");
+	String name=input.next();
+	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
+    cmdImgCapture.execute(name);
     }
 }
 

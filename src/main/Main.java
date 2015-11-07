@@ -16,7 +16,7 @@ public class Main
 	System.out.println("enter image name:");
 	String name=input.next();
 	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
-    cmdImgCapture.execute(name);
+        cmdImgCapture.execute(name);
     }
 }
 

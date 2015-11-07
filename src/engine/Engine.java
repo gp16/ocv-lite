@@ -1,6 +1,6 @@
 package engine;
 
-import engine.commands.CmdHello;
+import engine.commands.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 

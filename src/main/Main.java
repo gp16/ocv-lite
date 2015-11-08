@@ -17,7 +17,7 @@ public class Main
 	String name=input.next();
 	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
         cmdImgCapture.execute(name);
-    }
+}
 }
 
 /*

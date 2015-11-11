@@ -13,11 +13,11 @@ public class Main
 	cmd.execute("Ahmad", 5);
 	// example for image capture
 	Scanner input = new Scanner(System.in);
-	/*System.out.println("enter image name:");
+	System.out.println("enter image name:");
 	String name = input.next();
 	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
         cmdImgCapture.execute(name);
-        */
+        
         
         // example for image load 
         

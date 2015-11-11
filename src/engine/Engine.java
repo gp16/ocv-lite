@@ -15,6 +15,7 @@ public final class Engine
     private Engine() {
 	registerCommand(new CmdHello());    
 	registerCommand(new CmdImgCapture());
+        registerCommand(new CmdImgLoad());
     }
     
     public static Engine getInstance() {
@@ -71,4 +72,4 @@ public final class Engine
     public void deallocImage(String imageName) {
 	IMGS.remove(imageName);
     }
-}
+}   

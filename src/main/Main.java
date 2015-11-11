@@ -12,12 +12,20 @@ public class Main
 	ICommand cmd = Engine.getInstance().getCommand("hello");
 	cmd.execute("Ahmad", 5);
 	// example for image capture
-	Scanner input=new Scanner(System.in);
+	Scanner input = new Scanner(System.in);
 	System.out.println("enter image name:");
-	String name=input.next();
+	String name = input.next();
 	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
         cmdImgCapture.execute(name);
-    }
+        
+        
+        // example for image load 
+        
+        System.out.println("Enter image path: ");
+        String path = input.next();
+        ICommand cmdImgLoad = Engine.getInstance().getCommand("load");
+        cmdImgLoad.execute(path);
+}
 }
 
 /*

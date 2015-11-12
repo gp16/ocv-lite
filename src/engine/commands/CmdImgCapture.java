@@ -10,15 +10,8 @@ import engine.Engine;
 import engine.Parameter;
 import engine.Type;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
 /**
@@ -38,28 +31,28 @@ public class CmdImgCapture extends AbstractCommand {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         String name=stringArgs.get("name").get(0);
         VideoCapture camera=new VideoCapture(0);
-        
-        if (!camera.isOpened()) {
+        if (!camera.isOpened()) 
+        {
             System.out.println("error");
-        } else {
+        } 
+        else 
+        {
             Mat frame = new Mat();
-            while (true) {
-                if (camera.read(frame)) {
-                    try {
-                        byte[] BufferdFrame = new byte[(int) (frame.total() * frame.channels())];
-                        frame.get(0, 0, BufferdFrame);
-                        InputStream in = new ByteArrayInputStream(BufferdFrame);
-                        BufferedImage outputImage = ImageIO.read(in);
-                        Engine.getInstance().allocImage(name, outputImage);
-                        break;
-                    } catch (IOException ex) {
-                        Logger.getLogger(CmdImgCapture.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            while (true) 
+            {
+                if (camera.read(frame)) 
+                {                    
+                    byte[] BufferdFrame = new byte[(int) (frame.total() * frame.channels()*frame.elemSize())];
+                    frame.get(0, 0, BufferdFrame);
+                    BufferedImage image=new BufferedImage(frame.cols(), frame.rows(), BufferedImage.TYPE_3BYTE_BGR);
+                    image.getRaster().setDataElements(0, 0, frame.cols(),frame.rows(),BufferdFrame);
+                    Engine.getInstance().allocImage(name, image);
+                    Engine.getInstance().getImage(name);
+                    break;                   
                 }
             }
-        camera.release();
-        
-    }
+        camera.release();        
+        }
         return null;
     }
 

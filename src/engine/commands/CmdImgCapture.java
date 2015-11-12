@@ -47,7 +47,6 @@ public class CmdImgCapture extends AbstractCommand {
                     BufferedImage image=new BufferedImage(frame.cols(), frame.rows(), BufferedImage.TYPE_3BYTE_BGR);
                     image.getRaster().setDataElements(0, 0, frame.cols(),frame.rows(),BufferdFrame);
                     Engine.getInstance().allocImage(name, image);
-                    Engine.getInstance().getImage(name);
                     break;                   
                 }
             }

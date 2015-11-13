@@ -3,6 +3,9 @@ package main;
 import engine.Engine;
 import engine.ICommand;
 import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Main
 {
@@ -19,12 +22,21 @@ public class Main
         cmdImgCapture.execute(name);
         
         
+        
         // example for image load 
         
-        System.out.println("Enter image path: ");
+        System.out.println("Enter image path : ");
         String path = input.next();
+        String imageName = input.next();
         ICommand cmdImgLoad = Engine.getInstance().getCommand("load");
-        cmdImgLoad.execute(path);
+        cmdImgLoad.execute(path,imageName);
+        JLabel label = new JLabel(new ImageIcon(path));
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.getContentPane().add(label);
+        f.pack();
+        f.setLocation(200,200);
+        f.setVisible(true);
 }
 }
 

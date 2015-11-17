@@ -33,7 +33,7 @@ public class CmdImgCapture extends AbstractCommand {
         VideoCapture camera=new VideoCapture(0);
         if (!camera.isOpened()) 
         {
-            System.out.println("error");
+            System.out.println("error: camera is not opened");
         } 
         else 
         {

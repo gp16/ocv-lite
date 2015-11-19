@@ -10,8 +10,16 @@ import engine.Engine;
 import engine.Parameter;
 import engine.Type;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
 /**
@@ -42,12 +50,17 @@ public class CmdImgCapture extends AbstractCommand {
             {
                 if (camera.read(frame)) 
                 {                    
-                    byte[] BufferdFrame = new byte[(int) (frame.total() * frame.channels()*frame.elemSize())];
-                    frame.get(0, 0, BufferdFrame);
-                    BufferedImage image=new BufferedImage(frame.cols(), frame.rows(), BufferedImage.TYPE_3BYTE_BGR);
-                    image.getRaster().setDataElements(0, 0, frame.cols(),frame.rows(),BufferdFrame);
-                    Engine.getInstance().allocImage(name, image);
-                    break;                   
+                    try {
+                        MatOfByte bytemat = new MatOfByte();
+                        Imgcodecs.imencode(".jpg", frame, bytemat);
+                        byte[] bytes = bytemat.toArray();
+                        InputStream in = new ByteArrayInputStream(bytes);
+                        BufferedImage image = ImageIO.read(in);                  
+                        Engine.getInstance().allocImage(name, image);
+                        break;                   
+                    } catch (IOException ex) {
+                        Logger.getLogger(CmdImgCapture.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         camera.release();        

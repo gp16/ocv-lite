@@ -37,6 +37,15 @@ public class Main
         f.pack();
         f.setLocation(200,200);
         f.setVisible(true);
+        
+        // example for image save
+        
+        System.out.println("enter image name:");
+        String imgname=input.next();
+        System.out.println("enter image path:");
+        String savePath=input.next();
+         ICommand CmdSave=Engine.getInstance().getCommand("Save");
+         CmdSave.execute(savePath,imgname);
 }
 }
 

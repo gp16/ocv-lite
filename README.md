@@ -151,8 +151,53 @@ cmd = engine.getCommand("command_name");
 cmd.execute(...);
 ```
 
-## 2.2 Interpreter
-(TODO)
+## 2.2 Interpreter (TODO)
+The interpreter exposes the engine commands to the front-end user in a
+systematic way. The user is allowed to write statements and send them to the 
+interpreter, which executes them one by one in a sequential order. A statement
+is a string of text that instructs the interpreter to do something. It should
+contain the name of the engine command to be executed and the arguments to be
+sent to it.
+
+### 2.2.1 Intrepreter modes
+The interpreter can be used either in interactive or batch mode. In the
+interactive mode, the interpreter waits for the user to manually enter the
+statements and executes each statements once it is entered. In the batch mode,
+the user can group all the commands he wants to execute in one file and then
+feed it to the interpreter.
+
+To run the interpreter in interactive mode, type into terminal
+```
+java -jar ocvlite.jar -i
+```
+And for batch mode
+```
+java -jar ocvlite.jar -i /path/to/script.ocvl
+```
+
+### 2.2.2 Syntax
+A script is a list of statements separated by newlines. Each statement starts
+with the command name followed by it arguments. For example,
+```
+load "/path/to/image.png" "img1"
+flip "img1" img2"
+resize "img2" "img3" 2.0
+save "img3" "/path/to/result.png"
+```
+The above script loads the image named "image.png", flips it, doubles its size,
+and then saves it as "result.png".
+
+The arguments that the interpreter can recognize are integers, floats, and
+strings. The interpreter is then responsible for casting these arguments
+including strings into types that the engine expects like STR, SYS_PATH, IMG_ID,
+CMD_ID, etc,. The correct type is decided based on the parameters of the stated
+command in the statement.
+
+Each statement follows this rough synopsis
+```
+<statement>: <cmd_name> [ "<string>" | <integer> | <float> ] ...
+```
+
 
 ## 2.3 GUI
 (TODO)

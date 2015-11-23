@@ -199,5 +199,55 @@ Each statement follows this rough synopsis
 ```
 
 
-## 2.3 GUI
-(TODO)
+## 2.3 GUI (TODO)
+The GUI defines a new type of panels. Each one of them has the required controls
+to allow the user to resize, close, or duplicate it. Any panel can be duplicated
+either vertically or horizontally.
+```
+.----------.                                   .-----------.
+|          |                                   |     |     |
+|          |   -- duplicated vertically -->    |     |     |
+|          |                                   |     |     |
+`----------`                                   `-----------`
+
+.----------.                                   .-----------.
+|          |                                   |           |
+|          |   -- duplicated horizontally -->  |-----------|
+|          |                                   |           |
+`----------`                                   `-----------`
+```
+The reason you might want to duplicate panels is to add new panels of different
+types to the screen. Although the new panels initially display the content
+displayed by the older ones, every panel has a dropdown menu to select what
+content it should display. So after you duplicate a panel, click the dropdown
+menu and select the content you want. This content can be either an image, a
+command, or a terminal.
+
+### 2.3.1 Image panels
+Image panels are assigned an image id to display its content. The panel is
+updated once the image is updated by the engine. The user can select the image
+id from a dropdown menu or enter it manually if it doesn't exist.
+
+2.3.2 Terminal panels
+A terminal is simply a graphical interface to the interactive mode of the
+interpreter. This is the only panel shown on the screen when the user starts the
+GUI.
+
+### 2.3.3 Command panels
+A command panel is a graphical representation of a command recognized by the
+engine. The user selects the requested command from a dropdown menu or by
+typing its name manually. The command panel then inspects the requested command
+and shows the necessary inputs and controls to set its arguments. Here is how
+the different arguments are displayed
+
+1. STR: textfield
+1. SYS_PATH: file chooser (or manually enter path)
+2. IMG_ID: dropdown menu (or manually enter image Id)
+4. INT with min=0, max=1: checkbox
+5. INT with small ranges (3, 10): slider
+6. INT with larger ranges: textfield (accepts integers only)
+7. FLOAT: textfield (accepts floats only)
+8. CMD_ID: dropdown menu
+
+When the user finishes entering the correct arguments, he can click the
+'execute' which is available on every command panel.

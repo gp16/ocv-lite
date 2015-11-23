@@ -1,6 +1,6 @@
 # 1 Introduction
 ocv-lite is a project that aims to simplify using OpenCV by providing
-easy-to-use wrappers around to the library.
+easy-to-use wrappers around it.
 
 # 2 Wrappers
 There are essentially three wrappers, namely, the engine, the GUI frontend, and
@@ -13,7 +13,7 @@ Its main purpose is to power the other two wrappers, the interpreter and the
 GUI. The engine is meant to be an internal part hidden from the end-user. And
 indeed, the user doesn't need to it directly since it is guaranteed that the
 other wrappers have all the capabilities the engine has. With that said, there
-are no techincal barriers preventing the user from accessing the engine directly
+are no technical barriers preventing the user from accessing the engine directly
 if he wishes.
 
 ### 2.1.1 Commands
@@ -23,7 +23,7 @@ encapsulated into objects of type `ICommand`, which is the building block of
 the engine. You can think of an `ICommand` as a callback that executes a
 specific task related to OpenCV. For example, loading an image, converting it to
 greyscale, performing edge detection on it, etc,. Each of these commands is
-identifed by a name. For example, the command responsible for loading an image
+identified by a name. For example, the command responsible for loading an image
 is identified by the name "load". In order to access a command of the engine and
 execute it, you need to know its name.
 
@@ -40,7 +40,7 @@ Here is a list of some commands to give you an idea of what commands are about
 
 ### 2.1.3 Images
 The engine also keeps track of the images it is working on. Each image is identified
-by a string, which we sometimes refere to as the image Id. To store an image in
+by a string, which we sometimes refer to as the image Id. To store an image in
 the engine memory, you need provide a unique Id for it. And when you need to
 access the same image again, you will need to just provide the same Id again.
 
@@ -78,7 +78,7 @@ save.execute("myImage2", "/path/to/flipped.png");
 ```
 
 The reason behind using string names to access commands is that this is the only
-way the interpreter can refere to a command. Because the input to the
+way the interpreter can refer to a command. Because the input to the
 interpreter is a script which is, of course, in plaintext.
 
 
@@ -121,7 +121,7 @@ actually passed to the command.
 The second mechanism is type checking. The array of arguments is checked against
 the array of parameters to see if they are valid or not. In fact, it is not
 guaranteed that all `ICommand` objects implement type checking. This is why the
-API provieds the `AbstractCommand` class, which implements `ICommand` and
+API provides the `AbstractCommand` class, which implements `ICommand` and
 provides some basic traits like type checking, argument loading, usage manual,
 etc,. On a side note, command programmers are encouraged to extend
 `AbstractCommand` rather than implement `ICommand` directly.
@@ -159,7 +159,7 @@ is a string of text that instructs the interpreter to do something. It should
 contain the name of the engine command to be executed and the arguments to be
 sent to it.
 
-### 2.2.1 Intrepreter modes
+### 2.2.1 Interpreter modes
 The interpreter can be used either in interactive or batch mode. In the
 interactive mode, the interpreter waits for the user to manually enter the
 statements and executes each statements once it is entered. In the batch mode,

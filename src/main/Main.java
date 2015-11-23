@@ -37,7 +37,14 @@ public class Main
         f.pack();
         f.setLocation(200,200);
         f.setVisible(true);
-        
+        //Convert to gray example  
+        ICommand cmdToGray = Engine.getInstance().getCommand("toGray");
+        System.out.println("enter image name to gray:");
+	String nameforgray = input.next();
+        System.out.println("enter the mem name:");
+	String nameforsave=input.next();
+        cmdToGray.execute(nameforgray,nameforsave);
+
         // example for image save
         
         System.out.println("enter image name:");

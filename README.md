@@ -1,6 +1,6 @@
 # 1 Introduction
 ocv-lite is a project that aims to simplify using OpenCV by providing
-easy-to-use wrappers around to the library.
+easy-to-use wrappers around it.
 
 # 2 Wrappers
 There are essentially three wrappers, namely, the engine, the GUI frontend, and
@@ -13,7 +13,7 @@ Its main purpose is to power the other two wrappers, the interpreter and the
 GUI. The engine is meant to be an internal part hidden from the end-user. And
 indeed, the user doesn't need to it directly since it is guaranteed that the
 other wrappers have all the capabilities the engine has. With that said, there
-are no techincal barriers preventing the user from accessing the engine directly
+are no technical barriers preventing the user from accessing the engine directly
 if he wishes.
 
 ### 2.1.1 Commands
@@ -23,7 +23,7 @@ encapsulated into objects of type `ICommand`, which is the building block of
 the engine. You can think of an `ICommand` as a callback that executes a
 specific task related to OpenCV. For example, loading an image, converting it to
 greyscale, performing edge detection on it, etc,. Each of these commands is
-identifed by a name. For example, the command responsible for loading an image
+identified by a name. For example, the command responsible for loading an image
 is identified by the name "load". In order to access a command of the engine and
 execute it, you need to know its name.
 
@@ -40,7 +40,7 @@ Here is a list of some commands to give you an idea of what commands are about
 
 ### 2.1.3 Images
 The engine also keeps track of the images it is working on. Each image is identified
-by a string, which we sometimes refere to as the image Id. To store an image in
+by a string, which we sometimes refer to as the image Id. To store an image in
 the engine memory, you need provide a unique Id for it. And when you need to
 access the same image again, you will need to just provide the same Id again.
 
@@ -78,7 +78,7 @@ save.execute("myImage2", "/path/to/flipped.png");
 ```
 
 The reason behind using string names to access commands is that this is the only
-way the interpreter can refere to a command. Because the input to the
+way the interpreter can refer to a command. Because the input to the
 interpreter is a script which is, of course, in plaintext.
 
 
@@ -121,7 +121,7 @@ actually passed to the command.
 The second mechanism is type checking. The array of arguments is checked against
 the array of parameters to see if they are valid or not. In fact, it is not
 guaranteed that all `ICommand` objects implement type checking. This is why the
-API provieds the `AbstractCommand` class, which implements `ICommand` and
+API provides the `AbstractCommand` class, which implements `ICommand` and
 provides some basic traits like type checking, argument loading, usage manual,
 etc,. On a side note, command programmers are encouraged to extend
 `AbstractCommand` rather than implement `ICommand` directly.
@@ -151,8 +151,103 @@ cmd = engine.getCommand("command_name");
 cmd.execute(...);
 ```
 
-## 2.2 Interpreter
-(TODO)
+## 2.2 Interpreter (TODO)
+The interpreter exposes the engine commands to the front-end user in a
+systematic way. The user is allowed to write statements and send them to the 
+interpreter, which executes them one by one in a sequential order. A statement
+is a string of text that instructs the interpreter to do something. It should
+contain the name of the engine command to be executed and the arguments to be
+sent to it.
 
-## 2.3 GUI
-(TODO)
+### 2.2.1 Interpreter modes
+The interpreter can be used either in interactive or batch mode. In the
+interactive mode, the interpreter waits for the user to manually enter the
+statements and executes each statements once it is entered. In the batch mode,
+the user can group all the commands he wants to execute in one file and then
+feed it to the interpreter.
+
+To run the interpreter in interactive mode, type into terminal
+```
+java -jar ocvlite.jar -i
+```
+And for batch mode
+```
+java -jar ocvlite.jar -i /path/to/script.ocvl
+```
+
+### 2.2.2 Syntax
+A script is a list of statements separated by newlines. Each statement starts
+with the command name followed by it arguments. For example,
+```
+load "/path/to/image.png" "img1"
+flip "img1" img2"
+resize "img2" "img3" 2.0
+save "img3" "/path/to/result.png"
+```
+The above script loads the image named "image.png", flips it, doubles its size,
+and then saves it as "result.png".
+
+The arguments that the interpreter can recognize are integers, floats, and
+strings. The interpreter is then responsible for casting these arguments
+including strings into types that the engine expects like STR, SYS_PATH, IMG_ID,
+CMD_ID, etc,. The correct type is decided based on the parameters of the stated
+command in the statement.
+
+Each statement follows this rough synopsis
+```
+<statement>: <cmd_name> [ "<string>" | <integer> | <float> ] ...
+```
+
+
+## 2.3 GUI (TODO)
+The GUI defines a new type of panels. Each one of them has the required controls
+to allow the user to resize, close, or duplicate it. Any panel can be duplicated
+either vertically or horizontally.
+```
+.----------.                                   .-----------.
+|          |                                   |     |     |
+|          |   -- duplicated vertically -->    |     |     |
+|          |                                   |     |     |
+`----------`                                   `-----------`
+
+.----------.                                   .-----------.
+|          |                                   |           |
+|          |   -- duplicated horizontally -->  |-----------|
+|          |                                   |           |
+`----------`                                   `-----------`
+```
+The reason you might want to duplicate panels is to add new panels of different
+types to the screen. Although the new panels initially display the content
+displayed by the older ones, every panel has a dropdown menu to select what
+content it should display. So after you duplicate a panel, click the dropdown
+menu and select the content you want. This content can be either an image, a
+command, or a terminal.
+
+### 2.3.1 Image panels
+Image panels are assigned an image id to display its content. The panel is
+updated once the image is updated by the engine. The user can select the image
+id from a dropdown menu or enter it manually if it doesn't exist.
+
+2.3.2 Terminal panels
+A terminal is simply a graphical interface to the interactive mode of the
+interpreter. This is the only panel shown on the screen when the user starts the
+GUI.
+
+### 2.3.3 Command panels
+A command panel is a graphical representation of a command recognized by the
+engine. The user selects the requested command from a dropdown menu or by
+typing its name manually. The command panel then inspects the requested command
+and shows the necessary inputs and controls to set its arguments. Here is how
+the different arguments are displayed
+
+1. STR: textfield
+1. SYS_PATH: file chooser (or manually enter path)
+2. IMG_ID: dropdown menu (or manually enter image Id)
+4. INT with min=0, max=1: checkbox
+5. INT with small ranges (3, 10): slider
+6. INT with larger ranges: textfield (accepts integers only)
+7. FLOAT: textfield (accepts floats only)
+8. CMD_ID: dropdown menu
+
+When the user finishes entering the correct arguments, he can click the
+'execute' which is available on every command panel.

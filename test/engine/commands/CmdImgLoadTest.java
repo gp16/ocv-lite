@@ -46,7 +46,7 @@ public class CmdImgLoadTest {
     
     @Parameterized.Parameters
     public static Collection parameters() {
-        return Arrays.asList(new Object[][]{{"C:\\Users\\mohsen\\Desktop\\cover.jpg","cover"}});
+        return Arrays.asList(new Object[][]{{"test\\Imgs\\mountain.jpg","mountain"}});
     }
 
     /**

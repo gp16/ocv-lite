@@ -51,7 +51,7 @@ public class Main
         String imgname=input.next();
         System.out.println("enter image path:");
         String savePath=input.next();
-         ICommand CmdSave=Engine.getInstance().getCommand("Save");
+         ICommand CmdSave=Engine.getInstance().getCommand("save");
          CmdSave.execute(savePath,imgname);
 }
 }

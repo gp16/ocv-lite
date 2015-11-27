@@ -10,11 +10,13 @@ import engine.Parameter;
 import engine.Type;
 import engine.Engine;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
+
 /**
  *
  * @author AmrGamal
@@ -31,20 +33,20 @@ public class CmdImgSave extends AbstractCommand{
    }
 
     @Override
-    protected Object executeSafe() 
-    {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String path=stringArgs.get("Path").get(0);
-        String ImageName=stringArgs.get("ImageName").get(0);
-        BufferedImage Image=Engine.getInstance().getImage(ImageName);
-        byte[] pixels = ((DataBufferByte) Image.getRaster().getDataBuffer()).getData();
-        Mat image = new Mat(Image.getHeight(), Image.getWidth(), CvType.CV_8UC3);
-        image.put(0, 0, pixels);
-        Imgcodecs.imwrite(path,image );
-        
+    protected Object executeSafe() {
+        try {
+            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+            String path=stringArgs.get("Path").get(0);
+            String ImageName=stringArgs.get("ImageName").get(0);
+            BufferedImage Image=Engine.getInstance().getImage(ImageName);
+            File output =new File(path);
+            ImageIO.write(Image, "jpg", output);   
+        } catch (IOException ex) {
+            Logger.getLogger(CmdImgSave.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
-
+    
     @Override
     public String getName() 
     {

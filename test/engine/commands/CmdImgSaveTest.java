@@ -49,7 +49,7 @@ public class CmdImgSaveTest {
     
     @Parameterized.Parameters
     public static Collection parameters() {
-        return Arrays.asList(new Object[][]{{"D:\\savedImg.jpg","source"}});
+        return Arrays.asList(new Object[][]{{"test\\imgs\\saved.jpg","mountain"}});
     }
 
     /**

@@ -24,12 +24,21 @@ import org.opencv.core.MatOfByte;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 /**
- *
- * @author Amr_Ayman
+ *This command gets an image from the memory, convert it to gray scale ,
+ * then saves it in the memory.
+ * @author AmrAyman
+ * @version 1.0
+ * @since 2015
  */
 public class CmdImgGray extends AbstractCommand{
     
     @Override
+    /**
+    * @return returns array of n objects of type Parameter.
+    * first is an image name from memory.
+    * second is an image name that the gray image will be saved with 
+    * in the memory.
+    */
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("NameToGray", Type.STR, 1, 0, "image name to get from memory", false, false),

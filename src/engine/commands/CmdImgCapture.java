@@ -23,12 +23,18 @@ import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
 
 /**
- *
- * @author Amr_Ayman
+ *This command captures an image and saves it in the memory.
+ * @author AmrAyman
+ * @version 1.0
+ * @since 2015
  */
 public class CmdImgCapture extends AbstractCommand {
 
     @Override
+    /**
+    * @return returns array of n objects of type Parameter. 
+    * first is an image name that the image will be saved with in the memory.
+    */
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("name", Type.STR, 1, 0, "image name to save in memory", false, false)};

@@ -19,8 +19,8 @@ import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.videoio.VideoCapture;
+import org.opencv.highgui.Highgui;
+import org.opencv.highgui.VideoCapture;
 
 /**
  *
@@ -52,7 +52,7 @@ public class CmdImgCapture extends AbstractCommand {
                 {                    
                     try {
                         MatOfByte bytemat = new MatOfByte();
-                        Imgcodecs.imencode(".jpg", frame, bytemat);
+                        Highgui.imencode(".jpg", frame, bytemat);
                         byte[] bytes = bytemat.toArray();
                         InputStream in = new ByteArrayInputStream(bytes);
                         BufferedImage image = ImageIO.read(in);                  

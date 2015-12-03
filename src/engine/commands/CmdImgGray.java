@@ -21,7 +21,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
-import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 /**
  *
@@ -40,7 +40,7 @@ public class CmdImgGray extends AbstractCommand{
     protected Object executeSafe() {
         
         try {
-            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);                                //load OpenCV Library
+            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);                                
             String NameToGray=stringArgs.get("NameToGray").get(0);                       // Name of the image that will be converted to gray
             String NameToSave=stringArgs.get("NameToSave").get(0);                       // Name of the gray image that will be saved im memory
             BufferedImage memImg = Engine.getInstance().getImage(NameToGray);             //get the RGB image from memory
@@ -50,7 +50,7 @@ public class CmdImgGray extends AbstractCommand{
             Mat Gray_Mat = new Mat(memImg.getHeight(),memImg.getWidth(),CvType.CV_8UC1);       //Mat for Gray image of the size of RGB image
             Imgproc.cvtColor(RGB_Mat, Gray_Mat, Imgproc.COLOR_RGB2GRAY);                         //OpenCV function that converts from any color space to gray color space
             MatOfByte Byte_Mat = new MatOfByte();                                         //Byte Mat
-            Imgcodecs.imencode(".jpg", Gray_Mat, Byte_Mat);                                   // compresses an image (Mat) to jpg, and put that in byte Mat
+            Highgui.imencode(".jpg", Gray_Mat, Byte_Mat);                                   // compresses an image (Mat) to jpg, and put that in byte Mat
             byte[] GrayImgData = Byte_Mat.toArray();                                            //convert bytemat to byte array
             InputStream in = new ByteArrayInputStream(GrayImgData);                            //read byte array as a stream
             BufferedImage GrayImg = ImageIO.read(in);                                     //read the stream as a buffered image

@@ -4,11 +4,18 @@ import engine.AbstractCommand;
 import engine.Engine;
 import engine.Parameter;
 import engine.Type;
-
-
+/**
+* This command frees an image from engine memory 
+* @author  Elmohand Haroon
+* @version 1.0
+* @since   2015
+*/
 public class CmdImgFree extends AbstractCommand 
 {
-
+    
+    /**
+    * @return array of one object representing the image name to be freed
+    */  
     @Override
     protected Parameter[] getParamsOnce() 
     {

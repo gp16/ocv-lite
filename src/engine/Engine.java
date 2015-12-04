@@ -4,6 +4,10 @@ import engine.commands.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+/**
+ * 
+ * Responsible for loading commands and storing images.
+ */
 public final class Engine
 {
     private static Engine instance;

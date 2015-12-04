@@ -1,5 +1,10 @@
 package engine;
 
+/**
+ * Represents a type that a command expects.
+ * 
+ * @see ICommand#getParams() 
+ */
 public class Parameter {
     public final String NAME;
     public final Type TYPE;

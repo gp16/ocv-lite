@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Provides common functionalities like generating full man, caching parameters,
+ * loading arguments before execution, etc,.
+ * 
+ */
 public abstract class AbstractCommand implements ICommand {
     private  Parameter[] params;
     protected HashMap<String, List<String>> stringArgs = new HashMap<>();

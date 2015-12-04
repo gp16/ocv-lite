@@ -4,6 +4,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides common functionalities like generating full man, caching parameters,
@@ -128,50 +129,27 @@ public abstract class AbstractCommand implements ICommand {
 	return false;
     }
     
-    private void loadArgument(String name, Object argument, Type type) {
-	// TODO: eliminate duplicate code using generics
-	
-	if(type == Type.STR) {
-	    List<String> argWrapper = stringArgs.get(name);
-	    
-	    if(argWrapper == null)
-	    {
-		argWrapper = new ArrayList<>();
-		argWrapper.add((String)argument);		
-		stringArgs.put(name, argWrapper);
-	    }
-	    else
-	    {
-		argWrapper.add((String)argument);
-	    }
+    private void loadArgument(String name, Object argument, Type type) {	
+	if(type == Type.STR)
+	    insertToMap(name, argument.toString(), stringArgs);
+	else if(type == Type.INT)
+	    insertToMap(name, (Integer) argument, intArgs);
+	else if(type == Type.FLOAT)
+	    insertToMap(name, (Double) argument, floatArgs);
+    }
+    
+    private <T> void insertToMap(String name, T argument, Map<String, List<T>> argsMap) {
+	List<T> argWrapper = argsMap.get(name);
+
+	if(argWrapper == null)
+	{
+	    argWrapper = new ArrayList<>();
+	    argWrapper.add(argument);
+	    argsMap.put(name, argWrapper);
 	}
-	else if(type == Type.INT) {
-	    List<Integer> argWrapper = intArgs.get(name);
-	    
-	    if(argWrapper == null)
-	    {
-		argWrapper = new ArrayList<>();
-		argWrapper.add((Integer)argument);
-		intArgs.put(name, argWrapper);
-	    }
-	    else
-	    {
-		argWrapper.add((Integer)argument);
-	    }
-	}
-	else if(type == Type.FLOAT) {
-	    List<Double> argWrapper = floatArgs.get(name);
-	    
-	    if(argWrapper == null)
-	    {
-		argWrapper = new ArrayList<>();
-		argWrapper.add((Double)argument);
-		floatArgs.put(name, argWrapper);
-	    }
-	    else
-	    {
-		argWrapper.add((Double)argument);
-	    }
+	else
+	{
+	    argWrapper.add(argument);
 	}
     }
 }

@@ -23,7 +23,7 @@ public class CmdHello extends AbstractCommand {
     protected Parameter[] getParamsOnce()
     {
 	return new Parameter[] {
-	  new Parameter("person", Type.STR, 1, 0, "Name of the person to be greeted", false, false),
+	  new Parameter("person", Type.STR, 1, null, "Name of the person to be greeted", false, false),
 	  new Parameter("times", Type.INT, 1, 5, "How many times this person should be greeted", false, false),
 	};
     }

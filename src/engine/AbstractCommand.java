@@ -72,10 +72,8 @@ public abstract class AbstractCommand implements ICommand {
 	    while (argI < arguments.length)
 	    {
 		
-		if (checkType(param.TYPE, arguments[argI]))
+		if (checkArgument(param, arguments[argI]))
 		{
-		    //TODO: take min and max into consideration as they are
-		    // currently ignored
 		    loadArgument(param.NAME, arguments[argI], param.TYPE);
 		    
 		    argI++;
@@ -84,7 +82,7 @@ public abstract class AbstractCommand implements ICommand {
 			break;
 		    }
 		}
-		else if (param.RECURR && argI > 0 && checkType(param.TYPE, arguments[argI - 1]))
+		else if (param.RECURR && argI > 0 && checkArgument(param, arguments[argI - 1]))
 		{
 		    break;
 		}
@@ -115,16 +113,47 @@ public abstract class AbstractCommand implements ICommand {
 	floatArgs.clear();	
     }
     
-    private boolean checkType(Type type, Object obj) {
+    private boolean checkArgument(Parameter param, Object arg) {
 	
-	if(type == Type.STR && obj instanceof String)
+	Type type = param.TYPE;
+	if(type == Type.STR && arg instanceof String)
+	{
+	    // check max
+	    if(param.MAX != null && arg.toString().length() > param.MAX)
+		return false;
+	    
+	    // check min
+	    if(param.MIN != null && arg.toString().length() < param.MIN)
+		return false;
+	    
 	    return true;
+	}
 	
-	if(type == Type.INT && obj instanceof Integer)
+	if(type == Type.INT && arg instanceof Integer)
+	{
+	    // check max
+	    if(param.MAX != null && (Integer)arg > param.MAX)
+		return false;
+	    
+	    // check min
+	    if(param.MIN != null && (Integer) arg < param.MIN)
+		return false;
+	    
 	    return true;
+	}
 	
-	if(type == Type.FLOAT && obj instanceof Double)
+	if(type == Type.FLOAT && arg instanceof Double)
+	{
+	    // check max
+	    if(param.MAX != null && (Double) arg > param.MAX)
+		return false;
+	    
+	    // check min
+	    if(param.MIN != null && (Double) arg < param.MIN)
+		return false;
+	    
 	    return true;
+	}
 	
 	return false;
     }

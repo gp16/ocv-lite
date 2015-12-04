@@ -12,17 +12,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
+/**
+* This command loads an image from the hard disk and name it in the memory 
+* @author Abdelrahman Mohsen
+* @version 1.0 
+* @since 2015
+*/
 
 public class CmdImgLoad extends AbstractCommand  {
-
+    
     @Override
+    /**
+    * @return returns array of n objects of type Parameter. 
+    * first is a path of an image and second is an image name.
+    */
     protected Parameter[] getParamsOnce() {
         return new Parameter[] {
 	  new Parameter("path", Type.STR, 1, 0, "path of image to be loaded", false, false),
           new Parameter("imageName", Type.STR, 1, 0, "image name in memory", false, false)
 	  };
     }
-
+    
     @Override
     protected Object executeSafe() {
     try {             

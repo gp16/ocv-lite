@@ -18,11 +18,19 @@ import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 
 /**
- *
- * @author AmrGamal
+ * saves the specified image to the given path.
+ * @author amrgamal
+ * @version 1.0
+ * @since   2015
  */
 public class CmdImgSave extends AbstractCommand{
 
+    /**
+    * @return array of 2 objects of type Parameter. 
+    * First is a path of an image and second is an image ID.
+    */
+    
+    
     @Override
     protected Parameter[] getParamsOnce() 
     {

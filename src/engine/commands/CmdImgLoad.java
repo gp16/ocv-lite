@@ -23,7 +23,7 @@ public class CmdImgLoad extends AbstractCommand  {
     
     @Override
     /**
-    * @return returns array of n objects of type Parameter. 
+    * @return returns array of 2 objects of type Parameter. 
     * first is a path of an image and second is an image name.
     */
     protected Parameter[] getParamsOnce() {

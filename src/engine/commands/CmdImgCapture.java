@@ -37,7 +37,7 @@ public class CmdImgCapture extends AbstractCommand {
     */
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
-            new Parameter("name", Type.STR, 1, 0, "image name to save in memory", false, false)};
+            new Parameter("name", Type.IMG_ID, 1, null, "image name to save in memory", false, false)};
     }
 
     @Override

@@ -21,7 +21,9 @@ public class Main
 	System.out.println("enter image name:");
 	String name = input.next();
 	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
-        cmdImgCapture.execute(name);
+        cmdImgCapture.execute(
+                new Argument(Type.IMG_ID,name)
+        );
         
         
         
@@ -48,7 +50,10 @@ public class Main
 	String nameforgray = input.next();
         System.out.println("enter the mem name:");
 	String nameforsave=input.next();
-        cmdToGray.execute(nameforgray,nameforsave);
+        cmdToGray.execute(
+                new Argument(Type.IMG_ID,nameforgray),
+                new Argument(Type.IMG_ID,nameforsave)
+        );
 
         // example for image save
         

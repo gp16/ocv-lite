@@ -5,8 +5,10 @@
  */
 package engine.commands;
 
+import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
+import engine.Type;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Before;
@@ -41,7 +43,7 @@ public class CmdImgCaptureTest {
     {
         instance = new CmdImgCapture();
         cmdImgCapture= Engine.getInstance().getCommand("capture");       
-        cmdImgCapture.execute(imageName);
+        cmdImgCapture.execute(new Argument(Type.IMG_ID,imageName));
     }
     @Test
    public void TestCapture()

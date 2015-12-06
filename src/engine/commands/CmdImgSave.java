@@ -35,11 +35,11 @@ public class CmdImgSave extends AbstractCommand{
     protected Parameter[] getParamsOnce() 
     {
      return new Parameter[]{
-         new Parameter("Path", Type.STR, 1, 0, "path to save image in", false, false),
-         new Parameter("ImageName", Type.STR, 1, 0, "Image Name", false, false)
+         new Parameter("Path", Type.SYS_PATH, 1, null, "path to save image in", false, false),
+         new Parameter("ImageName", Type.IMG_ID, 1, null, "Image Name", false, false)
                            };
    }
-
+    
     @Override
     protected Object executeSafe() {
         try {

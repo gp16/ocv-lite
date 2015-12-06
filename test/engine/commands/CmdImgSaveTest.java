@@ -5,8 +5,10 @@
  */
 package engine.commands;
 
+import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
+import engine.Type;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.File;
@@ -42,9 +44,15 @@ public class CmdImgSaveTest {
     public void setUp() {
         instance = new CmdImgSave();
         cmdImgLoad = Engine.getInstance().getCommand("load");
-        cmdImgLoad.execute("test\\imgs\\mountain.jpg","mountain");
+        cmdImgLoad.execute(
+                new Argument(Type.SYS_PATH,"test\\Imgs\\mountain.jpg"),
+                new Argument(Type.IMG_ID,imageName));
+        
         cmdImgSave = Engine.getInstance().getCommand("save");       
-        cmdImgSave.execute(path,imageName);
+        cmdImgSave.execute(
+                new Argument(Type.SYS_PATH, path),
+                new Argument(Type.IMG_ID, imageName)
+        );
     }
     
     @Parameterized.Parameters

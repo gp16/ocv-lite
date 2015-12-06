@@ -36,5 +36,5 @@ public interface ICommand
      * @param arguments The arguments to be passed to the command
      * @return Not used
      */
-    public Object execute(Object... arguments);
+    public Object execute(Argument... arguments);
 }

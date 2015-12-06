@@ -1,5 +1,6 @@
 package main;
 
+import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class Main
     {
 	// example
 	ICommand cmd = Engine.getInstance().getCommand("hello");
-	cmd.execute("Ahmad", 5);
+	cmd.execute(new Argument("Ahmad"), new Argument(5));
 	// example for image capture
 	Scanner input = new Scanner(System.in);
 	System.out.println("enter image name:");

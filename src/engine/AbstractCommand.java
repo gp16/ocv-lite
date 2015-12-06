@@ -16,6 +16,9 @@ public abstract class AbstractCommand implements ICommand {
     protected HashMap<String, List<String>> stringArgs = new HashMap<>();
     protected HashMap<String, List<Double>> floatArgs = new HashMap<>();
     protected HashMap<String, List<Integer>> intArgs = new HashMap<>();
+    protected Map<String, List<String>> imgIdArgs = new HashMap<>();
+    protected Map<String, List<String>> cmdIdArgs = new HashMap<>();
+    protected Map<String, List<String>> pathArgs = new HashMap<>();
     
     protected abstract Parameter[] getParamsOnce();
     
@@ -51,14 +54,14 @@ public abstract class AbstractCommand implements ICommand {
     }
     
     @Override
-    public Object execute(Object... arguments) {
+    public Object execute(Argument... arguments) {
 	loadArguments(arguments);
 	return executeSafe();
     }
     
     protected abstract Object executeSafe();
     
-    private void loadArguments(Object[] arguments)
+    private void loadArguments(Argument[] arguments)
     {
 	if(arguments == null || arguments.length <= 0)
 	    return;
@@ -111,60 +114,46 @@ public abstract class AbstractCommand implements ICommand {
 	stringArgs.clear();
 	intArgs.clear();
 	floatArgs.clear();	
+	imgIdArgs.clear();
+	cmdIdArgs.clear();
+	pathArgs.clear();
     }
     
-    private boolean checkArgument(Parameter param, Object arg) {
-	
-	Type type = param.TYPE;
-	if(type == Type.STR && arg instanceof String)
-	{
-	    // check max
-	    if(param.MAX != null && arg.toString().length() > param.MAX)
-		return false;
-	    
-	    // check min
-	    if(param.MIN != null && arg.toString().length() < param.MIN)
-		return false;
-	    
-	    return true;
-	}
-	
-	if(type == Type.INT && arg instanceof Integer)
-	{
-	    // check max
-	    if(param.MAX != null && (Integer)arg > param.MAX)
-		return false;
-	    
-	    // check min
-	    if(param.MIN != null && (Integer) arg < param.MIN)
-		return false;
-	    
-	    return true;
-	}
-	
-	if(type == Type.FLOAT && arg instanceof Double)
-	{
-	    // check max
-	    if(param.MAX != null && (Double) arg > param.MAX)
-		return false;
-	    
-	    // check min
-	    if(param.MIN != null && (Double) arg < param.MIN)
-		return false;
-	    
+    private boolean checkArgument(Parameter param, Argument arg) {
+	if(param.TYPE == arg.TYPE) {
+	    // check max and min
+	    if(arg.TYPE == Type.STR) {
+		if(param.MAX != null && arg.toString().length() > param.MAX)
+		    return false;
+		if(param.MIN != null && arg.toString().length() < param.MIN)
+		    return false;
+	    }
+	    else if(arg.TYPE == Type.INT || arg.TYPE == Type.FLOAT)
+	    {
+		if(param.MAX != null && arg.toDouble() > param.MAX)
+		    return false;
+		if(param.MIN != null && arg.toDouble() < param.MIN)
+		    return false;
+	    }
 	    return true;
 	}
 	
 	return false;
     }
     
-    private void loadArgument(String name, Object argument, Type type) {	
+    private void loadArgument(String name, Argument argument, Type type) {	
 	if(type == Type.STR)
 	    insertToMap(name, argument.toString(), stringArgs);
 	else if(type == Type.INT)
-	    insertToMap(name, (Integer) argument, intArgs);
+	    insertToMap(name, argument.toInt(), intArgs);
 	else if(type == Type.FLOAT)
-	    insertToMap(name, (Double) argument, floatArgs);
+	    insertToMap(name, argument.toDouble(), floatArgs);
+	else if(type == Type.IMG_ID)
+	    insertToMap(name, argument.toString(), imgIdArgs);
+	else if(type == Type.CMD_ID)
+	    insertToMap(name, argument.toString(), cmdIdArgs);
+	else if(type == Type.SYS_PATH)
+	    insertToMap(name, argument.toString(), pathArgs);
     }
     
     private <T> void insertToMap(String name, T argument, Map<String, List<T>> argsMap) {

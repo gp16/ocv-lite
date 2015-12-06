@@ -41,8 +41,8 @@ public class CmdImgGray extends AbstractCommand{
     */
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
-            new Parameter("NameToGray", Type.STR, 1, 0, "image name to get from memory", false, false),
-        new Parameter("NameToSave", Type.STR, 1, 0, "image name to get from memory", false, false)};
+            new Parameter("NameToGray", Type.IMG_ID, 1, null, "image name to get from memory", false, false),
+        new Parameter("NameToSave", Type.IMG_ID, 1, null, "image name to get from memory", false, false)};
  }
 
     @Override

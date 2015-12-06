@@ -5,8 +5,10 @@
  */
 package engine.commands;
 
+import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
+import engine.Type;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -43,9 +45,12 @@ public class CmdImgGrayTest
     public void setUp() {
         instance = new CmdImgGray();
         cmdImgLoad = Engine.getInstance().getCommand("load");
-        cmdImgLoad.execute("test\\Imgs\\mountain.jpg","RGB"); 
+        cmdImgLoad.execute(
+                new Argument(Type.SYS_PATH,"test\\Imgs\\mountain.jpg"),
+                new Argument(Type.IMG_ID,"RGB")
+        ); 
         cmdImgGray = Engine.getInstance().getCommand("toGray");     
-        cmdImgGray.execute(RGBname,GRAYname);
+        cmdImgGray.execute(new Argument(Type.IMG_ID,RGBname),new Argument(Type.IMG_ID,GRAYname));
     } 
     @Parameterized.Parameters
     public static Collection parameters() 
@@ -54,10 +59,9 @@ public class CmdImgGrayTest
     }
     /**
      * Test class CmdImgGray
-     * @throws java.io.IOException
      */
     @Test
-    public void TestGray() throws IOException 
+    public void TestGray() 
     {
         System.out.println("toGray");
         BufferedImage RGBimage = Engine.getInstance().getImage(RGBname);

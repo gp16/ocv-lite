@@ -3,6 +3,7 @@ package main;
 import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
+import engine.Type;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -30,7 +31,10 @@ public class Main
         String path = input.next();
         String imageName = input.next();
         ICommand cmdImgLoad = Engine.getInstance().getCommand("load");
-        cmdImgLoad.execute(path,imageName);
+        cmdImgLoad.execute(
+                new Argument(Type.SYS_PATH, path),
+                new Argument(Type.IMG_ID, imageName)
+        );
         JLabel label = new JLabel(new ImageIcon(path));
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

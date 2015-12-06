@@ -28,8 +28,8 @@ public class CmdImgLoad extends AbstractCommand  {
     */
     protected Parameter[] getParamsOnce() {
         return new Parameter[] {
-	  new Parameter("path", Type.STR, 1, null, "path of image to be loaded", false, false),
-          new Parameter("imageName", Type.STR, 1, null, "image name in memory", false, false)
+	  new Parameter("path", Type.SYS_PATH, 1, null, "path of image to be loaded", false, false),
+          new Parameter("imageName", Type.IMG_ID, 1, null, "image name in memory", false, false)
 	  };
     }
     

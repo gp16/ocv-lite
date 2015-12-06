@@ -5,9 +5,11 @@
  */
 package engine.commands;
 
+import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import engine.Parameter;
+import engine.Type;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.File;
@@ -41,7 +43,10 @@ public class CmdImgLoadTest {
     public void setUp() {
         instance = new CmdImgLoad();
         cmdImgLoad = Engine.getInstance().getCommand("load");       
-        cmdImgLoad.execute(path,imageName);
+        cmdImgLoad.execute(
+                new Argument(Type.SYS_PATH, path),
+                new Argument(Type.IMG_ID, imageName)
+        );
     }
     
     @Parameterized.Parameters

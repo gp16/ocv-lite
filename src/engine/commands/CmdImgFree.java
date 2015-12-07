@@ -21,7 +21,7 @@ public class CmdImgFree extends AbstractCommand
     {
         return new Parameter[] 
         {
-            new Parameter("imageName", Type.STR, 1, 0, "name of image to be deleted", false, false)
+            new Parameter("imageName", Type.IMG_ID, 1, null, "name of image to be deleted", false, false)
         };
     }
 

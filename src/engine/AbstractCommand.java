@@ -13,12 +13,13 @@ import java.util.Map;
  */
 public abstract class AbstractCommand implements ICommand {
     private  Parameter[] params;
-    protected HashMap<String, List<String>> stringArgs = new HashMap<>();
-    protected HashMap<String, List<Double>> floatArgs = new HashMap<>();
-    protected HashMap<String, List<Integer>> intArgs = new HashMap<>();
-    protected Map<String, List<String>> imgIdArgs = new HashMap<>();
-    protected Map<String, List<String>> cmdIdArgs = new HashMap<>();
-    protected Map<String, List<String>> pathArgs = new HashMap<>();
+    
+    private HashMap<String, List<String>> stringArgs = new HashMap<>();
+    private HashMap<String, List<Double>> floatArgs = new HashMap<>();
+    private HashMap<String, List<Integer>> intArgs = new HashMap<>();
+    private Map<String, List<String>> imgIdArgs = new HashMap<>();
+    private Map<String, List<String>> cmdIdArgs = new HashMap<>();
+    private Map<String, List<String>> pathArgs = new HashMap<>();
     
     protected abstract Parameter[] getParamsOnce();
     
@@ -169,5 +170,29 @@ public abstract class AbstractCommand implements ICommand {
 	{
 	    argWrapper.add(argument);
 	}
+    }
+    
+    protected Integer getArgInt(String argName, int index) {
+        return intArgs.get(argName).get(index);
+    }  
+    
+    protected String getArgString(String argName, int index) {
+        return stringArgs.get(argName).get(index);
+    }
+
+    protected Double getArgFloat(String argName, int index) {
+        return floatArgs.get(argName).get(index);
+    }
+
+    protected String getArgImgId(String argName, int index) {
+        return imgIdArgs.get(argName).get(index);
+    }
+
+    protected String getArgCmdId(String argName, int index) {
+        return cmdIdArgs.get(argName).get(index);
+    }
+
+    protected String getArgPath(String argName, int index) {
+        return pathArgs.get(argName).get(index);
     }
 }

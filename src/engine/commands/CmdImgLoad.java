@@ -36,8 +36,8 @@ public class CmdImgLoad extends AbstractCommand  {
     @Override
     protected Object executeSafe() {
     try {             
-        String path = stringArgs.get("path").get(0);
-        String name = stringArgs.get("imageName").get(0);
+        String path = getArgPath("path", 0);
+        String name = getArgImgId("imageName",0);
         File file = new File(path);
         Image image = ImageIO.read(file);
         Engine.getInstance().allocImage(name, (BufferedImage) image);

@@ -43,7 +43,7 @@ public class CmdImgCapture extends AbstractCommand {
     @Override
     protected Object executeSafe() {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String name=stringArgs.get("name").get(0);
+        String name=getArgImgId("name",0);
         VideoCapture camera=new VideoCapture(0);
         if (!camera.isOpened()) 
         {

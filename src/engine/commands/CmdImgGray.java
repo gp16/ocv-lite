@@ -50,8 +50,8 @@ public class CmdImgGray extends AbstractCommand{
         
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);                                
-            String NameToGray=stringArgs.get("NameToGray").get(0);                       // Name of the image that will be converted to gray
-            String NameToSave=stringArgs.get("NameToSave").get(0);                       // Name of the gray image that will be saved im memory
+            String NameToGray=getArgImgId("NameToGray",0);                       // Name of the image that will be converted to gray
+            String NameToSave=getArgImgId("NameToSave",0);                       // Name of the gray image that will be saved im memory
             BufferedImage memImg = Engine.getInstance().getImage(NameToGray);             //get the RGB image from memory
             byte[] memImgData = ((DataBufferByte) memImg.getRaster().getDataBuffer()).getData();//byte array containing the raster data of the RGB image
             Mat RGB_Mat=new Mat(memImg.getHeight(), memImg.getWidth(), CvType.CV_8UC3);        //Mat for RGB image of the size of the RGB image

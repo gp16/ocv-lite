@@ -8,6 +8,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import interpreter.*;
 
 public class Main
 {
@@ -25,6 +26,7 @@ public class Main
                 new Argument(Type.IMG_ID,name)
         );
         
+       
         
         
         // example for image load 
@@ -44,6 +46,8 @@ public class Main
         f.pack();
         f.setLocation(200,200);
         f.setVisible(true);
+        
+        
         //Convert to gray example  
         ICommand cmdToGray = Engine.getInstance().getCommand("toGray");
         System.out.println("enter image name to gray:");
@@ -66,6 +70,23 @@ public class Main
                 new Argument(Type.SYS_PATH, path),
                 new Argument(Type.IMG_ID, imageName)
         );
+
+         
+         
+    //example of interpreter and imagr flip
+        String CommPath ="Flip ;dmsm;ms" ;
+        Interpreter interpreter = new Interpreter(CommPath);   
+        ICommand cmdF;
+        cmdF = interpreter.get_command();
+        Scanner input2 = new Scanner(System.in);
+        String nameforflip=input2.next();
+        String nameforsaveflip=input2.next();       
+        cmdF.execute
+        (
+                new Argument(Type.IMG_ID,nameforflip),
+                new Argument(Type.IMG_ID,nameforsaveflip)
+        );
+        
 }
 }
 

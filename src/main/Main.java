@@ -75,9 +75,9 @@ public class Main
          
     //example of interpreter and imagr flip
         String CommPath ="Flip ;dmsm;ms" ;
-        Interpreter interpreter = new Interpreter(CommPath);   
+        Interpreter interpreter = new Interpreter();   
         ICommand cmdF;
-        cmdF = interpreter.get_command();
+        cmdF = interpreter.get_command(CommPath);
         Scanner input2 = new Scanner(System.in);
         String nameforflip=input2.next();
         String nameforsaveflip=input2.next();       

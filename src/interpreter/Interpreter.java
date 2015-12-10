@@ -10,16 +10,8 @@ import java.util.StringTokenizer;
  */
 public class Interpreter {
 
-    String user_command = "";
-
-    public Interpreter(String user_command) 
-    {
-        this.user_command += user_command;
-    }
-
-    public ICommand get_command() 
-    {
-        
+    public ICommand get_command(String user_command) 
+    {        
         StringTokenizer stringTokenizer = new StringTokenizer(user_command, " ");
         String command = "";
         command += stringTokenizer.nextToken();

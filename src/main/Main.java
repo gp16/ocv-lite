@@ -4,90 +4,31 @@ import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import engine.Type;
-import java.util.Scanner;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import interpreter.*;
 
-public class Main
-{
-    public static void main(String[] args)
-    {
-	// example
-	ICommand cmd = Engine.getInstance().getCommand("hello");
-	cmd.execute(new Argument("Ahmad"), new Argument(5));
-	// example for image capture
-	Scanner input = new Scanner(System.in);
-	System.out.println("enter image name:");
-	String name = input.next();
-	ICommand cmdImgCapture=Engine.getInstance().getCommand("capture");
-        cmdImgCapture.execute(
-                new Argument(Type.IMG_ID,name)
-        );
+public class Main {
+
+    public static void main(String[] args) {
+        Engine engine = Engine.getInstance();
+        ICommand load = engine.getCommand("load");
+        ICommand flip = engine.getCommand("toFlip");
+        ICommand save = engine.getCommand("save");
         
-       
-        
-        
-        // example for image load 
-        
-        System.out.println("Enter image path : ");
-        String path = input.next();
-        String imageName = input.next();
-        ICommand cmdImgLoad = Engine.getInstance().getCommand("load");
-        cmdImgLoad.execute(
-                new Argument(Type.SYS_PATH, path),
-                new Argument(Type.IMG_ID, imageName)
-        );
-        JLabel label = new JLabel(new ImageIcon(path));
-        JFrame f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.getContentPane().add(label);
-        f.pack();
-        f.setLocation(200,200);
-        f.setVisible(true);
-        
-        
-        //Convert to gray example  
-        ICommand cmdToGray = Engine.getInstance().getCommand("toGray");
-        System.out.println("enter image name to gray:");
-	String nameforgray = input.next();
-        System.out.println("enter the mem name:");
-	String nameforsave=input.next();
-        cmdToGray.execute(
-                new Argument(Type.IMG_ID,nameforgray),
-                new Argument(Type.IMG_ID,nameforsave)
+        load.execute(
+                new Argument(Type.SYS_PATH, "C:\\Users\\ALKHIAMY\\Desktop\\balloons.jpg"),
+                new Argument(Type.IMG_ID, "balloons")
         );
 
-        // example for image save
-        
-        System.out.println("enter image name:");
-        String imgname=input.next();
-        System.out.println("enter image path:");
-        String savePath=input.next();
-         ICommand CmdSave=Engine.getInstance().getCommand("save");
-         CmdSave.execute(
-                new Argument(Type.SYS_PATH, path),
-                new Argument(Type.IMG_ID, imageName)
+        flip.execute(
+                new Argument(Type.IMG_ID, "balloons"),
+                new Argument(Type.IMG_ID, "balloons_flipped")
         );
 
-         
-         
-    //example of interpreter and imagr flip
-        String CommPath ="Flip ;dmsm;ms" ;
-        Interpreter interpreter = new Interpreter();   
-        ICommand cmdF;
-        cmdF = interpreter.get_command(CommPath);
-        Scanner input2 = new Scanner(System.in);
-        String nameforflip=input2.next();
-        String nameforsaveflip=input2.next();       
-        cmdF.execute
-        (
-                new Argument(Type.IMG_ID,nameforflip),
-                new Argument(Type.IMG_ID,nameforsaveflip)
+        save.execute(
+                new Argument(Type.SYS_PATH, "C:\\Users\\ALKHIAMY\\Desktop\\balloons-flipped.jpg"),
+                new Argument(Type.IMG_ID, "balloons_flipped")
+                
         );
-        
-}
+    }
 }
 
 /*

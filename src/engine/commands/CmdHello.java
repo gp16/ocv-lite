@@ -9,8 +9,8 @@ public class CmdHello extends AbstractCommand {
     @Override
     public Object executeSafe()
     {	
-	String personName = stringArgs.get("person").get(0);
-	int times = intArgs.get("times").get(0);
+	String personName = getArgString("person", 0);
+	int times = getArgInt("times", 0);
 	
 	for(int i=0; i<times; i++) {
 	    System.out.println("Hello, " + personName + "\n");

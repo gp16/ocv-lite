@@ -44,8 +44,8 @@ public class CmdImgSave extends AbstractCommand{
     protected Object executeSafe() {
         try {
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            String path=stringArgs.get("Path").get(0);
-            String ImageName=stringArgs.get("ImageName").get(0);
+            String path = getArgPath("Path", 0);
+            String ImageName = getArgImgId("ImageName", 0);  
             BufferedImage Image=Engine.getInstance().getImage(ImageName);
             File output =new File(path);
             ImageIO.write(Image, "jpg", output);   

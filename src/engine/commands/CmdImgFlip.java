@@ -31,8 +31,8 @@ public class CmdImgFlip extends AbstractCommand {
         
         
             System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            String NameToFlip=stringArgs.get("NameToFlip").get(0);
-            String NameToSave=stringArgs.get("NameToSave").get(0);
+            String NameToFlip=getArgImgId("NameToFlip", 0);
+            String NameToSave=getArgImgId("NameToSave", 0);
             BufferedImage memImg = Engine.getInstance().getImage(NameToFlip);
            
             byte[] data = ((DataBufferByte) memImg.getRaster().  getDataBuffer()).getData();

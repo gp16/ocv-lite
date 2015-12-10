@@ -30,7 +30,7 @@ public class CmdImgFree extends AbstractCommand
     {
     try 
     {
-        String name = stringArgs.get("imageName").get(0);
+        String name = getArgImgId("imageName", 0);
         
         Engine.getInstance().deallocImage(name);
     }

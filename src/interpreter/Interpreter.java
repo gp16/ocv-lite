@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 /**
  *
- * @author Elmohand Haroon, AmrAyman, AmrGamal
+ * @author Elmohand Haroon, AmrAyman, Abdelrahman Mohsen
  */
 public class Interpreter {
 
@@ -119,5 +119,8 @@ public class Interpreter {
             }
         }
         return arguments.toArray(new Argument[0]);
+    }
+    public void executeCommand(ICommand icomm, String source){
+        icomm.execute(getArguments(source));
     }
 }

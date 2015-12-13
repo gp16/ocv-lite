@@ -19,31 +19,36 @@ public class Interpreter {
         String command = "";
         command += stringTokenizer.nextToken();
         ICommand icomm=  Engine.getInstance().getCommand(command);
-        
-        if(icomm.equals(null))
+        if(icomm == null)
         {
             System.out.println("There is no command with this name ");
             return null;
         }
         else
         {
-            
             return icomm;
-        
         }  
-        
-   }
+    }
     
     public Argument[] getArguments(String source)
     {
+        String[] commands={"load","save","toGray","free","toFlip","capture"};
+        String args="";
+        for (String command : commands) 
+        {
+            if (source.contains(command)) 
+            {
+                args = source.replace(command, "");
+            }
+        }
         List<Argument> arguments=new ArrayList<>();
         Character terminator=null;
         Type type=null;
         StringBuilder buffer=new StringBuilder();
         Character current;
-        for(int counter=0;counter<source.length();counter++)
+        for(int counter=0;counter<args.length();counter++)
         {
-            current=source.charAt(counter);
+            current=args.charAt(counter);
             if(Objects.equals(current, terminator))
             {
                 Object value;
@@ -91,7 +96,7 @@ public class Interpreter {
                 {
                     if(current=='\'')
                     {
-                        Character prefix=buffer.charAt(0);;
+                        Character prefix=buffer.charAt(0);
                         buffer.delete(0,buffer.length());
                         if(prefix=='p')
                         {
@@ -120,7 +125,11 @@ public class Interpreter {
         }
         return arguments.toArray(new Argument[0]);
     }
-    public void executeCommand(ICommand icomm, String source){
-        icomm.execute(getArguments(source));
+    
+    public void executeCommand(String source)
+    {
+        ICommand icomm = get_command(source);
+        Argument[] args=getArguments(source);
+        icomm.execute(args);
     }
 }

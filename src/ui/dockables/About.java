@@ -4,7 +4,7 @@ package ui.dockables;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import ui.Dockable;
+import ui.api.Dockable;
 
 public class About extends JPanel implements Dockable {
     public About()

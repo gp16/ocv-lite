@@ -1,4 +1,4 @@
-package ui;
+package ui.api;
 
 import java.awt.Component;
 import javax.swing.JPanel;

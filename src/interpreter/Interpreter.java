@@ -32,23 +32,14 @@ public class Interpreter {
     
     public Argument[] getArguments(String source)
     {
-        String[] commands={"load","save","toGray","free","toFlip","capture"};
-        String args="";
-        for (String command : commands) 
-        {
-            if (source.contains(command)) 
-            {
-                args = source.replace(command, "");
-            }
-        }
         List<Argument> arguments=new ArrayList<>();
         Character terminator=null;
         Type type=null;
         StringBuilder buffer=new StringBuilder();
         Character current;
-        for(int counter=0;counter<args.length();counter++)
+        for(int counter=0;counter<source.length();counter++)
         {
-            current=args.charAt(counter);
+            current=source.charAt(counter);
             if(Objects.equals(current, terminator))
             {
                 Object value;
@@ -128,8 +119,9 @@ public class Interpreter {
     
     public void executeCommand(String source)
     {
-        ICommand icomm = get_command(source);
-        Argument[] args=getArguments(source);
-        icomm.execute(args);
+        String[] cmdAndArgs = source.split(" ", 2);
+        ICommand icomm = get_command(cmdAndArgs[0]);
+	Argument[] arguments = getArguments(cmdAndArgs[1]);
+	icomm.execute(arguments);
     }
 }

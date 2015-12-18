@@ -24,6 +24,7 @@ import org.jdesktop.swingx.MultiSplitLayout.Leaf;
 import org.jdesktop.swingx.MultiSplitLayout.Node;
 import org.jdesktop.swingx.MultiSplitLayout.Split;
 import ui.dockables.About;
+import ui.dockables.Command;
 
 public class GenericWindowContainer extends JPanel {
         
@@ -32,7 +33,8 @@ public class GenericWindowContainer extends JPanel {
     }
     
     static {
-	registerDockableClass(About.class);	
+	registerDockableClass(About.class);
+	registerDockableClass(Command.class);	
     }
     
     public GenericWindowContainer() {

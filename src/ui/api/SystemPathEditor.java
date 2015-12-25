@@ -30,7 +30,7 @@ public class SystemPathEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.STR, chooseImage.getIcon(null));
+        Argument arg = new Argument(Type.SYS_PATH, chooseImage.getSelectedFile().getAbsolutePath());
         return arg;
     }
 

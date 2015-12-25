@@ -25,6 +25,27 @@ public interface ArgumentEditor {
             editor.setParameter(param);
             return editor;
         }
+        else if (param.TYPE == Type.SYS_PATH) {
+            ArgumentEditor editor = new SystemPathEditor();
+            editor.setParameter(param);
+            return editor;
+        }
+        else if (param.TYPE == Type.IMG_ID) {
+            ArgumentEditor editor = new ImgIdEditor();
+            editor.setParameter(param);
+            return editor;
+        }
+        else if (param.TYPE == Type.FLOAT) {
+            ArgumentEditor editor = new FloatEditor();
+            editor.setParameter(param);
+            return editor;
+        }
+        
+        else if (param.TYPE == Type.INT) {
+            ArgumentEditor editor = new IntEditor();
+            editor.setParameter(param);
+            return editor;
+        }
         return null;
     }
     

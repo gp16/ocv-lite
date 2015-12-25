@@ -1,24 +1,26 @@
 package ui.api;
 
 import engine.Argument;
+import engine.Engine;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StringEditor extends JPanel implements ArgumentEditor{
+public class SystemPathEditor extends JPanel implements ArgumentEditor{
     
-    private final JTextField argumentValue;
+    private final JFileChooser chooseImage;
     private final JLabel label;
     private Parameter param;
     
-    public StringEditor(){
-        argumentValue = new JTextField(10);
+    public SystemPathEditor(){
+        chooseImage = new JFileChooser();
         label = new JLabel();
         add(label);
-        add(argumentValue);
+        add(chooseImage);
     }
     
     @Override
@@ -28,7 +30,7 @@ public class StringEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.STR, argumentValue.getText());
+        Argument arg = new Argument(Type.STR, chooseImage.getIcon(null));
         return arg;
     }
 

@@ -6,19 +6,21 @@ import engine.Type;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
 
-public class StringEditor extends JPanel implements ArgumentEditor{
-    
-    private final JTextField argumentValue;
-    private final JLabel label;
+public class IntEditor extends JPanel implements ArgumentEditor {
+
     private Parameter param;
+    private final JSpinner  numSpinner;
+    private final JLabel label;
     
-    public StringEditor(){
-        argumentValue = new JTextField(10);
+    
+    public IntEditor() {
+        numSpinner = new JSpinner();
         label = new JLabel();
-        add(label);
-        add(argumentValue);
+        add(label); 
+        add(numSpinner);
     }
     
     @Override
@@ -28,7 +30,7 @@ public class StringEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.STR, argumentValue.getText());
+        Argument arg = new Argument(Type.FLOAT , numSpinner.getValue());
         return arg;
     }
 

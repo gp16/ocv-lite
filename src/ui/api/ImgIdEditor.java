@@ -8,17 +8,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StringEditor extends JPanel implements ArgumentEditor{
-    
-    private final JTextField argumentValue;
-    private final JLabel label;
+public class ImgIdEditor extends JPanel implements ArgumentEditor{
+
     private Parameter param;
+    private final JTextField imageID;
+    private final JLabel label;
     
-    public StringEditor(){
-        argumentValue = new JTextField(10);
+    public ImgIdEditor(){
+        imageID = new JTextField(10);
         label = new JLabel();
         add(label);
-        add(argumentValue);
+        add(imageID);
     }
     
     @Override
@@ -28,7 +28,7 @@ public class StringEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.STR, argumentValue.getText());
+        Argument arg = new Argument(Type.IMG_ID, imageID.getText());
         return arg;
     }
 

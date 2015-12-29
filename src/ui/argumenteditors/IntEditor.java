@@ -1,4 +1,4 @@
-package ui.api;
+package ui.argumenteditors;
 
 import engine.Argument;
 import engine.Parameter;
@@ -6,7 +6,6 @@ import engine.Type;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 
 public class IntEditor extends JPanel implements ArgumentEditor {
@@ -30,7 +29,7 @@ public class IntEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.FLOAT , numSpinner.getValue());
+        Argument arg = new Argument(Type.INT , numSpinner.getValue());
         return arg;
     }
 

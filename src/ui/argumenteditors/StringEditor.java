@@ -1,4 +1,4 @@
-package ui.api;
+package ui.argumenteditors;
 
 import engine.Argument;
 import engine.Parameter;
@@ -8,19 +8,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StringEditor extends JPanel implements ArgumentEditor{
-    
+public class StringEditor extends JPanel implements ArgumentEditor {
+
     private final JTextField argumentValue;
     private final JLabel label;
     private Parameter param;
-    
-    public StringEditor(){
+
+    public StringEditor() {
         argumentValue = new JTextField(10);
         label = new JLabel();
         add(label);
         add(argumentValue);
     }
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -47,5 +47,5 @@ public class StringEditor extends JPanel implements ArgumentEditor{
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

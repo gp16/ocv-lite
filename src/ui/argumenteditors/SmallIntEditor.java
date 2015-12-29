@@ -6,19 +6,19 @@ import engine.Type;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JSlider;
 
-public class ImgIdEditor extends JPanel implements ArgumentEditor {
+public class SmallIntEditor extends JPanel implements ArgumentEditor {
 
     private Parameter param;
-    private final JTextField imageID;
+    private final JSlider numSlider;
     private final JLabel label;
 
-    public ImgIdEditor() {
-        imageID = new JTextField(10);
+    public SmallIntEditor() {
+        numSlider = new JSlider();
         label = new JLabel();
         add(label);
-        add(imageID);
+        add(numSlider);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ImgIdEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.MAT_ID, imageID.getText());
+        Argument arg = new Argument(Type.INT, numSlider.getValue());
         return arg;
     }
 

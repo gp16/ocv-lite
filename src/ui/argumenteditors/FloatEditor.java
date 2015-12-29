@@ -1,4 +1,4 @@
-package ui.api;
+package ui.argumenteditors;
 
 import engine.Argument;
 import engine.Parameter;
@@ -6,23 +6,21 @@ import engine.Type;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 public class FloatEditor extends JPanel implements ArgumentEditor {
 
     private Parameter param;
-    private final JSlider  floatSlider;
+    private final JTextField floatInput;
     private final JLabel label;
-    
-    
+
     public FloatEditor() {
-        floatSlider = new JSlider();
+        floatInput = new JTextField(10);
         label = new JLabel();
-        add(label); 
-        add(floatSlider);
+        add(label);
+        add(floatInput);
     }
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -30,7 +28,7 @@ public class FloatEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.FLOAT , floatSlider.getValue());
+        Argument arg = new Argument(Type.FLOAT, floatInput.getText());
         return arg;
     }
 
@@ -49,5 +47,5 @@ public class FloatEditor extends JPanel implements ArgumentEditor {
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

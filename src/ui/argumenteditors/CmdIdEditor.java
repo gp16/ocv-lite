@@ -1,4 +1,4 @@
-package ui.api;
+package ui.argumenteditors;
 
 import engine.Argument;
 import engine.Engine;
@@ -12,15 +12,14 @@ public class CmdIdEditor extends JPanel implements ArgumentEditor {
     private final JComboBox commandSelector;
     private final JLabel label;
     private Parameter param;
-    
+
     public CmdIdEditor() {
         commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
         label = new JLabel();
         add(label);
         add(commandSelector);
     }
-    
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -47,5 +46,5 @@ public class CmdIdEditor extends JPanel implements ArgumentEditor {
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

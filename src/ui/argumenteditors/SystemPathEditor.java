@@ -1,28 +1,37 @@
-package ui.api;
+package ui.argumenteditors;
 
 import engine.Argument;
-import engine.Engine;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-public class SystemPathEditor extends JPanel implements ArgumentEditor{
-    
+public class SystemPathEditor extends JPanel implements ArgumentEditor {
+
     private final JFileChooser chooseImage;
+    private final JButton openChooser;
     private final JLabel label;
     private Parameter param;
-    
-    public SystemPathEditor(){
+
+    public SystemPathEditor() {
         chooseImage = new JFileChooser();
+        openChooser = new JButton("Select file");
+        openChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseImage.showOpenDialog(null);
+            }
+        });
         label = new JLabel();
         add(label);
-        add(chooseImage);
+        add(openChooser);
     }
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -49,5 +58,5 @@ public class SystemPathEditor extends JPanel implements ArgumentEditor{
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

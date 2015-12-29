@@ -1,8 +1,8 @@
 package engine;
 
 import engine.commands.*;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import org.opencv.core.Mat;
 
 /**
  * 
@@ -13,7 +13,7 @@ public final class Engine
     private static Engine instance;
     
     private final HashMap<String, ICommand>      CMDS = new HashMap<>();
-    private final HashMap<String, BufferedImage> IMGS = new HashMap<>();
+    private final HashMap<String, Mat> IMGS = new HashMap<>();
     
     // singleton pattern
     private Engine() {
@@ -57,12 +57,12 @@ public final class Engine
 	return IMGS.keySet().toArray(new String[]{});
     }
 
-    public BufferedImage[] getImages() {
-	return IMGS.values().toArray(new BufferedImage[]{});
+    public Mat[] getImages() {
+	return IMGS.values().toArray(new Mat[]{});
     }
 
     // gets an image by name
-    public BufferedImage getImage(String imageName) {
+    public Mat getImage(String imageName) {
 	return IMGS.get(imageName);
     }
     
@@ -71,7 +71,7 @@ public final class Engine
     }
     
     // puts an image into memory
-    public void allocImage(String imageName, BufferedImage image) {
+    public void allocImage(String imageName, Mat image) {
 	IMGS.put(imageName, image);
     }
     

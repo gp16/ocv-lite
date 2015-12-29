@@ -9,13 +9,8 @@ import engine.AbstractCommand;
 import engine.Parameter;
 import engine.Type;
 import engine.Engine;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
 
 /**
  * saves the specified image to the given path.
@@ -36,22 +31,17 @@ public class CmdImgSave extends AbstractCommand{
     {
      return new Parameter[]{
          new Parameter("Path", Type.SYS_PATH, 1, null, "path to save image in", false, false),
-         new Parameter("ImageName", Type.IMG_ID, 1, null, "Image Name", false, false)
+         new Parameter("ImageName", Type.MAT_ID, 1, null, "Image Name", false, false)
                            };
    }
     
     @Override
-    protected Object executeSafe() {
-        try {
-            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    protected Object executeSafe() 
+    {
             String path = getArgPath("Path", 0);
             String ImageName = getArgImgId("ImageName", 0);  
-            BufferedImage Image=Engine.getInstance().getImage(ImageName);
-            File output =new File(path);
-            ImageIO.write(Image, "jpg", output);   
-        } catch (IOException ex) {
-            Logger.getLogger(CmdImgSave.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            Mat image=Engine.getInstance().getImage(ImageName);
+            Highgui.imwrite(path, image);
         return null;
     }
     

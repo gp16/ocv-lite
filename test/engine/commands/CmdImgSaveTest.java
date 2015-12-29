@@ -9,18 +9,18 @@ import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import engine.Type;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.imageio.ImageIO;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.highgui.Highgui;
 
 /**
  *
@@ -29,13 +29,13 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class CmdImgSaveTest {
     protected String path;
-    protected File file;
     protected String imageName;
     protected ICommand cmdImgSave;
     protected ICommand cmdImgLoad;
     protected CmdImgSave instance;
     
     public CmdImgSaveTest(String path, String imageName) {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         this.path = path;
         this.imageName = imageName;
     }
@@ -46,12 +46,12 @@ public class CmdImgSaveTest {
         cmdImgLoad = Engine.getInstance().getCommand("load");
         cmdImgLoad.execute(
                 new Argument(Type.SYS_PATH,"test\\Imgs\\mountain.jpg"),
-                new Argument(Type.IMG_ID,imageName));
+                new Argument(Type.MAT_ID,imageName));
         
         cmdImgSave = Engine.getInstance().getCommand("save");       
         cmdImgSave.execute(
                 new Argument(Type.SYS_PATH, path),
-                new Argument(Type.IMG_ID, imageName)
+                new Argument(Type.MAT_ID, imageName)
         );
     }
     
@@ -67,11 +67,10 @@ public class CmdImgSaveTest {
     @Test
     public void TestSave() throws IOException {
         System.out.println("save");
-        BufferedImage MemImage = Engine.getInstance().getImage(imageName);
-        byte [] MemBytes = ((DataBufferByte) MemImage.getData().getDataBuffer()).getData();
-        BufferedImage SavedImage = ImageIO.read(new File(path));
-        byte [] SavedBytes = ((DataBufferByte) SavedImage.getData().getDataBuffer()).getData();        
-        assertArrayEquals(MemBytes, SavedBytes);
+        Mat result = Engine.getInstance().getImage(imageName);
+        Mat ExpResult=Highgui.imread(path);      
+        assertSame(Highgui.imencode(".jpg", ExpResult, new MatOfByte()),
+                Highgui.imencode(".jpg", result, new MatOfByte()));
     }  
 
     /**

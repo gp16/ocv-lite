@@ -1,36 +1,14 @@
 package main;
 
-import engine.Argument;
-import engine.Engine;
-import engine.ICommand;
-import engine.Type;
 import javax.swing.JFrame;
+import org.opencv.core.Core;
 import ui.api.GenericWindowContainer;
 
-public class Main {
-
-    public static void main(String[] args) {
-//        Engine engine = Engine.getInstance();
-//        ICommand load = engine.getCommand("load");
-//        ICommand flip = engine.getCommand("toFlip");
-//        ICommand save = engine.getCommand("save");
-//        
-//        load.execute(
-//                new Argument(Type.SYS_PATH, "C:\\Users\\ALKHIAMY\\Desktop\\balloons.jpg"),
-//                new Argument(Type.IMG_ID, "balloons")
-//        );
-//
-//        flip.execute(
-//                new Argument(Type.IMG_ID, "balloons"),
-//                new Argument(Type.IMG_ID, "balloons_flipped")
-//        );
-//
-//        save.execute(
-//                new Argument(Type.SYS_PATH, "C:\\Users\\ALKHIAMY\\Desktop\\balloons-flipped.jpg"),
-//                new Argument(Type.IMG_ID, "balloons_flipped")
-//                
-//        );
-
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GenericWindowContainer container = new GenericWindowContainer();

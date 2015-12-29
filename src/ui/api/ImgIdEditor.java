@@ -28,7 +28,7 @@ public class ImgIdEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.IMG_ID, imageID.getText());
+        Argument arg = new Argument(Type.MAT_ID, imageID.getText());
         return arg;
     }
 

@@ -9,28 +9,27 @@ import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import engine.Type;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.imageio.ImageIO;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.highgui.Highgui;
 
 @RunWith(Parameterized.class)
 public class CmdImgLoadTest {
     protected String path;
-    protected File file;
     protected String imageName;
     protected ICommand cmdImgLoad;
     protected CmdImgLoad instance;
     
     public CmdImgLoadTest(String path, String imageName) {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         this.path = path;
         this.imageName = imageName;
     }
@@ -41,7 +40,7 @@ public class CmdImgLoadTest {
         cmdImgLoad = Engine.getInstance().getCommand("load");       
         cmdImgLoad.execute(
                 new Argument(Type.SYS_PATH, path),
-                new Argument(Type.IMG_ID, imageName)
+                new Argument(Type.MAT_ID, imageName)
         );
     }
     
@@ -55,13 +54,14 @@ public class CmdImgLoadTest {
      */
     
     @Test
-    public void TestLoad() throws IOException {
+    public void TestLoad() 
+    {
         System.out.println("load");
-        BufferedImage image = ImageIO.read(new File(path));
-        byte [] imageInByte = ((DataBufferByte) image.getData().getDataBuffer()).getData();
-        BufferedImage loadedImage = Engine.getInstance().getImage(imageName);
-        byte [] loadedImageInByte = ((DataBufferByte) loadedImage.getData().getDataBuffer()).getData();
-        assertArrayEquals(imageInByte, loadedImageInByte);
+        Mat ExpResult=Highgui.imread(path);
+        Mat result=Engine.getInstance().getImage(imageName);
+        
+        assertSame(Highgui.imencode(".jpg", ExpResult, new MatOfByte()),
+                Highgui.imencode(".jpg", result, new MatOfByte()));
     }
 
     /**
@@ -71,7 +71,7 @@ public class CmdImgLoadTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        CmdImgLoad instance = new CmdImgLoad();
+        instance = new CmdImgLoad();
         String expResult = "load";
         String result = instance.getName();
         assertEquals(expResult, result);
@@ -84,7 +84,7 @@ public class CmdImgLoadTest {
     @Test
     public void testGetMan() {
         System.out.println("getMan");
-        CmdImgLoad instance = new CmdImgLoad();
+        instance = new CmdImgLoad();
         String expResult = "load an image from hard disk";
         String result = instance.getMan();
         assertEquals(expResult, result);

@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import engine.Engine;
 import engine.Type;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
 
 /**
  *
@@ -31,6 +33,7 @@ public class CmdImgFreeTest {
     protected CmdImgFree instance;
 
     public CmdImgFreeTest(String path, String imageName) {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         this.path = path;
         this.imageName = imageName;
     }
@@ -41,11 +44,11 @@ public class CmdImgFreeTest {
         cmdImgLoad = Engine.getInstance().getCommand("load");
         cmdImgLoad.execute(
                 new Argument(Type.SYS_PATH, path),
-                new Argument(Type.IMG_ID, imageName)
+                new Argument(Type.MAT_ID, imageName)
         );
 
         cmdImgFree = Engine.getInstance().getCommand("free");
-        cmdImgFree.execute(new Argument(Type.IMG_ID, imageName));
+        cmdImgFree.execute(new Argument(Type.MAT_ID, imageName));
 
     }
 
@@ -58,11 +61,11 @@ public class CmdImgFreeTest {
      * Test of executeSafe method, of class CmdImgFree.
      */
     @Test
-    public void testExecuteSafe() {
+    public void testExecuteSafe() 
+    {
         System.out.println("free");
-        Object name = Engine.getInstance().getImage(imageName);;
-        assertNull(name);
-
+        Mat result = Engine.getInstance().getImage(imageName);
+        assertNull(result);
     }
 
     /**

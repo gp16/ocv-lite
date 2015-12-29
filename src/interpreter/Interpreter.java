@@ -73,7 +73,7 @@ public class Interpreter {
                     else if(current=='_'||Character.isLetter(current))
                     {
                         buffer.append(current);
-                        type=Type.IMG_ID;
+                        type=Type.MAT_ID;
                         terminator=' ';   
                     }
                     else if (Character.isDigit(current))

@@ -4,13 +4,8 @@ import engine.AbstractCommand;
 import engine.Engine;
 import engine.Parameter;
 import engine.Type;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
 
 /**
 * This command loads an image from the hard disk and name it in the memory 
@@ -29,22 +24,17 @@ public class CmdImgLoad extends AbstractCommand  {
     protected Parameter[] getParamsOnce() {
         return new Parameter[] {
 	  new Parameter("path", Type.SYS_PATH, 1, null, "path of image to be loaded", false, false),
-          new Parameter("imageName", Type.IMG_ID, 1, null, "image name in memory", false, false)
+          new Parameter("imageName", Type.MAT_ID, 1, null, "image name in memory", false, false)
 	  };
     }
     
     @Override
-    protected Object executeSafe() {
-    try {             
+    protected Object executeSafe() 
+    {   
         String path = getArgPath("path", 0);
         String name = getArgImgId("imageName",0);
-        File file = new File(path);
-        Image image = ImageIO.read(file);
-        Engine.getInstance().allocImage(name, (BufferedImage) image);
-        }
-        catch (IOException e) {
-            Logger.getLogger(CmdImgLoad.class.getName()).log(Level.SEVERE, null, e);
-        }
+        Mat image=Highgui.imread(path);
+        Engine.getInstance().allocImage(name,image);
         return null;
     }
         

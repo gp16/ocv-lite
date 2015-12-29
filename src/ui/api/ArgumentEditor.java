@@ -4,8 +4,6 @@ import engine.Argument;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 
 public interface ArgumentEditor {
@@ -30,7 +28,7 @@ public interface ArgumentEditor {
             editor.setParameter(param);
             return editor;
         }
-        else if (param.TYPE == Type.IMG_ID) {
+        else if (param.TYPE == Type.MAT_ID) {
             ArgumentEditor editor = new ImgIdEditor();
             editor.setParameter(param);
             return editor;

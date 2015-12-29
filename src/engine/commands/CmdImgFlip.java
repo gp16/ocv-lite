@@ -4,10 +4,7 @@ import engine.AbstractCommand;
 import engine.Engine;
 import engine.Parameter;
 import engine.Type;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 /**
@@ -20,36 +17,23 @@ public class CmdImgFlip extends AbstractCommand {
     protected Parameter[] getParamsOnce() 
     {
         return new Parameter[]{
-        new Parameter("NameToFlip", Type.IMG_ID, 1, null, "image name to get from memory", false, false),
-        new Parameter("NameToSave", Type.IMG_ID, 1, null, "image name to save into memory", false, false)};
+        new Parameter("NameToFlip", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
+        new Parameter("NameToSave", Type.MAT_ID, 1, null, "image name to save into memory", false, false)};
  
     }
 
     @Override
     protected Object executeSafe() 
     {
-        
-        
-            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            String NameToFlip=getArgImgId("NameToFlip", 0);
-            String NameToSave=getArgImgId("NameToSave", 0);
-            BufferedImage memImg = Engine.getInstance().getImage(NameToFlip);
+           String NameToFlip=getArgImgId("NameToFlip", 0);
+           String NameToSave=getArgImgId("NameToSave", 0);
+           Mat Source_Image = Engine.getInstance().getImage(NameToFlip);
+           Mat Destination_Image = new Mat();
            
-            byte[] data = ((DataBufferByte) memImg.getRaster().  getDataBuffer()).getData();
-            Mat mat = new Mat(memImg.getHeight(),memImg.getWidth(),CvType.CV_8UC3);
-            mat.put(0, 0, data);
-            
-            Mat mat1 = new Mat(memImg.getHeight(),memImg.getWidth(),CvType.CV_8UC3);
-            Core.flip(mat, mat1, -1);
-            
-            byte[] data1 = new byte[mat1.rows()*mat1.cols()*(int)(mat1.elemSize())];
-            mat1.get(0, 0, data1);
-            BufferedImage image1 = new BufferedImage(mat1.cols(), mat1.rows(), 5);
-            image1.getRaster().setDataElements(0,0,mat1.cols(),mat1.rows(),data1);
-            
-            
-            Engine.getInstance().allocImage(NameToSave, image1); 
-            return null; 
+           Core.flip(Source_Image, Destination_Image, -1);
+           
+           Engine.getInstance().allocImage(NameToSave, Destination_Image);
+           return null; 
     }
 
     @Override

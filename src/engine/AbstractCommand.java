@@ -17,7 +17,7 @@ public abstract class AbstractCommand implements ICommand {
     private HashMap<String, List<String>> stringArgs = new HashMap<>();
     private HashMap<String, List<Double>> floatArgs = new HashMap<>();
     private HashMap<String, List<Integer>> intArgs = new HashMap<>();
-    private Map<String, List<String>> imgIdArgs = new HashMap<>();
+    private Map<String, List<String>> matIdArgs = new HashMap<>();
     private Map<String, List<String>> cmdIdArgs = new HashMap<>();
     private Map<String, List<String>> pathArgs = new HashMap<>();
     
@@ -115,7 +115,7 @@ public abstract class AbstractCommand implements ICommand {
 	stringArgs.clear();
 	intArgs.clear();
 	floatArgs.clear();	
-	imgIdArgs.clear();
+	matIdArgs.clear();
 	cmdIdArgs.clear();
 	pathArgs.clear();
     }
@@ -149,8 +149,8 @@ public abstract class AbstractCommand implements ICommand {
 	    insertToMap(name, argument.toInt(), intArgs);
 	else if(type == Type.FLOAT)
 	    insertToMap(name, argument.toDouble(), floatArgs);
-	else if(type == Type.IMG_ID)
-	    insertToMap(name, argument.toString(), imgIdArgs);
+	else if(type == Type.MAT_ID)
+	    insertToMap(name, argument.toString(), matIdArgs);
 	else if(type == Type.CMD_ID)
 	    insertToMap(name, argument.toString(), cmdIdArgs);
 	else if(type == Type.SYS_PATH)
@@ -185,7 +185,7 @@ public abstract class AbstractCommand implements ICommand {
     }
 
     protected String getArgImgId(String argName, int index) {
-        return imgIdArgs.get(argName).get(index);
+        return matIdArgs.get(argName).get(index);
     }
 
     protected String getArgCmdId(String argName, int index) {

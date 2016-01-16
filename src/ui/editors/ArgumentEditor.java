@@ -1,4 +1,4 @@
-package ui.argumenteditors;
+package ui.editors;
 
 import engine.Argument;
 import engine.Parameter;
@@ -39,7 +39,7 @@ public interface ArgumentEditor {
             editor.setParameter(param);
             return editor;
         } else if (param.TYPE == Type.INT) {
-            if (param.MIN <= 1 && 10 >= param.MAX) {
+            if (param.MIN >= 1 && 10 >= param.MAX) {
                 ArgumentEditor editor = new SmallIntEditor();
                 editor.setParameter(param);
                 return editor;

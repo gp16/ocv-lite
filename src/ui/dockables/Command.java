@@ -11,7 +11,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import ui.api.Dockable;
-import ui.argumenteditors.ArgumentEditor;
+import ui.editors.ArgumentEditor;
 
 public class Command extends JPanel implements Dockable {
 

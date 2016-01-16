@@ -1,4 +1,4 @@
-package ui.argumenteditors;
+package ui.editors;
 
 import engine.Argument;
 import engine.Parameter;

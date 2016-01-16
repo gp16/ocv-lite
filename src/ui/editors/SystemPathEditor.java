@@ -1,4 +1,4 @@
-package ui.argumenteditors;
+package ui.editors;
 
 import engine.Argument;
 import engine.Parameter;
@@ -25,6 +25,7 @@ public class SystemPathEditor extends JPanel implements ArgumentEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chooseImage.showOpenDialog(null);
+                System.out.println(chooseImage.getSelectedFile().getAbsolutePath());
             }
         });
         label = new JLabel();

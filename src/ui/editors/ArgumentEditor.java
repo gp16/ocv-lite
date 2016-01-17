@@ -39,7 +39,8 @@ public interface ArgumentEditor {
             editor.setParameter(param);
             return editor;
         } else if (param.TYPE == Type.INT) {
-            if (param.MIN >= 1 && 10 >= param.MAX) {
+            int intRange = param.MAX - param.MIN;
+            if (intRange <= 10 && intRange >= 1) {
                 ArgumentEditor editor = new SmallIntEditor();
                 editor.setParameter(param);
                 return editor;

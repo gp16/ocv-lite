@@ -1,3 +1,5 @@
+[![build status](https://magnum-ci.com/status/f300ab2a3148c10ca15b9470272749ff.png)](https://magnum-ci.com/projects/3863/history)
+
 # 1 Introduction
 ocv-lite is a project that aims to simplify using OpenCV by providing
 easy-to-use wrappers around it.

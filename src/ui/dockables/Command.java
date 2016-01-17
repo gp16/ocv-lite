@@ -21,11 +21,14 @@ public class Command extends JPanel implements Dockable {
     public Command() {
         add(panel, BorderLayout.WEST);
         commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
+        commandSelector.addItem("Choose Command");
+        commandSelector.setSelectedItem("Choose Command");
         commandSelector.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 panel.removeAll();
                 if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (commandSelector.getSelectedItem()!= "Choose Command"){
                     ICommand comm = Engine.getInstance()
                             .getCommand(e.getItem().toString());
                     Parameter[] params = comm.getParams();
@@ -37,6 +40,7 @@ public class Command extends JPanel implements Dockable {
                     }
                     panel.setLayout(new GridLayout(params.length, 2));
                     panel.revalidate();
+                }
                 }
             }
         });

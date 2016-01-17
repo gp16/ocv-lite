@@ -24,6 +24,7 @@ public final class Engine
         registerCommand(new CmdImgSave());
         registerCommand(new CmdImgGray());
         registerCommand(new CmdImgFlip());
+        registerCommand(new CmdImgEdge());
     }
     
     public static Engine getInstance() {

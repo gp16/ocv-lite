@@ -2,6 +2,7 @@ package interpreter;
 
 import engine.ICommand;
 import engine.*;
+import engine.commands.CmdMan;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -119,9 +120,16 @@ public class Interpreter {
     
     public void executeCommand(String source)
     {
+        if(source.equals("man"))
+        {
+           Engine.getInstance().getCommand("man").execute();
+        }
+        else
+        {
         String[] cmdAndArgs = source.split(" ", 2);
         ICommand icomm = get_command(cmdAndArgs[0]);
 	Argument[] arguments = getArguments(cmdAndArgs[1]);
 	icomm.execute(arguments);
+        }
     }
 }

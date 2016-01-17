@@ -33,7 +33,7 @@ public final class Terminal extends JPanel implements Dockable
      CodeEntery=new JTextField();
      command=new JTextArea();
      scroll = new JScrollPane (command);
-     command.setEnabled(false);
+     command.setEditable(false);
      command.setLineWrap(true);
      CodeEntery.setEnabled(true);
      command.setForeground(Color.white);
@@ -54,8 +54,8 @@ public void interpret()
 {
     interpreter = new Interpreter();
     CodeEntery.addActionListener((ActionEvent e) -> {
-        interpreter.executeCommand(CodeEntery.getText());
-        Append();
+    interpreter.executeCommand(CodeEntery.getText());
+    Append();
     });
     
 }

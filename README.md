@@ -12,9 +12,11 @@ The engine is the core component of the project that handles all the OpenCV logi
 Its main purpose is to power the other two wrappers, the interpreter and the
 GUI. The engine is meant to be an internal part hidden from the end-user. And
 indeed, the user doesn't need to it directly since it is guaranteed that the
-other wrappers have all the capabilities the engine has. With that said, there
-are no technical barriers preventing the user from accessing the engine directly
-if he wishes.
+other wrappers have all the capabilities the engine has, for example: other wrappers 
+can use the engine to register their command, get command names, get a registered command, 
+get number of registered commands, get the images as matrices from memory and it contains 
+the memory for both images as matrices and commands. With that said, there are no technical 
+barriers preventing the user from accessing the engine directly if he wishes.
 
 ### 2.1.1 Commands
 The engine is responsible for encapsulating OpenCV functionalities and allowing
@@ -30,19 +32,17 @@ execute it, you need to know its name.
 ### 2.1.2 Sample commands
 Here is a list of some commands to give you an idea of what commands are about
 
-1. CmdLoad
-2. CmdSave
-3. CmdFree
-4. CmdCamCapture (TODO) (already implemented under a different name, CmdImgCapture)
-5. CmdFlip (TODO)
-6. CmdLoadCommand (TODO)
-
+1. CmdImgLoad
+2. CmdImgSave
+3. CmdImgFree
+4. CmdImgCapture
+5. CmdImgFlip
 
 ### 2.1.3 Images
-The engine also keeps track of the images it is working on. Each image is identified
-by a string, which we sometimes refer to as the image Id. To store an image in
+The images are used as matrices.The engine also keeps track of the matrices it is working on. Each MAT is identified
+by a string, which we sometimes refer to as the MAT_Id. To store a MAT in
 the engine memory, you need provide a unique Id for it. And when you need to
-access the same image again, you will need to just provide the same Id again.
+access the same MAT again, you will need to just provide the same Id again.
 
 ### 2.1.4 Example
 Here is an example of how to use the API to load an image from disk, flip it,
@@ -151,13 +151,15 @@ cmd = engine.getCommand("command_name");
 cmd.execute(...);
 ```
 
-## 2.2 Interpreter (TODO)
+## 2.2 Interpreter
 The interpreter exposes the engine commands to the front-end user in a
 systematic way. The user is allowed to write statements and send them to the 
 interpreter, which executes them one by one in a sequential order. A statement
 is a string of text that instructs the interpreter to do something. It should
 contain the name of the engine command to be executed and the arguments to be
-sent to it.
+sent to it.The interpreter executes the statements by dividing each statement 
+to name of the engine command and the arguments, the arguments are then classified 
+based on a terminator character and type of each argument.
 
 ### 2.2.1 Interpreter modes
 The interpreter can be used either in interactive or batch mode. In the
@@ -176,20 +178,24 @@ java -jar ocvlite.jar -i /path/to/script.ocvl
 ```
 
 ### 2.2.2 Syntax
-A script is a list of statements separated by newlines. Each statement starts
+A script is a list of statements separated by terminal character. Each statement starts
 with the command name followed by it arguments. For example,
 ```
-load "/path/to/image.png" "img1"
-flip "img1" img2"
-resize "img2" "img3" 2.0
-save "img3" "/path/to/result.png"
+[load p"/path/to/image.png" img1 ]
+[flip img1 img2 ]
+[resize img2 img3 2.0 ]
+[save img3 p"/path/to/result.png"]
 ```
-The above script loads the image named "image.png", flips it, doubles its size,
-and then saves it as "result.png".
-
+The above script loads the image named "image.png" change it to MAT, flips it, doubles its size,
+and then change the MAT to IMAGE and saves it as "result.png".
+The terminals can be:
+1- 'p' for System_Path
+2- 'c' for Command_id
+3- '.' for integers
+4- ' ' for MAT_id
 The arguments that the interpreter can recognize are integers, floats, and
 strings. The interpreter is then responsible for casting these arguments
-including strings into types that the engine expects like STR, SYS_PATH, IMG_ID,
+including strings into types that the engine expects like STR, SYS_PATH, MAT_ID,
 CMD_ID, etc,. The correct type is decided based on the parameters of the stated
 command in the statement.
 
@@ -199,7 +205,7 @@ Each statement follows this rough synopsis
 ```
 
 
-## 2.3 GUI (TODO)
+## 2.3 GUI
 The GUI defines a new type of panels. Each one of them has the required controls
 to allow the user to resize, close, or duplicate it. Any panel can be duplicated
 either vertically or horizontally.
@@ -224,25 +230,26 @@ menu and select the content you want. This content can be either an image, a
 command, or a terminal.
 
 ### 2.3.1 Image panels
-Image panels are assigned an image id to display its content. The panel is
-updated once the image is updated by the engine. The user can select the image
-id from a dropdown menu or enter it manually if it doesn't exist.
+Image panels are assigned a MAT_ID, convert it to buffered image to display its content. 
+The user can select the MAT_ID from a dropdown menu which will contain all the images as matrices names saved in the MAT memory.
+The dropdown menu is updated once a new MAT is added to the memory by the engine.
 
-2.3.2 Terminal panels
+###2.3.2 Terminal panels
 A terminal is simply a graphical interface to the interactive mode of the
 interpreter. This is the only panel shown on the screen when the user starts the
-GUI.
+GUI. It displays 2 GUI components to the user, a text field where user write the 
+statements (command name + arguments) to be executed and a text area where 
+successfully executed commands are written to in a sequence manner.
 
 ### 2.3.3 Command panels
 A command panel is a graphical representation of a command recognized by the
-engine. The user selects the requested command from a dropdown menu or by
-typing its name manually. The command panel then inspects the requested command
-and shows the necessary inputs and controls to set its arguments. Here is how
-the different arguments are displayed
+engine. The user selects the requested command from a dropdown menu. 
+The command panel then inspects the requested command and shows the necessary inputs 
+and controls to set its arguments. Here is how the different arguments are displayed
 
 1. STR: textfield
-1. SYS_PATH: file chooser (or manually enter path)
-2. IMG_ID: dropdown menu (or manually enter image Id)
+1. SYS_PATH: file chooser
+2. MAT_ID: dropdown menu
 4. INT with min=0, max=1: checkbox
 5. INT with small ranges (3, 10): slider
 6. INT with larger ranges: textfield (accepts integers only)
@@ -251,3 +258,5 @@ the different arguments are displayed
 
 When the user finishes entering the correct arguments, he can click the
 'execute' which is available on every command panel.
+
+

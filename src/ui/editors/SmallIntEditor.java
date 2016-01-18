@@ -13,7 +13,7 @@ public class SmallIntEditor extends JPanel implements ArgumentEditor {
     private Parameter param;
     private final JSlider numSlider;
     private final JLabel label;
-
+    
     public SmallIntEditor() {
         numSlider = new JSlider();
         label = new JLabel();
@@ -36,6 +36,12 @@ public class SmallIntEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        numSlider.setMaximum(param.MAX);
+	numSlider.setMinimum(param.MIN);
+	numSlider.setMajorTickSpacing(10);
+        numSlider.setMinorTickSpacing(1);
+        numSlider.setPaintTicks(true);
+        numSlider.setPaintLabels(true);
     }
 
     @Override

@@ -27,6 +27,7 @@ public final class Terminal extends JPanel implements Dockable
     private final JTextField CodeEntery;
     private final JTextArea command;
     private final JScrollPane scroll;
+    
  public Terminal()
  {
      setLayout(new BorderLayout());
@@ -45,20 +46,29 @@ public final class Terminal extends JPanel implements Dockable
      add(CodeEntery,BorderLayout.SOUTH);
      interpret();
  }
- public void Append()
+ 
+ public void Append(String text)
  {
-     command.append("-> "+CodeEntery.getText() + "\n");
-     CodeEntery.setText("");
+     command.append("-> "+text + "\n");
  }
+ 
 public void interpret()
 {
     interpreter = new Interpreter();
     CodeEntery.addActionListener((ActionEvent e) -> {
-    interpreter.executeCommand(CodeEntery.getText());
-    Append();
+    if(interpreter.executeCommand(CodeEntery.getText())!=null)
+    {
+        Append(CodeEntery.getText());
+        Append(interpreter.executeCommand(CodeEntery.getText()));
+    }
+    else
+    {
+        Append(CodeEntery.getText());
+    }
+    CodeEntery.setText("");
     });
-    
 }
+
     @Override
     public Component[] getNavigationComponents() 
     {

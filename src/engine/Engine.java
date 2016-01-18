@@ -14,7 +14,6 @@ public final class Engine
     
     private final HashMap<String, ICommand> CMDS = new HashMap<>();
     private final HashMap<String, Mat> IMGS = new HashMap<>();
-    private final HashMap<String,String> man = new HashMap<>();
     // singleton pattern
     private Engine() {
 	registerCommand(new CmdHello());    
@@ -37,7 +36,6 @@ public final class Engine
     
     public void registerCommand(ICommand command) {
 	CMDS.put(command.getName(), command);
-        man.put(command.getName(), command.getMan());
     }
     
     public ICommand getCommand(String cmdName) {
@@ -64,14 +62,6 @@ public final class Engine
 	return IMGS.values().toArray(new Mat[]{});
     }
     
-    public String[] getDescriptionCommand()
-    {
-        return man.keySet().toArray(new String[]{});
-    }
-    public String[] getDescription()
-    {
-       return man.values().toArray(new String[]{});
-    }
     // gets an image by name
     public Mat getImage(String imageName) {
 	return IMGS.get(imageName);

@@ -118,18 +118,15 @@ public class Interpreter {
         return arguments.toArray(new Argument[0]);
     }
     
-    public void executeCommand(String source)
+    public String executeCommand(String source)
     {
-        if(source.equals("man"))
-        {
-           Engine.getInstance().getCommand("man").execute();
-        }
-        else
-        {
         String[] cmdAndArgs = source.split(" ", 2);
         ICommand icomm = get_command(cmdAndArgs[0]);
 	Argument[] arguments = getArguments(cmdAndArgs[1]);
-	icomm.execute(arguments);
+        if(icomm.execute(arguments)!=null)
+        {
+            return icomm.execute(arguments).toString();
         }
+        return null;
     }
 }

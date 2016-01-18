@@ -53,7 +53,7 @@ public class CmdImgGrayTest
         instance = new CmdImgGray();
         cmdImgLoad = Engine.getInstance().getCommand("load");
         cmdImgLoad.execute(
-                new Argument(Type.SYS_PATH,"test\\Imgs\\mountain.jpg"),
+                new Argument(Type.SYS_PATH,"test/Imgs/mountain.jpg"),
                 new Argument(Type.MAT_ID,"RGB")
         ); 
         cmdImgGray = Engine.getInstance().getCommand("gray");     

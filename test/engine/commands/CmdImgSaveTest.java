@@ -45,7 +45,7 @@ public class CmdImgSaveTest {
         instance = new CmdImgSave();
         cmdImgLoad = Engine.getInstance().getCommand("load");
         cmdImgLoad.execute(
-                new Argument(Type.SYS_PATH,"test\\Imgs\\mountain.jpg"),
+                new Argument(Type.SYS_PATH,"test/Imgs/mountain.jpg"),
                 new Argument(Type.MAT_ID,imageName));
         
         cmdImgSave = Engine.getInstance().getCommand("save");       
@@ -57,7 +57,7 @@ public class CmdImgSaveTest {
     
     @Parameterized.Parameters
     public static Collection parameters() {
-        return Arrays.asList(new Object[][]{{"test\\imgs\\saved.jpg","mountain"}});
+        return Arrays.asList(new Object[][]{{"test/imgs/saved.jpg","mountain"}});
     }
 
     /**

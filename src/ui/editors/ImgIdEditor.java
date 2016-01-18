@@ -1,21 +1,22 @@
 package ui.editors;
 
 import engine.Argument;
+import engine.Engine;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class ImgIdEditor extends JPanel implements ArgumentEditor {
 
     private Parameter param;
-    private final JTextField imageID;
+    private final JComboBox imageID;
     private final JLabel label;
 
     public ImgIdEditor() {
-        imageID = new JTextField(10);
+        imageID = new JComboBox(Engine.getInstance().getImagesNames());
         label = new JLabel();
         add(label);
         add(imageID);
@@ -28,7 +29,7 @@ public class ImgIdEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.MAT_ID, imageID.getText());
+        Argument arg = new Argument(Type.MAT_ID, imageID.getSelectedItem());
         return arg;
     }
 

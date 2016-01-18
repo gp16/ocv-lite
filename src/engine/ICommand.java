@@ -20,6 +20,11 @@ public interface ICommand
     public String getMan();
     
     /**
+     * @return A full description of the command including its parameters
+     */
+    public String getFullMan();
+    
+    /**
      * Defines the parameters of the command, this means, its signature.
      * 
      * @return An array of parameters that describe what arguments the command

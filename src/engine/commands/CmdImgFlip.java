@@ -17,29 +17,29 @@ public class CmdImgFlip extends AbstractCommand {
     protected Parameter[] getParamsOnce() 
     {
         return new Parameter[]{
-        new Parameter("NameToFlip", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
-        new Parameter("NameToSave", Type.MAT_ID, 1, null, "image name to save into memory", false, false)};
+        new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
+        new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false)};
  
     }
 
     @Override
     protected Object executeSafe() 
     {
-           String NameToFlip=getArgImgId("NameToFlip", 0);
-           String NameToSave=getArgImgId("NameToSave", 0);
-           Mat Source_Image = Engine.getInstance().getImage(NameToFlip);
+           String Source=getArgImgId("Source", 0);
+           String Destination=getArgImgId("Destination", 0);
+           Mat Source_Image = Engine.getInstance().getImage(Source);
            Mat Destination_Image = new Mat();
            
            Core.flip(Source_Image, Destination_Image, -1);
            
-           Engine.getInstance().allocImage(NameToSave, Destination_Image);
+           Engine.getInstance().allocImage(Destination, Destination_Image);
            return null; 
     }
 
     @Override
     public String getName() 
     {
-         return "toFlip";
+         return "flip";
     }
 
     @Override

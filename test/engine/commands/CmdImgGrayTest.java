@@ -9,15 +9,9 @@ import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import engine.Type;
-import java.awt.color.ColorSpace;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.imageio.ImageIO;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -37,7 +31,7 @@ public class CmdImgGrayTest
 {
         protected String RGB;
         protected File file;
-        protected String GRAY;
+        protected String Result;
         protected ICommand cmdImgGray;
         protected ICommand cmdImgLoad;
         protected CmdImgGray instance;
@@ -45,8 +39,8 @@ public class CmdImgGrayTest
     public CmdImgGrayTest(String GRAYname, String RGBname) 
     {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        this.GRAY = GRAYname;
-        this.RGB = RGBname;
+        Result = GRAYname;
+        RGB = RGBname;
     }    
     @Before
     public void setUp() {
@@ -56,9 +50,13 @@ public class CmdImgGrayTest
                 new Argument(Type.SYS_PATH,"test/Imgs/mountain.jpg"),
                 new Argument(Type.MAT_ID,"RGB")
         ); 
+        cmdImgLoad.execute(
+                new Argument(Type.SYS_PATH,"test/Imgs/MountainGrayed.jpg"),
+                new Argument(Type.MAT_ID,"expResult")
+        );
         cmdImgGray = Engine.getInstance().getCommand("gray");     
         cmdImgGray.execute(new Argument(Type.MAT_ID,RGB),
-                new Argument(Type.MAT_ID,GRAY));
+                new Argument(Type.MAT_ID,Result));
     } 
     
     @Parameterized.Parameters
@@ -68,15 +66,15 @@ public class CmdImgGrayTest
     }
     /**
      * Test class CmdImgGray
-     * @throws java.io.IOException
      */
     @Test
-    public void TestGray() throws IOException 
+    public void TestGray()
     {
         System.out.println("gray");
-        Mat result = Engine.getInstance().getImage(GRAY);
-        ColorSpace color=ColorSpace.getInstance(ColorSpace.CS_GRAY);
-        assertTrue(Convert_To_Buffer(result).getColorModel().getColorSpace().equals(color));   
+        Mat result = Engine.getInstance().getImage(Result);
+        Mat expResult = Engine.getInstance().getImage("expResult");
+        assertEquals(Highgui.imencode(".jpg", expResult, new MatOfByte()),
+                Highgui.imencode(".jpg", result, new MatOfByte()));   
     }
     /**
      * Test of getName method, of class CmdImgGray.
@@ -99,18 +97,5 @@ public class CmdImgGrayTest
         String expResult = "Convert Image To Gray";
         String result = instance.getMan();
         assertEquals(expResult, result);
-    }
-    /**
-     * Convert a mat to buffered image
-     */
-    private BufferedImage Convert_To_Buffer(Mat image) throws IOException
-    {
-        MatOfByte Byte_Mat = new MatOfByte();
-        Highgui.imencode(".jpg", image, Byte_Mat);
-        byte[] Img = Byte_Mat.toArray();
-        InputStream in = new ByteArrayInputStream(Img);
-        BufferedImage Final_Image = ImageIO.read(in);
-        return Final_Image;
- 
     }
 }

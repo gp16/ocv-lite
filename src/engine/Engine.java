@@ -24,6 +24,7 @@ public final class Engine
         registerCommand(new CmdImgGray());
         registerCommand(new CmdImgFlip());
         registerCommand(new CmdImgEdge());
+        registerCommand(new CmdImgDetect());
         registerCommand(new CmdMan());
     }
     

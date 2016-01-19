@@ -15,18 +15,24 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 /**
- *
+ *This command gets an image from the memory, detect face on it ,
+ * then saves it in the memory.
  * @author AmrGamal
+ * @version 1.0
+ * @since 2015
  */
 public class CmdImgDetect extends AbstractCommand{
 
     @Override
+    /**
+    * @return returns array of n objects of type Parameter.
+    * first is an image name from memory.
+    * second is an image name that will be detected then saves it 
+    * in the memory.
+    */
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),

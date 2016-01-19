@@ -34,7 +34,7 @@ public class CmdImgSaveTest {
     protected ICommand cmdImgLoad;
     protected CmdImgSave instance;
     
-    public CmdImgSaveTest(String path, String imageName) {
+    public CmdImgSaveTest(String imageName, String path) {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         this.path = path;
         this.imageName = imageName;
@@ -50,14 +50,15 @@ public class CmdImgSaveTest {
         
         cmdImgSave = Engine.getInstance().getCommand("save");       
         cmdImgSave.execute(
-                new Argument(Type.SYS_PATH, path),
-                new Argument(Type.MAT_ID, imageName)
+                new Argument(Type.MAT_ID, imageName),
+                new Argument(Type.SYS_PATH, path)
+                
         );
     }
     
     @Parameterized.Parameters
     public static Collection parameters() {
-        return Arrays.asList(new Object[][]{{"test/imgs/saved.jpg","mountain"}});
+        return Arrays.asList(new Object[][]{{"mountain","test/imgs/saved.jpg"}});
     }
 
     /**

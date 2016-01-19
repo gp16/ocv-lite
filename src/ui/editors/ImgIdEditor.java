@@ -18,6 +18,7 @@ public class ImgIdEditor extends JPanel implements ArgumentEditor {
     public ImgIdEditor() {
         imageID = new JComboBox(Engine.getInstance().getImagesNames());
         label = new JLabel();
+        imageID.setEditable(true);
         add(label);
         add(imageID);
     }
@@ -37,6 +38,7 @@ public class ImgIdEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        imageID.setToolTipText(param.MAN);
     }
 
     @Override

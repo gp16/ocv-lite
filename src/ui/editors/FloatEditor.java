@@ -8,6 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+* Assigns a FileChooser to any command with SYS_PATH Parameter. 
+* @author  Abdelrahman Mohsen
+* @version 1.0
+* @since   2015 
+*/
+
 public class FloatEditor extends JPanel implements ArgumentEditor {
 
     private Parameter param;
@@ -36,6 +43,7 @@ public class FloatEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        floatInput.setToolTipText(param.MAN);
     }
 
     @Override

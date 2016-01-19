@@ -48,6 +48,7 @@ public class SystemPathEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        chooseImage.setToolTipText(param.MAN);
     }
 
     @Override

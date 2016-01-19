@@ -37,6 +37,7 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        numSpinner.setToolTipText(param.MAN);
     }
 
     @Override

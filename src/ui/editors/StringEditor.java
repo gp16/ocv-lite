@@ -36,6 +36,7 @@ public class StringEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        argumentValue.setToolTipText(param.MAN);
     }
 
     @Override

@@ -42,6 +42,7 @@ public class SmallIntEditor extends JPanel implements ArgumentEditor {
         numSlider.setMinorTickSpacing(1);
         numSlider.setPaintTicks(true);
         numSlider.setPaintLabels(true);
+        numSlider.setToolTipText(param.MAN);
     }
 
     @Override

@@ -35,6 +35,7 @@ public class CmdIdEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        commandSelector.setToolTipText(param.MAN);
     }
 
     @Override

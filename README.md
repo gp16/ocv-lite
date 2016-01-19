@@ -257,5 +257,5 @@ and controls to set its arguments. Here is how the different arguments are displ
 7. FLOAT: textfield (accepts floats only)
 8. CMD_ID: dropdown menu
 
-When the user finishes entering the correct arguments, he can click the
+When the user finishes entering the correct arguments, he can click then
 'execute' which is available on every command panel.

@@ -3,7 +3,6 @@ package ui.dockables;
 import engine.Engine;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -36,8 +35,8 @@ public class Image extends JPanel implements Dockable {
     private final JComboBox ImageSelector;
     private ImageIcon imageIcon;
     private Mat Image;
-    private Label x;
-    private Label y;
+    private JLabel xLabel = new JLabel("X: ");
+    private JLabel yLabel = new JLabel("Y: ");
     private JButton refresh;
     private JPanel panel = new JPanel();
 
@@ -79,13 +78,11 @@ public class Image extends JPanel implements Dockable {
                 }
             }
         });
-        x = new Label();
-        y = new Label();
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                x.setText("X = " + e.getX());
-                y.setText("Y = " + e.getY());
+                xLabel.setText("X: " + e.getX());
+                yLabel.setText("Y: " + e.getY());
             }
         });
         refresh = new JButton("refresh");
@@ -127,8 +124,8 @@ public class Image extends JPanel implements Dockable {
         return new Component[]{
             ImageSelector,
             refresh,
-            x,
-            y,};
+            xLabel = new JLabel("x: "),
+            yLabel,};
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 package ui.dockables;
 
 import engine.Argument;
@@ -17,13 +18,15 @@ import ui.api.Dockable;
 import ui.editors.ArgumentEditor;
 
 public class Command extends JPanel implements Dockable {
-
+    
     private JComboBox commandSelector;
     private JPanel panel = new JPanel();
-    JButton excuteBotton = new JButton("execute");
-
+    private JButton excuteBotton = new JButton("execute");
+    private ArgumentEditor[] editors = null;
+    
     public Command() {
         add(panel, BorderLayout.WEST);
+        
         commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
         commandSelector.addItem("Choose Command");
         commandSelector.setSelectedItem("Choose Command");
@@ -35,25 +38,20 @@ public class Command extends JPanel implements Dockable {
                     if (commandSelector.getSelectedItem() != "Choose Command") {
                         ICommand comm = Engine.getInstance()
                                 .getCommand(e.getItem().toString());
+                        
                         Parameter[] params = comm.getParams();
-                        Argument[] arrArguments = new Argument[2];
+                        editors = new ArgumentEditor[params.length];
+                        
                         for (int i = 0; i < params.length; i++) {
                             ArgumentEditor argumentEditor = ArgumentEditor.createInstance(params[i]);
-                            arrArguments[i] = argumentEditor.getArgument();
+                            
                             if (argumentEditor != null) {
                                 panel.add(argumentEditor.getEditorPanel());
                             }
+                            editors[i] = argumentEditor;
                         }
-                        excuteBotton.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(java.awt.event.ActionEvent e) {
-                                comm.execute(arrArguments);
-
-                            }
-
-                        });
-
-                        panel.setLayout(new GridLayout(params.length, 2));
+                        
+                        panel.setLayout(new GridLayout(params.length + 1, 1));
                         panel.revalidate();
                         panel.add(excuteBotton);
                         panel.revalidate();
@@ -61,17 +59,46 @@ public class Command extends JPanel implements Dockable {
                 }
             }
         });
+        
+        excuteBotton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if(editors == null)
+                    return;
+                
+                Argument arguments[] = new Argument[editors.length];
+                
+                for(int i=0; i<editors.length; i++) {
+                    if(editors[i] == null)
+                        return;
+                    
+                    arguments[i] = editors[i].getArgument();
+                }
+                
+                
+                ICommand comm = Engine.getInstance().getCommand(
+                        commandSelector.getSelectedItem().toString());
+                
+                
+                
+                if(comm == null)
+                    return; // command not found
+                
+                comm.execute(arguments);
+            }
+            
+        });
     }
-
+    
     @Override
     public Component[] getNavigationComponents() {
         return new Component[]{
             commandSelector,};
     }
-
+    
     @Override
     public JPanel getDockablePanel() {
         return this;
     }
-
+    
 }

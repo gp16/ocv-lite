@@ -9,9 +9,14 @@ import engine.Argument;
 import engine.Engine;
 import engine.ICommand;
 import engine.Type;
+import java.awt.color.ColorSpace;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
+import javax.imageio.ImageIO;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -66,15 +71,29 @@ public class CmdImgGrayTest
     }
     /**
      * Test class CmdImgGray
+     * @throws java.io.IOException
      */
     @Test
-    public void TestGray()
+    public void TestGray() throws IOException
     {
         System.out.println("gray");
-        Mat result = Engine.getInstance().getImage(Result);
-        Mat expResult = Engine.getInstance().getImage("expResult");
-        assertEquals(Highgui.imencode(".jpg", expResult, new MatOfByte()),
-                Highgui.imencode(".jpg", result, new MatOfByte()));   
+        Mat resultMat = Engine.getInstance().getImage(Result);
+        Mat expResultMat = Engine.getInstance().getImage("expResult");
+        
+        MatOfByte resultByteMat = new MatOfByte();
+        Highgui.imencode(".jpg", resultMat, resultByteMat);
+        
+        MatOfByte expResultbyteMat = new MatOfByte();
+        Highgui.imencode(".jpg", resultMat, expResultbyteMat);
+        
+        byte[] result = resultByteMat.toArray();
+        byte[] expResult = expResultbyteMat.toArray();
+        
+        boolean TestResult=Arrays.equals(result, expResult);
+        assertTrue(TestResult);
+        InputStream in = new ByteArrayInputStream(result);
+        ColorSpace color=ColorSpace.getInstance(ColorSpace.CS_GRAY);
+        assertTrue(ImageIO.read(in).getColorModel().getColorSpace().equals(color));
     }
     /**
      * Test of getName method, of class CmdImgGray.

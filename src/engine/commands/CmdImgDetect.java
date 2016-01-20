@@ -36,14 +36,17 @@ public class CmdImgDetect extends AbstractCommand{
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
-            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false)};
+            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false),
+            new Parameter("Classifier", Type.SYS_PATH, 1, null, "Name of the file from which the classifier is loaded.", false, false)	
+	};
     }
 
     @Override
     protected Object executeSafe() {
         String Source = getArgImgId("Source", 0);
         String Destination = getArgImgId("Destination", 0);
-        CascadeClassifier faceDetector = new CascadeClassifier("C:/opencv/sources/data/lbpcascades/lbpcascade_frontalface.xml");
+	String classifier = getArgPath("Classifier", 0);
+        CascadeClassifier faceDetector = new CascadeClassifier(classifier);
         Mat Source_Mat = Engine.getInstance().getImage(Source);
         MatOfRect faceDetections = new MatOfRect();
         faceDetector.detectMultiScale(Source_Mat, faceDetections);

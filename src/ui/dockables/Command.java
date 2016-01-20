@@ -38,7 +38,7 @@ public class Command extends JPanel implements Dockable {
                     if (commandSelector.getSelectedItem() != "Choose Command") {
                         ICommand comm = Engine.getInstance()
                                 .getCommand(e.getItem().toString());
-                        
+                        excuteBotton.setToolTipText(comm.getMan());
                         Parameter[] params = comm.getParams();
                         editors = new ArgumentEditor[params.length];
                         

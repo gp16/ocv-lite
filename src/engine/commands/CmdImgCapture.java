@@ -9,6 +9,8 @@ import engine.AbstractCommand;
 import engine.Engine;
 import engine.Parameter;
 import engine.Type;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.opencv.core.Mat;
 import org.opencv.highgui.VideoCapture;
 
@@ -40,6 +42,12 @@ public class CmdImgCapture extends AbstractCommand {
         } 
         else 
         {
+            //TODO: Camera initialization should be done a lot smarter
+            for(int i = 0; i<10; i++)
+            {
+                camera.read(new Mat());
+            }
+            
             Mat frame = new Mat();
             while (true) 
             {

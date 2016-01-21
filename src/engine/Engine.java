@@ -27,6 +27,7 @@ public final class Engine
         registerCommand(new CmdImgDetect());
         registerCommand(new CmdMan());
         registerCommand(new CmdImgBlur());
+        registerCommand(new CmdImgCanny());
     }
     
     public static Engine getInstance() {

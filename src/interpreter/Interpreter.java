@@ -2,11 +2,9 @@ package interpreter;
 
 import engine.ICommand;
 import engine.*;
-import engine.commands.CmdMan;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringTokenizer;
 
 /**
  *
@@ -14,11 +12,8 @@ import java.util.StringTokenizer;
  */
 public class Interpreter {
 
-    public ICommand get_command(String user_command) 
-    {        
-        StringTokenizer stringTokenizer = new StringTokenizer(user_command, " ");
-        String command = "";
-        command += stringTokenizer.nextToken();
+    public ICommand get_command(String command) 
+    {
         ICommand icomm=  Engine.getInstance().getCommand(command);
         if(icomm == null)
         {

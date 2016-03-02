@@ -14,9 +14,9 @@ import java.util.Map;
 public abstract class AbstractCommand implements ICommand {
     private  Parameter[] params;
     
-    private HashMap<String, List<String>> stringArgs = new HashMap<>();
-    private HashMap<String, List<Double>> floatArgs = new HashMap<>();
-    private HashMap<String, List<Integer>> intArgs = new HashMap<>();
+    private Map<String, List<String>> stringArgs = new HashMap<>();
+    private Map<String, List<Double>> floatArgs = new HashMap<>();
+    private Map<String, List<Integer>> intArgs = new HashMap<>();
     private Map<String, List<String>> matIdArgs = new HashMap<>();
     private Map<String, List<String>> cmdIdArgs = new HashMap<>();
     private Map<String, List<String>> pathArgs = new HashMap<>();

@@ -31,16 +31,21 @@ public class CmdImgBlur extends AbstractCommand{
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
-            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false)};
+            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false),
+            new Parameter("Width", Type.INT, 1, 100, "image width", false,false),
+            new Parameter("Height", Type.INT, 1, 100, "image height", false ,false)
+        };
     }
 
     @Override
     protected Object executeSafe() {
         String Source = getArgImgId("Source", 0);
         String Destination = getArgImgId("Destination", 0);
+        int width = getArgInt("Width", 0);
+        int height = getArgInt("Height", 0);
         Mat Source_Mat = Engine.getInstance().getImage(Source);
         Mat Destination_Mat = new Mat();
-        Imgproc.blur(Source_Mat, Destination_Mat, new Size(3, 3));
+        Imgproc.blur(Source_Mat, Destination_Mat, new Size(width, height));
         Engine.getInstance().allocImage(Destination, Destination_Mat);  
         return null;
     }

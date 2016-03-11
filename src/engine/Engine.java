@@ -32,6 +32,8 @@ public final class Engine
         registerCommand(new CmdHistogram());
         registerCommand(new CmdEqualize());
         registerCommand(new CmdPyr());
+        registerCommand(new CmdDilation());
+        registerCommand(new CmdErosion());
     }
     
     public static Engine getInstance() {

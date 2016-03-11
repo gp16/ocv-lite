@@ -32,6 +32,7 @@ public final class Engine
         registerCommand(new CmdHistogram());
         registerCommand(new CmdEqualize());
         registerCommand(new CmdPyr());
+        registerCommand(new CmdMorph());
     }
     
     public static Engine getInstance() {

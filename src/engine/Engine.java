@@ -37,6 +37,7 @@ public final class Engine
         registerCommand(new CmdMorph());
         registerCommand(new CmdHoughCircles());
         registerCommand(new CmdcopyMakeBorder());
+        registerCommand(new Cmdaccumulate());
     }
     
     public static Engine getInstance() {

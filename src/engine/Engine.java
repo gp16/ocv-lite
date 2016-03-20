@@ -35,6 +35,7 @@ public final class Engine
         registerCommand(new CmdDilation());
         registerCommand(new CmdErosion());
         registerCommand(new CmdMorph());
+        registerCommand(new CmdHoughCircles());
     }
     
     public static Engine getInstance() {

@@ -38,6 +38,8 @@ public final class Engine
         registerCommand(new CmdHoughCircles());
         registerCommand(new CmdcopyMakeBorder());
         registerCommand(new Cmdaccumulate());
+        registerCommand(new CmdSubtract());
+	
     }
     
     public static Engine getInstance() {

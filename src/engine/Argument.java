@@ -1,5 +1,7 @@
 package engine;
 
+import java.lang.reflect.Constructor;
+
 public class Argument
 {
     public final Type TYPE;
@@ -27,7 +29,7 @@ public class Argument
     
     @Override
     public String toString() {
-	return (String) VALUE;
+	return  VALUE.toString();
     }
     
     public Integer toInt() {
@@ -41,4 +43,5 @@ public class Argument
 	    return new Double((Integer) VALUE);
 	else return null;
     }
+    
 }

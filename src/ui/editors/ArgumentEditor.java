@@ -4,6 +4,7 @@ import engine.Argument;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import java.lang.reflect.Method;
 
 public interface ArgumentEditor {
 
@@ -11,48 +12,52 @@ public interface ArgumentEditor {
 
     public Argument getArgument();
 
-    public void setParameter(Parameter param);
+    public void setParameter(java.lang.reflect.Parameter param);
 
-    public Parameter getParameter();
+    public java.lang.reflect.Parameter getParameter();
 
     public boolean isArgumentValid();
 
-    public static ArgumentEditor createInstance(Parameter param) {
-        if (param.TYPE == Type.CMD_ID) {
-            ArgumentEditor editor = new CmdIdEditor();
-            editor.setParameter(param);
-            return editor;
-        } else if (param.TYPE == Type.STR) {
+    public static ArgumentEditor createInstance(java.lang.reflect.Parameter param) 
+    {
+       Class TYPE = param.getType();
+         
+        
+             
+         
+          if (TYPE == String.class) {
             ArgumentEditor editor = new StringEditor();
             editor.setParameter(param);
             return editor;
-        } else if (param.TYPE == Type.SYS_PATH) {
-            ArgumentEditor editor = new SystemPathEditor();
-            editor.setParameter(param);
-            return editor;
-        } else if (param.TYPE == Type.MAT_ID) {
-            ArgumentEditor editor = new ImgIdEditor();
-            editor.setParameter(param);
-            return editor;
-        } else if (param.TYPE == Type.FLOAT) {
+         
+        } else if (TYPE.toString().contains("float")) {
             ArgumentEditor editor = new FloatEditor();
             editor.setParameter(param);
             return editor;
-        } else if (param.TYPE == Type.INT) {
-            int intRange = param.MAX - param.MIN;
-            if (intRange <= 10 && intRange >= 1) {
-                ArgumentEditor editor = new SmallIntEditor();
-                editor.setParameter(param);
-                return editor;
-            } 
-            else {
+        } else if (TYPE.toString().contains("int")) {
                 ArgumentEditor editor = new IntEditor();
                 editor.setParameter(param);
                 return editor;
-            }
         }
-
-        return null;
+        else if(TYPE.toString().contains("double"))
+        {
+            ArgumentEditor editor = new DoubleEditor();
+            editor.setParameter(param);
+                return editor;
+        }
+        else if(TYPE.toString().contains("long"))
+        {
+            ArgumentEditor editor = new LongEditor();
+            editor.setParameter(param);
+                return editor;
+        }
+        else{
+            ArgumentEditor editor = new ObjectEditor();
+            editor.setParameter(param);
+                return editor;
+        }
+         
+        
     }
 
 }

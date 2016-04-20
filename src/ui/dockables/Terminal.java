@@ -59,7 +59,7 @@ public void interpret()
     if(interpreter.executeCommand(CodeEntery.getText())!=null)
     {
         Append(CodeEntery.getText());
-        Append(interpreter.executeCommand(CodeEntery.getText()));
+        Append((String) interpreter.executeCommand(CodeEntery.getText()));
     }
     else
     {

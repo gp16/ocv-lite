@@ -34,7 +34,7 @@ public class Image extends JPanel implements Dockable {
 
     private final JComboBox ImageSelector;
     private ImageIcon imageIcon;
-    private Mat Image;
+    private BufferedImage Image;
     private JLabel xLabel = new JLabel("X: ");
     private JLabel yLabel = new JLabel("Y: ");
     private JButton refresh;
@@ -48,34 +48,32 @@ public class Image extends JPanel implements Dockable {
         for (int i = 0; i < imagesNames.length; i++) {
             ImageSelector.addItem(imagesNames[i]);
         }
-        ImageSelector.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ImageSelector.removeAllItems();
-                String imagesNames[] = Engine.getInstance().getImagesNames();
-                ImageSelector.addItem("Choose");
-                for (int i = 0; i < imagesNames.length; i++) {
-                    ImageSelector.addItem(imagesNames[i]);
-                }
-            }
-        });
+//        ImageSelector.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                ImageSelector.removeAllItems();
+//                String imagesNames[] = Engine.getInstance().getImagesNames();
+//                ImageSelector.addItem("Choose");
+//                for (int i = 0; i < imagesNames.length; i++) {
+//                    ImageSelector.addItem(imagesNames[i]);
+//                }
+//            }
+//        });
         ImageSelector.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                try {
+                
                     panel.removeAll();
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         if (ImageSelector.getSelectedItem() != "Choose") {
-                            Image = Engine.getInstance().getImage(e.getItem().toString());
-                            imageIcon = new ImageIcon(Convert_To_Buffer(Image));
+                            Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
+                            imageIcon = new ImageIcon(Image);
                             panel.add(new JLabel(imageIcon));
                         }
                     }
                     panel.revalidate();
                     panel.repaint();
-                } catch (IOException ex) {
-                    Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
             }
         });
         panel.addMouseListener(new MouseAdapter() {
@@ -85,38 +83,26 @@ public class Image extends JPanel implements Dockable {
                 yLabel.setText("Y: " + e.getY());
             }
         });
+        
         refresh = new JButton("refresh");
         refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
+               
                     panel.removeAll();
                         if (ImageSelector.getSelectedItem() != "Choose") {
                     Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
-                    imageIcon = new ImageIcon(Convert_To_Buffer(Image));
+                    imageIcon = new ImageIcon(Image);
                     panel.add(new JLabel(imageIcon));
                         }
                     
                     panel.revalidate();
                     panel.repaint();
-                } catch (IOException ex) {
-                    Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
             }
         });
     }
 
-    /**
-     * Convert a mat to buffered image
-     */
-    private BufferedImage Convert_To_Buffer(Mat image) throws IOException {
-        MatOfByte Byte_Mat = new MatOfByte();
-        Highgui.imencode(".jpg", image, Byte_Mat);
-        byte[] Img = Byte_Mat.toArray();
-        InputStream in = new ByteArrayInputStream(Img);
-        BufferedImage Final_Image = ImageIO.read(in);
-        return Final_Image;
 
-    }
 
     @Override
     public Component[] getNavigationComponents() {

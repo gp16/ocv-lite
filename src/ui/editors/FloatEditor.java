@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 public class FloatEditor extends JPanel implements ArgumentEditor {
 
-    private Parameter param;
+    private java.lang.reflect.Parameter param;
     private final JTextField floatInput;
     private final JLabel label;
 
@@ -40,14 +40,14 @@ public class FloatEditor extends JPanel implements ArgumentEditor {
     }
 
     @Override
-    public void setParameter(Parameter param) {
+    public void setParameter(java.lang.reflect.Parameter param) {
         this.param = param;
-        label.setText(param.NAME + " :");
-        floatInput.setToolTipText(param.MAN);
+        label.setText(param.getType() + " :");
+        //floatInput.setToolTipText(param.MAN);
     }
 
     @Override
-    public Parameter getParameter() {
+    public java.lang.reflect.Parameter getParameter() {
         return param;
     }
 

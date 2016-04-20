@@ -1,20 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ui.editors;
 
 import engine.Argument;
-import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.Arrays;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StringEditor extends JPanel implements ArgumentEditor {
+/**
+ *
+ * @author Amr_Ayman
+ */
+public class ObjectEditor extends JPanel implements ArgumentEditor{
 
     private final JTextField argumentValue;
     private final JLabel label;
     private java.lang.reflect.Parameter param;
 
-    public StringEditor() {
+    public ObjectEditor() {
+      //  System.out.println(Arrays.toString(param.getType().getConstructors()));
         argumentValue = new JTextField(10);
         label = new JLabel();
         add(label);
@@ -28,14 +40,14 @@ public class StringEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.STR, argumentValue.getText());
+        Argument arg = new Argument(Type.OBJECT, argumentValue.getText());
         return arg;
     }
 
     @Override
     public void setParameter(java.lang.reflect.Parameter param) {
         this.param = param;
-       label.setText("String" + " :");
+        label.setText(param.getType() + " :");
     //    argumentValue.setToolTipText(param.MAN);
     }
 
@@ -48,5 +60,5 @@ public class StringEditor extends JPanel implements ArgumentEditor {
     public boolean isArgumentValid() {
         return true;
     }
-
+    
 }

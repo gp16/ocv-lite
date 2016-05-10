@@ -56,10 +56,10 @@ public void interpret()
 {
     interpreter = new Interpreter();
     CodeEntery.addActionListener((ActionEvent e) -> {
-    if(interpreter.executeCommand(CodeEntery.getText())!=null)
+    boolean isInterpreted = interpreter.Interpret(CodeEntery.getText());
+    if(isInterpreted== false)
     {
-        Append(CodeEntery.getText());
-        Append((String) interpreter.executeCommand(CodeEntery.getText()));
+        Append("Error in executing");
     }
     else
     {

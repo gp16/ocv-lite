@@ -22,10 +22,11 @@ import org.opencv.highgui.Highgui;
  * @author Amr_Ayman
  */
 public class AddImage {
-    public void AddImage(String imageName,Mat mat)
+    private Engine engine = Engine.getInstance();
+    AddImage(String imageName,Mat mat)
     {
         BufferedImage image = Convert_To_Buffer(mat);
-        Engine.getInstance().allocImage(imageName, image);
+        engine.AddImage(imageName, image);
     }
         /**
      * Convert a mat to buffered image

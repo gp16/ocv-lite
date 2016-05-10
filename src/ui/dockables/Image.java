@@ -10,20 +10,13 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
-import org.opencv.highgui.Highgui;
 import ui.api.Dockable;
 
 /**
@@ -39,26 +32,18 @@ public class Image extends JPanel implements Dockable {
     private JLabel yLabel = new JLabel("Y: ");
     private JButton refresh;
     private JPanel panel = new JPanel();
+    private Engine engine = Engine.getInstance();
 
     public Image() {
+        TreeMap<String,BufferedImage> IMGS = engine.getAllImages();
         add(panel, BorderLayout.WEST);
         ImageSelector = new JComboBox();
-        String imagesNames[] = Engine.getInstance().getImagesNames();
         ImageSelector.addItem("Choose");
-        for (int i = 0; i < imagesNames.length; i++) {
-            ImageSelector.addItem(imagesNames[i]);
+        for (Map.Entry<String, BufferedImage> entrySet : IMGS.entrySet()) {
+                String ImageName = entrySet.getKey();
+                ImageSelector.addItem(ImageName);
+                
         }
-//        ImageSelector.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                ImageSelector.removeAllItems();
-//                String imagesNames[] = Engine.getInstance().getImagesNames();
-//                ImageSelector.addItem("Choose");
-//                for (int i = 0; i < imagesNames.length; i++) {
-//                    ImageSelector.addItem(imagesNames[i]);
-//                }
-//            }
-//        });
         ImageSelector.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -66,7 +51,7 @@ public class Image extends JPanel implements Dockable {
                     panel.removeAll();
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         if (ImageSelector.getSelectedItem() != "Choose") {
-                            Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
+                            Image = IMGS.get(ImageSelector.getSelectedItem().toString());
                             imageIcon = new ImageIcon(Image);
                             panel.add(new JLabel(imageIcon));
                         }
@@ -86,11 +71,12 @@ public class Image extends JPanel implements Dockable {
         
         refresh = new JButton("refresh");
         refresh.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                
                     panel.removeAll();
                         if (ImageSelector.getSelectedItem() != "Choose") {
-                    Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
+                    Image = IMGS.get(ImageSelector.getSelectedItem().toString());
                     imageIcon = new ImageIcon(Image);
                     panel.add(new JLabel(imageIcon));
                         }

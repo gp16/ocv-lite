@@ -3,7 +3,6 @@ package ui.dockables;
 
 import engine.Argument;
 import engine.Engine;
-import engine.Methods;
 import engine.Type;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -14,8 +13,11 @@ import java.awt.event.ItemListener;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -24,22 +26,24 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import ui.api.Dockable;
+import ui.api.autoCompletionComboBox;
 import ui.editors.ArgumentEditor;
 
 public class Command extends JPanel implements Dockable {
-   private Methods method = new Methods();
+    private Engine engine = Engine.getInstance();
     private JComboBox methodSelector;
     private JComboBox classSelector;
     private JPanel panel = new JPanel();
     private JTextField SaveName = new JTextField(10);
     private JButton excuteBotton = new JButton("execute");
     private ArgumentEditor[] editors = null;
-    HashMap<String,Method>   methods = null;
+    private TreeMap<String,Method> methods = null;
+    private TreeMap<String,Class> Classes = null;
     public Command() {
+        Classes = engine.getClasses();
         add(panel, BorderLayout.WEST);
-        
-        classSelector = new JComboBox();
-        methodSelector = new JComboBox();
+        classSelector = new autoCompletionComboBox();
+        methodSelector = new autoCompletionComboBox();
         SaveName.setEnabled(false);
         methodSelector.setEnabled(false);
         PromptSupport.setPrompt("save name", SaveName);
@@ -47,35 +51,35 @@ public class Command extends JPanel implements Dockable {
         methodSelector.setSelectedItem("Choose Command");
         classSelector.addItem("Choose Class");
         classSelector.setSelectedItem("Choose Class");
-        HashMap<String,Class> classes = Engine.getInstance().getAllClasses();
-        for (Map.Entry<String, Class> entrySet : classes.entrySet()) {
-            String key = entrySet.getKey();
-            Class value = entrySet.getValue();
+        
+        // add classes to classes combo-box
+        for (Map.Entry<String, Class> clazz : Classes.entrySet()) {
+            String key = clazz.getKey();
             classSelector.addItem(key);
         }
-        
+        //class combo-box listner
         classSelector.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED)
                 {
+                    SaveName.setText("");
                     SaveName.setEnabled(false);
                     if (classSelector.getSelectedItem() != "Choose Class")
                     {
                         methodSelector.removeAllItems();
                         methodSelector.addItem("Choose Command");
                         methodSelector.setSelectedItem("Choose Command");
-                        methods = Engine.getInstance().getClassMethods(classes.get(classSelector.getSelectedItem()));
-                        for (Map.Entry<String, Method> entrySet : methods.entrySet()) {
-                            String key = entrySet.getKey();
-                            Method value = entrySet.getValue();
-                            
-                                methodSelector.addItem(key);
-                            
+                        methods = engine.getMethod(Classes.get(classSelector.getSelectedItem()));
+                        //add methods to methods combo-box
+                        for (Map.Entry<String, Method> method : methods.entrySet()) {
+                            String MethodName = method.getKey();
+                            methodSelector.addItem(MethodName);
                         }
                         methodSelector.setEnabled(true);
                     }
-                else{
+                    else
+                    {
                         methodSelector.removeAllItems();
                         methodSelector.addItem("Choose Command");
                         methodSelector.setSelectedItem("Choose Command");
@@ -84,23 +88,22 @@ public class Command extends JPanel implements Dockable {
                 }
             }
         });
-        
+        //method combo-box listner
         methodSelector.addItemListener(new ItemListener() {
-            java.lang.reflect.Parameter[] params = null;
+            Parameter[] params = null;
             @Override
             public void itemStateChanged(ItemEvent e) {
+                SaveName.setText("");
                 SaveName.setEnabled(false);
                 panel.removeAll();
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (methodSelector.getSelectedItem() != "Choose Command") {
-                        Method comm = methods.get(methodSelector.getSelectedItem().toString());
-                        if(!"void".equals(comm.getReturnType().toString()))
-                {
-                    SaveName.setEnabled(true);
-                }
-                      
-                        //excuteBotton.setToolTipText(comm.getMan());
-                        params = comm.getParameters();
+                        Method method = methods.get(methodSelector.getSelectedItem().toString());
+                        if(!(method.getReturnType().toString()).equals("void"))
+                        {
+                            SaveName.setEnabled(true);
+                        }
+                        params = method.getParameters();
                         editors = new ArgumentEditor[params.length];
                         for (int i = 0; i < params.length; i++) {
                             ArgumentEditor argumentEditor = ArgumentEditor.createInstance(params[i]);
@@ -118,132 +121,134 @@ public class Command extends JPanel implements Dockable {
                 }
             }
         });
-        
+        //execute button lisitner
         excuteBotton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if(editors == null)
-                    return;
-                
-                Argument arguments[] = new Argument[editors.length];
-                
-                for(int i=0; i<editors.length; i++) {
-                    if(editors[i] == null)
-                        return;
-                    
-                    arguments[i] = editors[i].getArgument();
-                }
-                
-                
-                Method comm = methods.get(methodSelector.getSelectedItem().toString());
-             
-                //editor.setParameter(param);
-            
-            
-          
-                
-                Object[] args=new Object[arguments.length];
-                for (int i = 0; i < args.length; i++) {
-                    Type type = arguments[i].TYPE;
-                    if(Engine.getInstance().contains(arguments[i].toString()))
                 {
-                    
-                    args[i] = Engine.getInstance().getObject(arguments[i].toString());
+                    return;
                 }
-                else{
-                    if(type == Type.INT)
+                Argument arguments[] = new Argument[editors.length];
+                for(int i=0; i<editors.length; i++) 
+                {
+                    if(editors[i] == null)
                     {
-                        args[i] = Integer.parseInt(arguments[i].toString());
+                        return;
                     }
-                    else if (type == Type.FLOAT)
+                    else
                     {
-                    args[i] = Float.parseFloat(arguments[i].toString());
+                        arguments[i] = editors[i].getArgument();    
                     }
-                    else if (type == Type.STR)
+                }
+                Method method = methods.get(methodSelector.getSelectedItem().toString());
+                Object[] args=new Object[arguments.length];
+                for(int i = 0 ; i < arguments.length ; i++)
+                {
+                    String ArgumentName = arguments[i].toString();
+                    if(engine.isInMemory(ArgumentName))
                     {
-                        args[i] = arguments[i].toString();
+                        args[i] = engine.getFromMemory(ArgumentName);
                     }
-                    else if(type == Type.OBJECT)
+                    else
                     {
-                        Class t=comm.getParameterTypes()[i];
-                        if(arguments[i].toString().contains(","))
+                        Type type = arguments[i].TYPE;
+                        if(type == Type.INT)
                         {
-                        String[] split=arguments[i].toString().split(",");
-                        Object[] splittedArgs = new Object[split.length];
-                        Constructor[] allConstructors = t.getConstructors();
-                            for (Constructor allConstructor : allConstructors) {
-                                if(allConstructor.getParameterCount() == split.length)
+                            args[i] = Integer.parseInt(ArgumentName);
+                        }
+                        else if (type == Type.FLOAT)
+                        {
+                            args[i] = Float.parseFloat(ArgumentName);
+                        }
+                        else if (type == Type.STR)
+                        {
+                            args[i] = ArgumentName;
+                        }
+                        else if (type == Type.BOOLEAN)
+                        {
+                            args[i] = Boolean.parseBoolean(ArgumentName);
+                        }
+                        else if(type == Type.OBJECT)
+                        {
+                            Class ArgumentType = method.getParameterTypes()[i];
+                            if(ArgumentName.contains(","))
+                            {
+                                List<Object> CompositArguments = new ArrayList<>();
+                                String[] CompositArgumentNames = ArgumentName.split(",");
+                                Constructor[] CompositConstructors = ArgumentType.getConstructors();
+                                Constructor CompositConstructor = null;
+                                for(Constructor aCompositConstructor : CompositConstructors)
                                 {
-                                    Class[] constTypes= allConstructor.getParameterTypes();
-                                    for(int j = 0; j < constTypes.length; j ++)
+                                    if(aCompositConstructor.getParameterCount() == CompositArgumentNames.length)
                                     {
-                                        if(constTypes[j] == String.class)
-                                        {
-                                            splittedArgs[j] = split[j];
-                                        }
-                                        else if (constTypes[j].toString().contains("int"))
-                                        {
-                                            splittedArgs[j] = Integer.parseInt(split[j]);
-                                        }
-                                        else if(constTypes[j].toString().contains("double"))
-                                        {
-                                             splittedArgs[j] = Double.parseDouble(split[j]);
-                                        }
-                                        else if(constTypes[j].toString().contains("long"))
-                                        {
-                                             splittedArgs[j] = Long.parseLong(split[j]);
-                                         }
-                                        else if(constTypes[j].toString().contains("float"))
-                                        {
-                                            splittedArgs[j] = Float.parseFloat(split[j]);
-                                        }
+                                        CompositConstructor = aCompositConstructor;
+                                        break;
                                     }
-                                    try {
-                                        args[i] = t.getConstructor(constTypes).newInstance(splittedArgs);
-                                        
-                                    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
-                                        Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                Class[] CompositParameterTypes=CompositConstructor.getParameterTypes();
+                                for(int j = 0 ; j< CompositArgumentNames.length;j++)
+                                {
+                                    if(CompositParameterTypes[j].equals(String.class))
+                                    {
+                                        CompositArguments.add(CompositArgumentNames);
                                     }
-                                    break;
+                                    else if(CompositParameterTypes[j].equals(int.class))
+                                    {
+                                        CompositArguments.add(Integer.parseInt(CompositArgumentNames[j]));
+                                    }
+                                    else if(CompositParameterTypes[j].equals(double.class))
+                                    {
+                                        CompositArguments.add(Double.parseDouble(CompositArgumentNames[j]));
+               
+                                    }
+                                    else if(CompositParameterTypes[j].equals(long.class))
+                                    {
+                                        CompositArguments.add(Long.parseLong(CompositArgumentNames[j]));
+               
+                                    }
+                                    else if(CompositParameterTypes[j].equals(boolean.class))
+                                    {
+                                        CompositArguments.add( Boolean.parseBoolean(CompositArgumentNames[j]));
+                                    }   
+                                    else if(CompositParameterTypes[j].equals(float.class))
+                                    {
+                                        CompositArguments.add(Float.parseFloat(CompositArgumentNames[j]));
+                                    }
+                                }
+                                try 
+                                {
+                                    args[i] = CompositConstructor.newInstance(CompositArguments.toArray());
+                                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                                    Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            else
+                            {
+                                try {
+                                    Constructor TypeConstructor = ArgumentType.getConstructor();
+                                    args[i] = TypeConstructor.newInstance();
+                                    engine.addToMemory(ArgumentName, args[i]);
+                                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+                                    Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             }
                         }
-                       else
-                        {
-                            try {
-                                args[i] = t.getConstructor().newInstance();
-                                
-                                Engine.getInstance().allocObject(arguments[i].toString(), args[i]);
-                            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                            Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        }
-                        
                     }
-                    
                 }
-                }
-                try {
-                 Object result =   comm.invoke(method.getInstance(comm), args);
-                 
-                 if(SaveName.getText().length()!=0)
+                //check for save name that the result will be saved with in mem.
+                if(SaveName.getText().length() !=0)
                 {
-                    
-                    Engine.getInstance().allocObject(SaveName.getText(), result);
+                    engine.save = SaveName.getText();
+                    SaveName.setText("");
                 }
-               
-                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                    Logger.getLogger(Command.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                engine.ExecuteMethod(method, args);
                 
-               
-                
-                if(comm == null)
+                if(method == null)
+                {
                     return; // command not found
-               // String command = 
-               // comm.execute(arguments);
+                }
             }
-            
         });
     }
     

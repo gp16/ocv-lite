@@ -7,25 +7,17 @@ package commands;
 
 
 import engine.Engine;
-import engine.Methods;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *
  * @author Amr_Ayman
  */
 public class Man {
-    private Methods methods = new Methods();
+    private Engine engine = Engine.getInstance();
+    
     public void Man(String method_name) 
     {
-        List<Method>methods=Engine.getInstance().getMethod(method_name);
-        for (Method method : methods) {
-            Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-            System.out.println(Arrays.toString(parameterAnnotations));
-                    }
+        
     }}
 
 

@@ -12,4 +12,5 @@ public enum Type {
     OBJECT,
     CMD_ID,
     SYS_PATH,
+    BOOLEAN,
 }

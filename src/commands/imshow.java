@@ -27,7 +27,7 @@ import org.opencv.highgui.Highgui;
  */
 public class imshow {
     private JLabel label;
-    public void imshow(Mat mat)
+    imshow(Mat mat)
     {
         buildFrame("frame",mat.cols(),mat.rows());
             BufferedImage image=Convert_To_Buffer(mat);

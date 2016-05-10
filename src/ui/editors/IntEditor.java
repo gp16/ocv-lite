@@ -1,9 +1,10 @@
 package ui.editors;
 
 import engine.Argument;
-import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.lang.reflect.Parameter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -17,6 +18,7 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     
     public IntEditor() {
         numSpinner = new JSpinner();
+        numSpinner.setPreferredSize(new Dimension(55, 20));
         label = new JLabel();
         add(label); 
         add(numSpinner);
@@ -34,15 +36,15 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     }
 
     @Override
-    public void setParameter(java.lang.reflect.Parameter param) {
+    public void setParameter(Parameter param) {
         this.param = param;
         
-        label.setText(param.getType() + " :");
-        //numSpinner.setToolTipText(param.MAN);
+        label.setText(param.getType().getSimpleName()+ " :");
+        
     }
 
     @Override
-    public java.lang.reflect.Parameter getParameter() {
+    public Parameter getParameter() {
         return param;
     }
 

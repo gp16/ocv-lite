@@ -23,10 +23,9 @@ public class ObjectEditor extends JPanel implements ArgumentEditor{
 
     private final JTextField argumentValue;
     private final JLabel label;
-    private java.lang.reflect.Parameter param;
+    private Parameter param;
 
     public ObjectEditor() {
-      //  System.out.println(Arrays.toString(param.getType().getConstructors()));
         argumentValue = new JTextField(10);
         label = new JLabel();
         add(label);
@@ -45,14 +44,14 @@ public class ObjectEditor extends JPanel implements ArgumentEditor{
     }
 
     @Override
-    public void setParameter(java.lang.reflect.Parameter param) {
+    public void setParameter(Parameter param) {
         this.param = param;
-        label.setText(param.getType() + " :");
-    //    argumentValue.setToolTipText(param.MAN);
+        label.setText(param.getType().getSimpleName() + " :");
+    
     }
 
     @Override
-    public java.lang.reflect.Parameter getParameter() {
+    public Parameter getParameter() {
         return param;
     }
 

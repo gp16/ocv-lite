@@ -43,7 +43,7 @@ public final class Engine
     public Engine()
     {
         try {
-            Classes("C:/opencv/build/java/opencv-249.jar");
+            Classes("./lib/opencv-249.jar");
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
         }

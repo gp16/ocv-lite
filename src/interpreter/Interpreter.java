@@ -1,236 +1,127 @@
 package interpreter;
 
+import engine.ICommand;
 import engine.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Objects;
 
 /**
  *
- * @author AmrAyman
+ * @author Elmohand Haroon, AmrAyman, Abdelrahman Mohsen
  */
-public class Interpreter 
-{
-    Engine engine = Engine.getInstance();
-    TreeMap<String,Method> Methods = engine.getMethods();
-    TreeMap<String,Class> Classes = engine.getClasses();
-    
-   public boolean Interpret(String command)
-   {
-       String[] CommandParts = command.split(" ",2);
-       String MethodPart = CommandParts[0];
-       String ArgumentPart = CommandParts[1];
-       Class clazz = InterpretClass(MethodPart);
-       List<String> ArgumentNames = InterpretArguments(ArgumentPart);
-       Method method = InterpretMethod(MethodPart,ArgumentNames.size());
-       if(method != null)
-       {
-           if(method.getDeclaringClass().getSimpleName().equals(clazz.getSimpleName()))
-           {
-               Object[]Arguments = CastArguments(ArgumentNames, method);
-               engine.ExecuteMethod(method, Arguments);
-               return true;
-           }
-       }
-       return false;
+public class Interpreter {
+
+    public ICommand get_command(String command) 
+    {
+        ICommand icomm=  Engine.getInstance().getCommand(command);
+        if(icomm == null)
+        {
+            System.out.println("There is no command with this name ");
+            return null;
+        }
+        else
+        {
+            return icomm;
+        }  
     }
-   private Class InterpretClass(String MethodPart)
-   {
-       MethodPart = MethodPart.replace(".", " ");
-       String [] ClazzAndMethod = MethodPart.split(" ",2);
-       String ClassName = ClazzAndMethod[0];
-       Class clazz = Classes.get(ClassName);
-       return clazz;
-   }
-   private Method InterpretMethod(String MethodPart,int ArgumentLength)
-   {
-       
-       MethodPart = MethodPart.replace(".", " ");
-       String [] ClazzAndMethod = MethodPart.split(" ",2);
-       String MethodName = ClazzAndMethod[1];
-       Method method = Methods.get(MethodName+" :: "+ArgumentLength);
-       
-       return method;
-   }
-   private List<String> InterpretArguments(String ArgumentPart)
-   {
-       StringBuilder buffer = new StringBuilder();
-       List<String>ArgumentNames = new ArrayList<>();
-       char DefaultTerminal = ',';
-       char BracketStarter = '[';
-       char BracketTerminal = ']';
-       char CommandTerminal = ';';
-       char SaveTerminal = '\'';
-       char CurrentTerminal = DefaultTerminal;
-       for(int i = 0 ; i < ArgumentPart.length() ; i++)
-       {
-           char current = ArgumentPart.charAt(i);
-           if(current != CurrentTerminal)
-           {
-               if(current == BracketStarter)
-               {
-                   CurrentTerminal = BracketTerminal;
-               }
-               else if(current == SaveTerminal)
-               {
-                   CurrentTerminal = SaveTerminal;
-               }
-               else if(current == CommandTerminal)
-               {
-                   if(buffer.length() != 0)
-                   {
-                       ArgumentNames.add(buffer.toString());
-                       buffer.delete(0, buffer.length());
-                   }
-                   break;
-               }
-               else
-               {
-                   buffer.append(current);
-               }
-           }
-           else if (current == CurrentTerminal)
-           {
-               if(CurrentTerminal == BracketTerminal)
-               {
-                   CurrentTerminal = DefaultTerminal;
-                   ArgumentNames.add(buffer.toString());
-                   buffer.delete(0, buffer.length());
-               }
-               else if(CurrentTerminal == SaveTerminal)
-               {
-                   CurrentTerminal = DefaultTerminal;
-                   engine.save = buffer.toString();
-                   buffer.delete(0, buffer.length());
-               }
-               else if(CurrentTerminal == DefaultTerminal)
-               {
-                   char previous = ArgumentPart.charAt(i-1);
-                   if(previous != BracketTerminal)
-                   {
-                       ArgumentNames.add(buffer.toString());
-                       buffer.delete(0, buffer.length());
-                   }
-               }
-           }
-       }
-       return ArgumentNames;
-   }
-   private Object[] CastArguments(List<String>ArgumentNames,Method method)
-   { 
-       List<Object> Arguments = new ArrayList<>();
-       
-         Class[]  ArgumentTypes = method.getParameterTypes();
-       
-       
-       Object Argument = null;
-       for(int i = 0 ; i < ArgumentNames.size() ; i++)
-       {
-           if(engine.isInMemory(ArgumentNames.get(i)))
-           {
-               Argument = engine.getFromMemory(ArgumentNames.get(i));
-           }
-           else
-           {
-           if(ArgumentTypes[i].equals(String.class))
-           {
-               Argument = ArgumentNames.get(i);
-           }
-           else if(ArgumentTypes[i].equals(int.class))
-           {
-               Argument = Integer.parseInt(ArgumentNames.get(i));
-           }
-           else if(ArgumentTypes[i].equals(double.class))
-           {
-               Argument = Double.parseDouble(ArgumentNames.get(i));
-           }
-           else if(ArgumentTypes[i].equals(long.class))
-           {
-               Argument = Long.parseLong(ArgumentNames.get(i));
-           }
-           else if(ArgumentTypes[i].equals(boolean.class))
-           {
-               Argument = Boolean.parseBoolean(ArgumentNames.get(i));
-           }
-           else if(ArgumentTypes[i].equals(float.class))
-           {
-               Argument = Float.parseFloat(ArgumentNames.get(i));
-           }
-           else
-           {
-               if(ArgumentNames.get(i).contains(","))
-               {
-                   List<Object> CompositArguments = new ArrayList<>();
-                   String[] CompositArgumentNames = ArgumentNames.get(i).split(",");
-                  
-                   Constructor[] CompositConstructors = ArgumentTypes[i].getConstructors();
-                   Constructor CompositConstructor = null;
-                   for(Constructor aCompositConstructor : CompositConstructors)
-                   {
-                       if(aCompositConstructor.getParameterCount() == CompositArgumentNames.length)
-                       {
-                           CompositConstructor = aCompositConstructor;
-                           break;
-                       }
-                   }
-                   Class[] CompositParameterTypes=CompositConstructor.getParameterTypes();
-                   for(int j = 0 ; j< CompositArgumentNames.length;j++)
-                   {
-                       if(CompositParameterTypes[j].equals(String.class))
-                       {
-                           CompositArguments.add(CompositArgumentNames);
-                       }
-                       else if(CompositParameterTypes[j].equals(int.class))
-                       {
-                           CompositArguments.add(Integer.parseInt(CompositArgumentNames[j]));
-                        }
-                        else if(CompositParameterTypes[j].equals(double.class))
-                        {
-                            CompositArguments.add(Double.parseDouble(CompositArgumentNames[j]));
-               
-                        }
-                        else if(CompositParameterTypes[j].equals(long.class))
-                        {
-                             CompositArguments.add(Long.parseLong(CompositArgumentNames[j]));
-               
-                        }
-                        else if(CompositParameterTypes[j].equals(boolean.class))
-                        {
-                            CompositArguments.add( Boolean.parseBoolean(CompositArgumentNames[j]));
-                        }   
-                        else if(CompositParameterTypes[j].equals(float.class))
-                        {
-                            CompositArguments.add(Float.parseFloat(CompositArgumentNames[j]));
-                        }
+    
+    public Argument[] getArguments(String source)
+    {
+        List<Argument> arguments=new ArrayList<>();
+        Character terminator=null;
+        Type type=null;
+        StringBuilder buffer=new StringBuilder();
+        Character current;
+        for(int counter=0;counter<source.length();counter++)
+        {
+            current=source.charAt(counter);
+            if(Objects.equals(current, terminator))
+            {
+                Object value;
+                if(type==Type.INT)
+                {
+                    value=Integer.parseInt(buffer.toString());
+                }
+                else if(type==Type.FLOAT)
+                {
+                    value=Double.parseDouble(buffer.toString());
+                }
+                else
+                {
+                    value=buffer.toString();
+                }
+                Argument argument=new Argument(type, value); 
+                arguments.add(argument);
+                buffer.delete(0,buffer.length());
+                terminator=null; 
+                type=null;
+            }
+            else //if current != terminator
+            {
+                if(type==null)
+                {
+                    if (current=='\'')
+                    {
+                        type=Type.STR;
+                        terminator='\'';
                     }
-                   try 
-                   {
-                       Argument = CompositConstructor.newInstance(CompositArguments.toArray());
-                   } 
-                   catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                       Logger.getLogger(Interpreter.class.getName()).log(Level.SEVERE, null, ex);
+                    else if(current=='_'||Character.isLetter(current))
+                    {
+                        buffer.append(current);
+                        type=Type.MAT_ID;
+                        terminator=' ';   
+                    }
+                    else if (Character.isDigit(current))
+                    {
+                        buffer.append(current);
+                        type=Type.INT;
+                        terminator=' ';
                     }
                 }
-               else
-               {
-               try {
-                   Constructor TypeConstructor = ArgumentTypes[i].getConstructor();
-                   Argument = TypeConstructor.newInstance();
-                   engine.addToMemory(ArgumentNames.get(i), Argument);
-               } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                   Logger.getLogger(Interpreter.class.getName()).log(Level.SEVERE, null, ex);
-               }
-               }
-           }
-           }
-           Arguments.add(Argument);
-       }
-       return Arguments.toArray();
-   }
+                else //if type !=null
+                {
+                    if(current=='\'')
+                    {
+                        Character prefix=buffer.charAt(0);
+                        buffer.delete(0,buffer.length());
+                        if(prefix=='p')
+                        {
+                            type=Type.SYS_PATH;
+                        }
+                        else if(prefix=='c')
+                        {
+                            type=Type.CMD_ID;
+                        }
+                        terminator='\'';
+                    }
+                    else if(current=='.')
+                    {
+                        if(type==Type.INT)
+                        {
+                            type=Type.FLOAT;
+                        }
+                        buffer.append(current);
+                    }
+                    else
+                    {
+                        buffer.append(current);
+                    }
+                }
+            }
+        }
+        return arguments.toArray(new Argument[0]);
+    }
+    
+    public String executeCommand(String source)
+    {
+        String[] cmdAndArgs = source.split(" ", 2);
+        ICommand icomm = get_command(cmdAndArgs[0]);
+	Argument[] arguments = getArguments(cmdAndArgs[1]);
+        if(icomm.execute(arguments)!=null)
+        {
+            return icomm.execute(arguments).toString();
+        }
+        return null;
+    }
 }

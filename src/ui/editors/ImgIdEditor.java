@@ -1,36 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui.editors;
 
 import engine.Argument;
+import engine.Engine;
+import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
-import java.lang.reflect.Parameter;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 
-/**
- *
- * @author Amr_Ayman
- */
-public class DoubleEditor extends JPanel implements ArgumentEditor{
+public class ImgIdEditor extends JPanel implements ArgumentEditor {
 
     private Parameter param;
-    private final JSpinner  numSpinner;
+    private final JComboBox imageID;
     private final JLabel label;
-    
-    
-    public DoubleEditor() {
-        numSpinner = new JSpinner();
+
+    public ImgIdEditor() {
+        imageID = new JComboBox(Engine.getInstance().getImagesNames());
         label = new JLabel();
-        add(label); 
-        add(numSpinner);
+        imageID.setEditable(true);
+        add(label);
+        add(imageID);
     }
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -38,14 +30,15 @@ public class DoubleEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.INT , numSpinner.getValue());
+        Argument arg = new Argument(Type.MAT_ID, imageID.getSelectedItem());
         return arg;
     }
 
     @Override
     public void setParameter(Parameter param) {
         this.param = param;
-        label.setText(param.getType().getSimpleName() + " :");
+        label.setText(param.NAME + " :");
+        imageID.setToolTipText(param.MAN);
     }
 
     @Override
@@ -57,5 +50,5 @@ public class DoubleEditor extends JPanel implements ArgumentEditor{
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

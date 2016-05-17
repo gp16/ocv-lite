@@ -1,9 +1,9 @@
 package ui.editors;
 
 import engine.Argument;
+import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
-import java.lang.reflect.Parameter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -35,8 +35,8 @@ public class StringEditor extends JPanel implements ArgumentEditor {
     @Override
     public void setParameter(Parameter param) {
         this.param = param;
-       label.setText(param.getType().getSimpleName()+ " :");
-    //    argumentValue.setToolTipText(param.MAN);
+        label.setText(param.NAME + " :");
+        argumentValue.setToolTipText(param.MAN);
     }
 
     @Override

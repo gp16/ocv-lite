@@ -1,22 +1,8 @@
 package engine;
 
-import commands.Customcommands;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Enumeration;
+import engine.commands.*;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.opencv.core.Mat;
 
 /**
  * 
@@ -25,170 +11,89 @@ import java.util.logging.Logger;
 public final class Engine
 {
     private static Engine instance;
-    private HashMap<String,Object> Memory = new HashMap<>();
-    private HashMap<String,BufferedImage> IMGS = new HashMap<>();
-    private HashMap<String,Class> Classes = new HashMap<>();
-    private HashMap<String,Method> Methods = new HashMap<>();
-    private HashMap<String,Constructor> Constructors = new HashMap<>();
-    private HashMap<String,Object>instances = new HashMap<>();
-    public String save = null;
-    public static Engine getInstance()
-    {
-        if(instance == null)
-        {
-            instance = new Engine();
-        }
-        return instance;
-    }
-    public Engine()
-    {
-        try {
-            Classes("./lib/opencv-249.jar");
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        removeUnecessaryClasses();
-        Methods();
-        Constructors();
-    }
-    private void Classes(String Path) throws IOException, ClassNotFoundException
-    {
-        JarFile jarFile = new JarFile(Path);
-        Enumeration allEntries = jarFile.entries();
-        while (allEntries.hasMoreElements())
-        {
-            JarEntry entry = (JarEntry) allEntries.nextElement();
-            String name = entry.getName();
-            if(name.endsWith(".java"))
-            {
-                name = name.substring(0,(name.lastIndexOf(".")+1));
-                name = name.replace(".", "");
-                name = name.replace("/", ".");
-                Class clazz = Class.forName(name);
-                String ClassName = clazz.getSimpleName();
-                Classes.put(ClassName, clazz);
-            }
-            Classes.put(Customcommands.class.getSimpleName(),Customcommands.class);
-            
-        }
-    }
-    //todo :: remove unnecessary classez 
-    private void removeUnecessaryClasses()
-    {
-        
-    }
-    private void Methods()
-    {
-        for (Map.Entry<String, Class> Clazz : Classes.entrySet()) {
-                Class clazz = Clazz.getValue();
-                Method[] Methodz = clazz.getDeclaredMethods();
-                for(Method method : Methodz)
-                {
-                    //check if method is public
-                    if(Modifier.isPublic(method.getModifiers()))
-                    {
-                        String MethodName = method.getName()+" :: "+method.getParameterCount();
-                        Methods.put(MethodName, method);
-                    }
-                    
-                }
-                
-            }
-    }
-    private void Constructors()
-    {
-        for (Map.Entry<String, Class> Clazz : Classes.entrySet())
-        {
-            Class clazz = Clazz.getValue();
-            Constructor [] constructorz = clazz.getConstructors();
-            for(Constructor constructor : constructorz)
-            {
-                String[]ConstructorNameData = constructor.getName().replace(".", " ").split(" ");
-                String ConstructorName = ConstructorNameData[ConstructorNameData.length-1]+" :: "+constructor.getParameterCount();//todo :: check for paramater size and type
-                
-                Constructors.put(ConstructorName, constructor);
-            }
-        }
-    }
-    public TreeMap<String, Method> getMethod(Class clazz)
-    {
-        HashMap<String,Method> ClazzMethods = new HashMap<>();
-        Method[] methods = clazz.getDeclaredMethods(); 
-        for(Method method : methods)
-        {
-            //check if the method is public
-            if(Modifier.isPublic(method.getModifiers()))
-            {
-                String MethodName = method.getName()+" :: "+method.getParameterCount();
-            ClazzMethods.put(MethodName, method);
-            }
-            
-        }
-        return new TreeMap<>(ClazzMethods);
-    }
-    public void ExecuteMethod(Method method,Object[] args)
-    {
-        Object instance = null;
-        Object result = null;
-        if(instances.containsKey(method.getDeclaringClass().toString()))
-        {
-            instance = instances.get(method.getDeclaringClass().toString());
-        }
-        else
-        {
-            try {
-                instance = method.getDeclaringClass().newInstance();
-                instances.put(method.getDeclaringClass().toString(), instance);
-            } catch (InstantiationException | IllegalAccessException ex) {
-                Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        try {
-           result = method.invoke(instance, args);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(result != null && save != null)
-        {
-            addToMemory(save, result);
-            save = null;
-        }
+    
+    private final HashMap<String, ICommand> CMDS = new HashMap<>();
+    private final HashMap<String, Mat> IMGS = new HashMap<>();
+    // singleton pattern
+    private Engine() {
+	registerCommand(new CmdHello());    
+	registerCommand(new CmdImgCapture());
+        registerCommand(new CmdImgLoad());
+        registerCommand(new CmdImgFree());
+        registerCommand(new CmdImgSave());
+        registerCommand(new CmdImgGray());
+        registerCommand(new CmdImgFlip());
+        registerCommand(new CmdImgEdge());
+        registerCommand(new CmdImgDetect());
+        registerCommand(new CmdMan());
+        registerCommand(new CmdThreshold());
+        registerCommand(new CmdImgBlur());
+        registerCommand(new CmdImgCanny());
+        registerCommand(new CmdHistogram());
+        registerCommand(new CmdEqualize());
+        registerCommand(new CmdPyr());
+        registerCommand(new CmdDilation());
+        registerCommand(new CmdErosion());
+        registerCommand(new CmdMorph());
+        registerCommand(new CmdHoughCircles());
+        registerCommand(new CmdcopyMakeBorder());
+        registerCommand(new Cmdaccumulate());
+        registerCommand(new CmdSubtract());
+	
     }
     
-    public TreeMap<String, Method> getMethods()
-    {
-        return new TreeMap<>(Methods);
+    public static Engine getInstance() {
+	if(instance == null)
+	    instance = new Engine();
+	
+	return instance;
     }
-    public TreeMap<String, Class> getClasses()
-    {
-        return new TreeMap<>(Classes);
+    
+    public void registerCommand(ICommand command) {
+	CMDS.put(command.getName(), command);
     }
-    public TreeMap<String,Constructor> getConstructors()
-    {
-        return new TreeMap<>(Constructors);
+    
+    public ICommand getCommand(String cmdName) {
+	return CMDS.get(cmdName);
     }
-    public void AddImage(String ImageName,BufferedImage image)
-    {
-        IMGS.put(ImageName, image);
+    
+    public String[] getCommandsNames() {
+	return CMDS.keySet().toArray(new String[]{});
     }
-    public void removeImage(String ImageName)
-    {
-        IMGS.remove(ImageName);
+    
+    public ICommand[] getCommands() {
+	return CMDS.values().toArray(new ICommand[]{});
     }
-    public TreeMap<String,BufferedImage> getAllImages()
-    {
-        return new TreeMap<>(IMGS);
+    
+    public int getCommandsCount() {
+	return CMDS.size();
     }
-    public boolean isInMemory(String ObjectName)
-    {
-        return Memory.containsKey(ObjectName);
+    
+    public String[] getImagesNames() {
+	return IMGS.keySet().toArray(new String[]{});
     }
-    public Object getFromMemory(String ObjectName)
-    {
-        return Memory.get(ObjectName);
+
+    public Mat[] getImages() {
+	return IMGS.values().toArray(new Mat[]{});
     }
-    public void addToMemory(String ObjectName,Object object)
-    {
-        Memory.put(ObjectName, object);
+    
+    // gets an image by name
+    public Mat getImage(String imageName) {
+	return IMGS.get(imageName);
     }
-} 
+    
+    public int getImagesCount() {
+	return IMGS.size();
+    }
+    
+    // puts an image into memory
+    public void allocImage(String imageName, Mat image) {
+	IMGS.put(imageName, image);
+    }
+    
+    
+    // removes an image from memory
+    public void deallocImage(String imageName) {
+	IMGS.remove(imageName);
+    }
+}   

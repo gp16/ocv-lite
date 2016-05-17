@@ -1,36 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui.editors;
 
 import engine.Argument;
+import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
-import java.lang.reflect.Parameter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.JSlider;
 
-/**
- *
- * @author Amr_Ayman
- */
-public class LongEditor extends JPanel implements ArgumentEditor{
+public class SmallIntEditor extends JPanel implements ArgumentEditor {
 
     private Parameter param;
-    private final JSpinner  numSpinner;
+    private final JSlider numSlider;
     private final JLabel label;
     
-    
-    public LongEditor() {
-        numSpinner = new JSpinner();
+    public SmallIntEditor() {
+        numSlider = new JSlider();
         label = new JLabel();
-        add(label); 
-        add(numSpinner);
+        add(label);
+        add(numSlider);
     }
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -38,14 +28,21 @@ public class LongEditor extends JPanel implements ArgumentEditor{
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.INT , numSpinner.getValue());
+        Argument arg = new Argument(Type.INT, numSlider.getValue());
         return arg;
     }
 
     @Override
     public void setParameter(Parameter param) {
         this.param = param;
-        label.setText(param.getType().getSimpleName() + " :");
+        label.setText(param.NAME + " :");
+        numSlider.setMaximum(param.MAX);
+	numSlider.setMinimum(param.MIN);
+	numSlider.setMajorTickSpacing(10);
+        numSlider.setMinorTickSpacing(1);
+        numSlider.setPaintTicks(true);
+        numSlider.setPaintLabels(true);
+        numSlider.setToolTipText(param.MAN);
     }
 
     @Override
@@ -57,5 +54,5 @@ public class LongEditor extends JPanel implements ArgumentEditor{
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

@@ -1,27 +1,25 @@
 package ui.editors;
 
 import engine.Argument;
+import engine.Engine;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.*;
 
-public class IntEditor extends JPanel implements ArgumentEditor {
+public class CmdIdEditor extends JPanel implements ArgumentEditor {
 
-    private Parameter param;
-    private final JSpinner  numSpinner;
+    private final JComboBox commandSelector;
     private final JLabel label;
-    
-    
-    public IntEditor() {
-        numSpinner = new JSpinner();
+    private Parameter param;
+
+    public CmdIdEditor() {
+        commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
         label = new JLabel();
-        add(label); 
-        add(numSpinner);
+        add(label);
+        add(commandSelector);
     }
-    
+
     @Override
     public Component getEditorPanel() {
         return this;
@@ -29,7 +27,7 @@ public class IntEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.INT , numSpinner.getValue());
+        Argument arg = new Argument(Type.CMD_ID, commandSelector.getSelectedItem());
         return arg;
     }
 
@@ -37,7 +35,7 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
-        numSpinner.setToolTipText(param.MAN);
+        commandSelector.setToolTipText(param.MAN);
     }
 
     @Override
@@ -49,5 +47,5 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     public boolean isArgumentValid() {
         return true;
     }
-    
+
 }

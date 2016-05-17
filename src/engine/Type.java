@@ -9,8 +9,7 @@ public enum Type {
     STR,
     INT,
     FLOAT,
-    OBJECT,
+    MAT_ID,
     CMD_ID,
     SYS_PATH,
-    BOOLEAN,
 }

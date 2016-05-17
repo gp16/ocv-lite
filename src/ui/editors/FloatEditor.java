@@ -1,13 +1,12 @@
 package ui.editors;
 
 import engine.Argument;
+import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.lang.reflect.Parameter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 /**
 * Assigns a FileChooser to any command with SYS_PATH Parameter. 
@@ -18,16 +17,15 @@ import javax.swing.JSpinner;
 
 public class FloatEditor extends JPanel implements ArgumentEditor {
 
-    private java.lang.reflect.Parameter param;
-    private final JSpinner  numSpinner;
+    private Parameter param;
+    private final JTextField floatInput;
     private final JLabel label;
 
     public FloatEditor() {
-        numSpinner = new JSpinner();
-        numSpinner.setPreferredSize(new Dimension(55, 20));
+        floatInput = new JTextField(10);
         label = new JLabel();
         add(label);
-        add(numSpinner);
+        add(floatInput);
     }
 
     @Override
@@ -37,14 +35,15 @@ public class FloatEditor extends JPanel implements ArgumentEditor {
 
     @Override
     public Argument getArgument() {
-        Argument arg = new Argument(Type.FLOAT, numSpinner.getValue());
+        Argument arg = new Argument(Type.FLOAT, floatInput.getText());
         return arg;
     }
 
     @Override
     public void setParameter(Parameter param) {
         this.param = param;
-        label.setText(param.getType().getSimpleName() + " :");
+        label.setText(param.NAME + " :");
+        floatInput.setToolTipText(param.MAN);
     }
 
     @Override

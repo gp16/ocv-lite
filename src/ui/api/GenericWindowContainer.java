@@ -178,6 +178,7 @@ class DirectedWindowContainer extends JXMultiSplitPane {
 	model = new Split();
 	model.setRowLayout(horizontal);
 	layout = getMultiSplitLayout();
+	layout.setLayoutMode(MultiSplitLayout.USER_MIN_SIZE_LAYOUT);
 	nodes = (ArrayList<Node>) model.getChildren();
     }
     

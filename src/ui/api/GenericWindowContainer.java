@@ -14,11 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import org.jdesktop.swingx.JXMultiSplitPane;
 import org.jdesktop.swingx.MultiSplitLayout;
 import org.jdesktop.swingx.MultiSplitLayout.Divider;
@@ -288,10 +291,11 @@ class DockingWindow extends JPanel {
 	Component[] tempNavComps = navigation.getComponents();
 	navigation.removeAll();
 	navigation.add(combobox);
+        DockingWindow.packComponent(combobox);
 	for(int i = 0; i<tempNavComps.length; i++)
 	    navigation.add(tempNavComps[i]);
-	
-	// create close and double buttons
+
+        // create close and double buttons
 	JPanel docking = new JPanel();	
 	docking.add(new DockingButton(genericWindowContainer, this, DockingButton.TYPE_DOUBLE_HOR));
 	docking.add(new DockingButton(genericWindowContainer, this, DockingButton.TYPE_DOUBLE_VER));
@@ -299,7 +303,7 @@ class DockingWindow extends JPanel {
 	
 	// top bar
 	JPanel bar = new JPanel(new BorderLayout());
-	bar.add(navigation, BorderLayout.WEST);
+        bar.add(navigation, BorderLayout.WEST);
 	bar.add(docking, BorderLayout.EAST);
 	
 	// align it to top line
@@ -345,10 +349,14 @@ class DockingWindow extends JPanel {
 	
 	// append nav comps defined by interface implementors
 	Component[] newNavComps = dockable.getNavigationComponents();
-	if(newNavComps != null)
-	    for (Component navComp : newNavComps)
-		navigation.add(navComp);
+	if(newNavComps != null) {
+	    for (Component navComp : newNavComps) {
+                if(navComp instanceof JComponent)
+                    DockingWindow.packComponent((JComponent) navComp);
 
+                navigation.add(navComp);
+            }
+        }
 	repaint();
 	revalidate();
 	
@@ -362,12 +370,20 @@ class DockingWindow extends JPanel {
     public void setComboBoxSelectedIndex(int index) {
 	combobox.setSelectedIndex(index);
     }
+    
+    public static final void packComponent(JComponent comp) {
+        comp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        for (int i = 0; i < comp.getComponentCount(); i++) {
+            if (comp.getComponent(i) instanceof JComponent) {
+                ((JComponent) comp.getComponent(i)).setBorder(new EmptyBorder(0, 0, 0, 0));
+            }
+        }
+    }
 }
 
 class DockingComboBox extends JComboBox {
     
     public DockingComboBox(DockingWindow window) {
-	
 	addItemListener(new ItemListener() {
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {

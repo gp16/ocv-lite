@@ -1,6 +1,7 @@
 package ui.api;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -402,7 +404,11 @@ class DockingButton extends JButton {
     private final GenericWindowContainer cont;
     private final DockingWindow window;
     private final int TYPE;
-
+    
+    private static final ImageIcon ICON_CLOSE = new ImageIcon("res/icons/close.png");
+    private static final ImageIcon ICON_DOUBLE_VER = new ImageIcon("res/icons/vsplit.png");
+    private static final ImageIcon ICON_DOUBLE_HOR = new ImageIcon("res/icons/hsplit.png");
+    
     private static final ActionListener listener = new ActionListener()
     {
 	@Override
@@ -427,16 +433,18 @@ class DockingButton extends JButton {
     };
     
     public DockingButton(GenericWindowContainer cont, DockingWindow panel, int type) {
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
 	if(type == TYPE_CLOSE) {
-	    setText("x");
+            setIcon(ICON_CLOSE);
 	    setToolTipText("Close this window!");
 	}
 	else if(type == TYPE_DOUBLE_HOR) {
-	    setText("%");
-	    setToolTipText("Split this window horizontally!");
+            setIcon(ICON_DOUBLE_HOR);
+            setToolTipText("Split this window horizontally!");
 	}
 	else if(type == TYPE_DOUBLE_VER) {
-	    setText("÷");
+            setIcon(ICON_DOUBLE_VER);
 	    setToolTipText("Split this window vertically!");
 	}
 	

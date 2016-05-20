@@ -39,6 +39,7 @@ public final class Engine
         registerCommand(new CmdcopyMakeBorder());
         registerCommand(new Cmdaccumulate());
         registerCommand(new CmdSubtract());
+        registerCommand(new CmdLoadCmd());
 	
     }
     

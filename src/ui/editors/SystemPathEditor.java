@@ -21,6 +21,7 @@ public class SystemPathEditor extends JPanel implements ArgumentEditor {
     public SystemPathEditor() {
         chooseImage = new JFileChooser();
         openChooser = new JButton("Select file");
+        chooseImage.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         openChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -41,6 +41,7 @@ public final class Engine
         registerCommand(new CmdSubtract());
         registerCommand(new CmdLoadCmd());
         registerCommand(new Cmdresize());
+        registerCommand(new CmdmatchTemplate());
 	
     }
     

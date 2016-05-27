@@ -43,6 +43,7 @@ public final class Engine
         registerCommand(new Cmdresize());
         registerCommand(new CmdmatchTemplate());
         registerCommand(new CmdLaplacian());
+        registerCommand(new CmdPutText());
 	
     }
     

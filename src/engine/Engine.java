@@ -40,6 +40,7 @@ public final class Engine
         registerCommand(new Cmdaccumulate());
         registerCommand(new CmdSubtract());
         registerCommand(new CmdLoadCmd());
+        registerCommand(new Cmdresize());
 	
     }
     

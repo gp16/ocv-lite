@@ -44,6 +44,7 @@ public final class Engine
         registerCommand(new CmdmatchTemplate());
         registerCommand(new CmdLaplacian());
         registerCommand(new CmdPutText());
+        registerCommand(new CmdCornerHarris());
 	
     }
     

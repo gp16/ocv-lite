@@ -45,6 +45,7 @@ public final class Engine
         registerCommand(new CmdLaplacian());
         registerCommand(new CmdPutText());
         registerCommand(new CmdCornerHarris());
+        registerCommand(new CmdAddWeighted());
 	
     }
     

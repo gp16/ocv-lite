@@ -46,7 +46,7 @@ public final class Engine
         registerCommand(new CmdPutText());
         registerCommand(new CmdCornerHarris());
         registerCommand(new CmdAddWeighted());
-	
+	registerCommand(new CmdGaussianBlur());
     }
     
     public static Engine getInstance() {

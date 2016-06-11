@@ -48,6 +48,7 @@ public final class Engine
         registerCommand(new CmdAddWeighted());
 	registerCommand(new CmdGaussianBlur());
         registerCommand(new CmdAbsdiff());
+        registerCommand(new CmdBilateralFilter());
     }
     
     public static Engine getInstance() {

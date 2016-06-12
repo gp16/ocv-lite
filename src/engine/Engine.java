@@ -49,6 +49,7 @@ public final class Engine
         registerCommand(new CmdAbsdiff());
         registerCommand(new CmdBilateralFilter());
         registerCommand(new CmdColor());
+        registerCommand(new CmdRandShuffle());
     }
     
     public static Engine getInstance() {

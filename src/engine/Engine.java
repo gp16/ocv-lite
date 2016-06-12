@@ -1,7 +1,7 @@
 package engine;
 
 import engine.commands.*;
-import java.util.HashMap;
+import java.util.TreeMap;
 import org.opencv.core.Mat;
 
 /**
@@ -12,8 +12,8 @@ public final class Engine
 {
     private static Engine instance;
     
-    private final HashMap<String, ICommand> CMDS = new HashMap<>();
-    private final HashMap<String, Mat> IMGS = new HashMap<>();
+    private final TreeMap<String, ICommand> CMDS = new TreeMap<>();
+    private final TreeMap<String, Mat> IMGS = new TreeMap<>();
     // singleton pattern
     private Engine() {
 	registerCommand(new CmdHello());    

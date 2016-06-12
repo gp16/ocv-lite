@@ -50,6 +50,7 @@ public final class Engine
         registerCommand(new CmdBilateralFilter());
         registerCommand(new CmdColor());
         registerCommand(new CmdRandShuffle());
+        registerCommand(new CmdAdd());
     }
     
     public static Engine getInstance() {

@@ -68,7 +68,7 @@ public class CmdHoughCircles extends AbstractCommand
 
     @Override
     public String getName() {
-    return "HoughCircles";
+    return "houghCircles";
     }
 
     @Override

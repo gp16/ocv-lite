@@ -93,7 +93,7 @@ public class CmdPutText extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "PutText";
+        return "putText";
     }
 
     @Override

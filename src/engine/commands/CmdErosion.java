@@ -37,7 +37,7 @@ public class CmdErosion extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "Erosion";
+        return "erosion";
     }
 
     @Override

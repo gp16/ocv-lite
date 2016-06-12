@@ -44,7 +44,7 @@ public class CmdThreshold extends AbstractCommand {
     
     @Override
     public String getName() {
-        return "Threshold";
+        return "threshold";
     }
     
     @Override

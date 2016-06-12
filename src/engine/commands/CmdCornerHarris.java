@@ -45,7 +45,7 @@ public class CmdCornerHarris extends AbstractCommand{
 
     @Override
     public String getName() {
-        return "CornerHarris";
+        return "cornerHarris";
     }
 
     @Override

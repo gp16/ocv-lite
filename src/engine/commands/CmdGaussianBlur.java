@@ -45,7 +45,7 @@ public class CmdGaussianBlur extends AbstractCommand{
 
     @Override
     public String getName() {
-    return "GaussianBlur";
+    return "gaussianBlur";
     }
 
     @Override

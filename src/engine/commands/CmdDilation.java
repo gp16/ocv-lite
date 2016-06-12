@@ -37,7 +37,7 @@ public class CmdDilation extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "Dilate";
+        return "dilate";
     }
 
     @Override

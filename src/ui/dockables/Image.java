@@ -2,7 +2,9 @@ package ui.dockables;
 
 import engine.Engine;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,7 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
+import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
+import org.opencv.imgproc.Imgproc;
 import ui.api.Dockable;
 
 /**
@@ -89,10 +93,12 @@ public class Image extends JPanel implements Dockable {
         refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
+                    Mat resizedIMG = new Mat();
                     panel.removeAll();
                         if (ImageSelector.getSelectedItem() != "Choose") {
                     Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
-                    imageIcon = new ImageIcon(Convert_To_Buffer(Image));
+                    Imgproc.resize(Image, resizedIMG, new Size(panel.getParent().getWidth(),panel.getParent().getHeight()));
+                    imageIcon = new ImageIcon(Convert_To_Buffer(resizedIMG));
                     panel.add(new JLabel(imageIcon));
                         }
                     

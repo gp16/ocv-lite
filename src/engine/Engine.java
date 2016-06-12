@@ -51,6 +51,7 @@ public final class Engine
         registerCommand(new CmdColor());
         registerCommand(new CmdRandShuffle());
         registerCommand(new CmdAdd());
+        registerCommand(new CmdTranspose());
     }
     
     public static Engine getInstance() {

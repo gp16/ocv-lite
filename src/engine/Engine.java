@@ -21,7 +21,6 @@ public final class Engine
         registerCommand(new CmdImgLoad());
         registerCommand(new CmdImgFree());
         registerCommand(new CmdImgSave());
-        registerCommand(new CmdImgGray());
         registerCommand(new CmdImgFlip());
         registerCommand(new CmdImgEdge());
         registerCommand(new CmdImgDetect());
@@ -49,6 +48,7 @@ public final class Engine
 	registerCommand(new CmdGaussianBlur());
         registerCommand(new CmdAbsdiff());
         registerCommand(new CmdBilateralFilter());
+        registerCommand(new CmdColor());
     }
     
     public static Engine getInstance() {

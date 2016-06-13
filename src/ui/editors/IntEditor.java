@@ -4,6 +4,7 @@ import engine.Argument;
 import engine.Parameter;
 import engine.Type;
 import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -36,6 +37,9 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     @Override
     public void setParameter(Parameter param) {
         this.param = param;
+        Dimension d = numSpinner.getPreferredSize();
+        d.width = 50;
+        numSpinner.setPreferredSize(d);
         label.setText(param.NAME + " :");
         numSpinner.setToolTipText(param.MAN);
     }

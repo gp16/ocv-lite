@@ -15,7 +15,7 @@ public class StringEditor extends JPanel implements ArgumentEditor {
     private Parameter param;
 
     public StringEditor() {
-        argumentValue = new JTextField(10);
+        argumentValue = new JTextField();
         label = new JLabel();
         add(label);
         add(argumentValue);
@@ -36,6 +36,7 @@ public class StringEditor extends JPanel implements ArgumentEditor {
     public void setParameter(Parameter param) {
         this.param = param;
         label.setText(param.NAME + " :");
+        argumentValue.setColumns(20);
         argumentValue.setToolTipText(param.MAN);
     }
 

@@ -15,6 +15,7 @@ public class Main
         frame.add(container);
         frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
+        frame.setTitle("Ocv-lite");
     }
 }
 

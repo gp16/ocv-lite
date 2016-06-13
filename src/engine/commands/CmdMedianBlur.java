@@ -14,7 +14,7 @@ import org.opencv.imgproc.Imgproc;
 
 /**
  *
- * @author Amr_Gamal
+ * @author Elmohand_Haroon
  */
 public class CmdMedianBlur extends AbstractCommand{
 

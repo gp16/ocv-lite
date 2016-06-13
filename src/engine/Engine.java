@@ -57,6 +57,7 @@ public final class Engine
         registerCommand(new CmdMultiply());
         registerCommand(new CmdDivide());
         registerCommand(new CmdMedianBlur());
+        registerCommand(new CmdBoxFilter());
     }
     
     public static Engine getInstance() {

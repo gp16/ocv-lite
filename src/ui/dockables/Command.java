@@ -14,6 +14,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import ui.api.Dockable;
 import ui.editors.ArgumentEditor;
 
@@ -28,6 +29,9 @@ public class Command extends JPanel implements Dockable {
         add(panel, BorderLayout.WEST);
         
         commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
+        
+        AutoCompleteDecorator.decorate(commandSelector);
+        
         commandSelector.addItem("Choose Command");
         commandSelector.setSelectedItem("Choose Command");
         commandSelector.addItemListener(new ItemListener() {

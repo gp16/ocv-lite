@@ -16,7 +16,6 @@ public final class Engine
     private final TreeMap<String, Mat> IMGS = new TreeMap<>();
     // singleton pattern
     private Engine() {
-	registerCommand(new CmdHello());    
 	registerCommand(new CmdImgCapture());
         registerCommand(new CmdImgLoad());
         registerCommand(new CmdImgFree());

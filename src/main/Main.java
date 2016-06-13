@@ -13,7 +13,7 @@ public class Main
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GenericWindowContainer container = new GenericWindowContainer();
         frame.add(container);
-        frame.pack();
+        frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
     }
 }

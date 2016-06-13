@@ -40,10 +40,10 @@ public class GenericWindowContainer extends JPanel {
     }
 
     static {
-        registerDockableClass(About.class);
+        registerDockableClass(Terminal.class);
         registerDockableClass(Command.class);
         registerDockableClass(Image.class);
-        registerDockableClass(Terminal.class);
+        registerDockableClass(About.class);
     }
 
     public GenericWindowContainer() {

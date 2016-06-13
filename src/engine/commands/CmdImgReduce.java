@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
  *
  * @author Elmohand Haroon
  */
-public class CmdImgRepeat extends AbstractCommand {
+public class CmdImgReduce extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() 
@@ -31,7 +31,7 @@ public class CmdImgRepeat extends AbstractCommand {
            Mat Source_Image = Engine.getInstance().getImage(Source);
            Mat Destination_Image = new Mat();
            
-           Core.repeat(Source_Image, 2, 2, Destination_Image);
+           Core.reduce(Source_Image, Destination_Image, 1, 2);
                    
            Engine.getInstance().allocImage(Destination, Destination_Image);
            return null; 
@@ -40,13 +40,14 @@ public class CmdImgRepeat extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "repeat";
+         return "reduce";
     }
 
     @Override
     public String getMan() 
     {
-        return "Repeat Image";
+        return "Reduce Image";
     }
     
 }
+

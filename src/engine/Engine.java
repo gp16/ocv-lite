@@ -54,6 +54,7 @@ public final class Engine
         registerCommand(new CmdTranspose());
         registerCommand(new CmdInRange());
         registerCommand(new CmdaccumulateSquare());
+        registerCommand(new CmdMultiply());
     }
     
     public static Engine getInstance() {

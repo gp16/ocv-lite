@@ -66,6 +66,7 @@ public final class Engine
         registerCommand(new CmdMinimum());
         registerCommand(new CmdMaximum());
         registerCommand(new CmdDivide1());
+        registerCommand(new CmdDivide3());
     }
     
     public static Engine getInstance() {

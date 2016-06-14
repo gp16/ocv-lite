@@ -54,7 +54,7 @@ public final class Engine
         registerCommand(new CmdInRange());
         registerCommand(new CmdaccumulateSquare());
         registerCommand(new CmdMultiply1());
-        registerCommand(new CmdDivide());
+        registerCommand(new CmdDivide2());
         registerCommand(new CmdMedianBlur());
         registerCommand(new CmdBoxFilter());
         registerCommand(new CmdDistanceTransform());

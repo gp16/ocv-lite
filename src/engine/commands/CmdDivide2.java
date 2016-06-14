@@ -11,7 +11,7 @@ import org.opencv.core.Mat;
  *
  * @author AmrGamal
  */
-public class CmdDivide extends AbstractCommand {
+public class CmdDivide2 extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() {

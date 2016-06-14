@@ -63,6 +63,7 @@ public final class Engine
         registerCommand(new CmdRaisesToPower());
         registerCommand(new CmdImgNormalize());
         registerCommand(new CmdMultiply2());
+        registerCommand(new CmdMinimum());
     }
     
     public static Engine getInstance() {

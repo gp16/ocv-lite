@@ -34,7 +34,7 @@ public class CmdMultiply2 extends AbstractCommand {
            Mat Source_Image2 = Engine.getInstance().getImage(Source2);
            Mat Destination_Image = new Mat();
            
-           Core.bitwise_and(Source_Image, Source_Image2, Destination_Image);
+           Core.multiply(Source_Image, Source_Image2, Destination_Image, 2);
                    
            Engine.getInstance().allocImage(Destination, Destination_Image);
            return null; 

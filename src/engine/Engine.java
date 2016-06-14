@@ -60,6 +60,7 @@ public final class Engine
         registerCommand(new CmdDistanceTransform());
         registerCommand(new CmdImgRepeat());
         registerCommand(new CmdImgReduce());
+        registerCommand(new CmdRaisesToPower());
     }
     
     public static Engine getInstance() {

@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
  *
  * @author Elmohand Haroon
  */
-public class CmdMultiply2 extends AbstractCommand {
+public class CmdBitwiseAnd extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() 
@@ -43,13 +43,13 @@ public class CmdMultiply2 extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Multiply 2";
+         return "Bitwise_And";
     }
 
     @Override
     public String getMan() 
     {
-        return "Multiply Two Images With Scalar";
+        return "Bitwise_And Between Tow Images";
     }
     
 }

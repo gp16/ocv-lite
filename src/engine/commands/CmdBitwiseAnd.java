@@ -34,7 +34,7 @@ public class CmdBitwiseAnd extends AbstractCommand {
            Mat Source_Image2 = Engine.getInstance().getImage(Source2);
            Mat Destination_Image = new Mat();
            
-           Core.bitwise_or(Source_Image, Source_Image2, Destination_Image);
+           Core.bitwise_and(Source_Image, Source_Image2, Destination_Image);
                    
            Engine.getInstance().allocImage(Destination, Destination_Image);
            return null; 

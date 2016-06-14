@@ -68,6 +68,7 @@ public final class Engine
         registerCommand(new CmdDivide1());
         registerCommand(new CmdDivide3());
         registerCommand(new CmdBitwiseAnd());
+        registerCommand(new CmdBitwiseOr());
     }
     
     public static Engine getInstance() {

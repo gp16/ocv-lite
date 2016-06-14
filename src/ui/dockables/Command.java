@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import ui.api.Dockable;
 import ui.editors.ArgumentEditor;
@@ -61,7 +62,8 @@ public class Command extends JPanel implements Dockable {
                             editors[i] = argumentEditor;
                         }
                         
-                        edditorsPanel.setLayout(new GridLayout(params.length, 2));
+                        edditorsPanel.setLayout(new GridLayout(params.length, 2, 0, 15));
+                        edditorsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
                         edditorsPanel.setMaximumSize(edditorsPanel.getPreferredSize());
                         edditorsPanel.revalidate();
                     }
@@ -98,7 +100,8 @@ public class Command extends JPanel implements Dockable {
             
         });
         
-        add(excuteBotton, BorderLayout.SOUTH);
+        add(excuteBotton);
+        excuteBotton.setLayout(new BorderLayout(0, 55));
     }
     
     @Override

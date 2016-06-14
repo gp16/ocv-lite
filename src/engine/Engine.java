@@ -53,7 +53,7 @@ public final class Engine
         registerCommand(new CmdTranspose());
         registerCommand(new CmdInRange());
         registerCommand(new CmdaccumulateSquare());
-        registerCommand(new CmdMultiply());
+        registerCommand(new CmdMultiply1());
         registerCommand(new CmdDivide());
         registerCommand(new CmdMedianBlur());
         registerCommand(new CmdBoxFilter());
@@ -62,7 +62,7 @@ public final class Engine
         registerCommand(new CmdImgReduce());
         registerCommand(new CmdRaisesToPower());
         registerCommand(new CmdImgNormalize());
-        registerCommand(new CmdMultiply3());
+        registerCommand(new CmdMultiply2());
     }
     
     public static Engine getInstance() {

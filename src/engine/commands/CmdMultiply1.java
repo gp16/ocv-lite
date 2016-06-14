@@ -11,7 +11,7 @@ import org.opencv.core.Mat;
  *
  * @author AmrGamal
  */
-public class CmdMultiply extends AbstractCommand {
+public class CmdMultiply1 extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() {
@@ -36,7 +36,7 @@ public class CmdMultiply extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "multiply";
+        return "multiply 1";
     }
 
     @Override

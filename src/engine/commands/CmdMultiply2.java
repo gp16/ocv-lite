@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
  *
  * @author Elmohand Haroon
  */
-public class CmdMultiply3 extends AbstractCommand {
+public class CmdMultiply2 extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() 
@@ -43,13 +43,13 @@ public class CmdMultiply3 extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Multiply 3";
+         return "Multiply 2";
     }
 
     @Override
     public String getMan() 
     {
-        return "Multiply Two Images With Scaler";
+        return "Multiply Two Images With Scalar";
     }
     
 }

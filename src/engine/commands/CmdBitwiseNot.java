@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
  *
  * @author Elmohand Haroon
  */
-public class CmdBitwiseOr extends AbstractCommand {
+public class CmdBitwiseNot extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() 
@@ -40,13 +40,13 @@ public class CmdBitwiseOr extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Bitwise_Or";
+         return "bitwise_not";
     }
 
     @Override
     public String getMan() 
     {
-        return "Bitwise_Or Between Tow Images";
+        return "Bitwise_Not Between Tow Images";
     }
     
 }

@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 * @since   2015 
 */
 
-public class FloatEditor extends JPanel implements ArgumentEditor {
+public class FloatEditor implements ArgumentEditor {
 
     private Parameter param;
     private final JTextField floatInput;
@@ -24,13 +24,11 @@ public class FloatEditor extends JPanel implements ArgumentEditor {
     public FloatEditor() {
         floatInput = new JTextField(10);
         label = new JLabel();
-        add(label);
-        add(floatInput);
     }
 
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, floatInput};
     }
 
     @Override

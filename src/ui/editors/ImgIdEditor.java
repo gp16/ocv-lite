@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ImgIdEditor extends JPanel implements ArgumentEditor {
+public class ImgIdEditor implements ArgumentEditor {
 
     private Parameter param;
     private final JComboBox imageID;
@@ -19,13 +19,11 @@ public class ImgIdEditor extends JPanel implements ArgumentEditor {
         imageID = new JComboBox(Engine.getInstance().getImagesNames());
         label = new JLabel();
         imageID.setEditable(true);
-        add(label);
-        add(imageID);
     }
 
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, imageID};
     }
 
     @Override

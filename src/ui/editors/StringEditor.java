@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StringEditor extends JPanel implements ArgumentEditor {
+public class StringEditor implements ArgumentEditor {
 
     private final JTextField argumentValue;
     private final JLabel label;
@@ -17,13 +17,11 @@ public class StringEditor extends JPanel implements ArgumentEditor {
     public StringEditor() {
         argumentValue = new JTextField();
         label = new JLabel();
-        add(label);
-        add(argumentValue);
     }
 
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, argumentValue};
     }
 
     @Override

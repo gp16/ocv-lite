@@ -11,7 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SystemPathEditor extends JPanel implements ArgumentEditor {
+public class SystemPathEditor implements ArgumentEditor {
 
     private final JFileChooser chooseImage;
     private final JButton openChooser;
@@ -30,13 +30,11 @@ public class SystemPathEditor extends JPanel implements ArgumentEditor {
             }
         });
         label = new JLabel();
-        add(label);
-        add(openChooser);
     }
 
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, openChooser};
     }
 
     @Override

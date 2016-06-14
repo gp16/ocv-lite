@@ -7,7 +7,7 @@ import engine.Type;
 import java.awt.Component;
 import javax.swing.*;
 
-public class CmdIdEditor extends JPanel implements ArgumentEditor {
+public class CmdIdEditor implements ArgumentEditor {
 
     private final JComboBox commandSelector;
     private final JLabel label;
@@ -16,13 +16,11 @@ public class CmdIdEditor extends JPanel implements ArgumentEditor {
     public CmdIdEditor() {
         commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
         label = new JLabel();
-        add(label);
-        add(commandSelector);
     }
 
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, commandSelector};
     }
 
     @Override

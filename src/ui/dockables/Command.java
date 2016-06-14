@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -21,12 +23,13 @@ import ui.editors.ArgumentEditor;
 public class Command extends JPanel implements Dockable {
     
     private JComboBox commandSelector;
-    private JPanel panel = new JPanel();
+    private JPanel edditorsPanel = new JPanel();
     private JButton excuteBotton = new JButton("execute");
     private ArgumentEditor[] editors = null;
     
     public Command() {
-        add(panel, BorderLayout.WEST);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(edditorsPanel);
         
         commandSelector = new JComboBox(Engine.getInstance().getCommandsNames());
         
@@ -37,7 +40,7 @@ public class Command extends JPanel implements Dockable {
         commandSelector.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                panel.removeAll();
+                edditorsPanel.removeAll();
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (commandSelector.getSelectedItem() != "Choose Command") {
                         ICommand comm = Engine.getInstance()
@@ -50,15 +53,17 @@ public class Command extends JPanel implements Dockable {
                             ArgumentEditor argumentEditor = ArgumentEditor.createInstance(params[i]);
                             
                             if (argumentEditor != null) {
-                                panel.add(argumentEditor.getEditorPanel());
+                                Component[] editorComps = argumentEditor.getEditorComps();
+                                
+                                edditorsPanel.add(editorComps[0]);
+                                edditorsPanel.add(editorComps[1]);
                             }
                             editors[i] = argumentEditor;
                         }
                         
-                        panel.setLayout(new GridLayout(params.length + 1, 1));
-                        panel.revalidate();
-                        panel.add(excuteBotton);
-                        panel.revalidate();
+                        edditorsPanel.setLayout(new GridLayout(params.length, 2));
+                        edditorsPanel.setMaximumSize(edditorsPanel.getPreferredSize());
+                        edditorsPanel.revalidate();
                     }
                 }
             }
@@ -92,6 +97,8 @@ public class Command extends JPanel implements Dockable {
             }
             
         });
+        
+        add(excuteBotton, BorderLayout.SOUTH);
     }
     
     @Override

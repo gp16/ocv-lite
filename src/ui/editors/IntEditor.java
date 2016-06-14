@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
-public class IntEditor extends JPanel implements ArgumentEditor {
+public class IntEditor implements ArgumentEditor {
 
     private Parameter param;
     private final JSpinner  numSpinner;
@@ -19,13 +19,11 @@ public class IntEditor extends JPanel implements ArgumentEditor {
     public IntEditor() {
         numSpinner = new JSpinner();
         label = new JLabel();
-        add(label); 
-        add(numSpinner);
     }
     
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, numSpinner};
     }
 
     @Override

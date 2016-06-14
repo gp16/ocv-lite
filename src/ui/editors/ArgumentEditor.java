@@ -7,7 +7,7 @@ import java.awt.Component;
 
 public interface ArgumentEditor {
 
-    public Component getEditorPanel();
+    public Component[] getEditorComps();
 
     public Argument getArgument();
 

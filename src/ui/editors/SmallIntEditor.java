@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
-public class SmallIntEditor extends JPanel implements ArgumentEditor {
+public class SmallIntEditor implements ArgumentEditor {
 
     private Parameter param;
     private final JSlider numSlider;
@@ -17,13 +17,11 @@ public class SmallIntEditor extends JPanel implements ArgumentEditor {
     public SmallIntEditor() {
         numSlider = new JSlider();
         label = new JLabel();
-        add(label);
-        add(numSlider);
     }
 
     @Override
-    public Component getEditorPanel() {
-        return this;
+    public Component[] getEditorComps() {
+        return new Component[]{label, numSlider};
     }
 
     @Override

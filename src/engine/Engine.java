@@ -71,6 +71,7 @@ public final class Engine
         registerCommand(new CmdBitwiseOr());
         registerCommand(new CmdBitwiseXor());
         registerCommand(new CmdFilter2D());
+        registerCommand(new CmdImgResize());
     }
     
     public static Engine getInstance() {

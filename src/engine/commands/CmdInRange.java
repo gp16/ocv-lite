@@ -25,12 +25,12 @@ public class CmdInRange extends AbstractCommand {
         return new Parameter[]{
             new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
             new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false),
-            new Parameter("HMin", Type.INT, 1, 179, "HMin", false, false),
-            new Parameter("SMin", Type.INT, 1, 256, "SMin", false, false),
-            new Parameter("VMin", Type.INT, 1, 256, "VMin", false, false),
-            new Parameter("HMax", Type.INT, 1, 179, "HMax", false, false),
-            new Parameter("SMax", Type.INT, 1, 256, "SMax", false, false),
-            new Parameter("VMax", Type.INT, 1, 256, "VMax", false, false)
+            new Parameter("HMin", Type.INT, 0, 179, "HMin", false, false),
+            new Parameter("SMin", Type.INT, 0, 255, "SMin", false, false),
+            new Parameter("VMin", Type.INT, 0, 255, "VMin", false, false),
+            new Parameter("HMax", Type.INT, 0, 179, "HMax", false, false),
+            new Parameter("SMax", Type.INT, 0, 255, "SMax", false, false),
+            new Parameter("VMax", Type.INT, 0, 255, "VMax", false, false)
 
         };
     }
@@ -47,7 +47,6 @@ public class CmdInRange extends AbstractCommand {
         int Hmax = getArgInt("HMax", 0);
         int Smax = getArgInt("SMax", 0);
         int Vmax = getArgInt("VMax", 0);
-        Imgproc.cvtColor(Source_Mat, Source_Mat, Imgproc.COLOR_RGB2HSV);
         Core.inRange(Source_Mat, new Scalar(Hmin, Smin, Vmin), new Scalar(Hmax, Smax, Vmax), Destination_Mat);
         Engine.getInstance().allocImage(Destination, Destination_Mat);
         return null;

@@ -26,9 +26,17 @@ public class SystemPathEditor implements ArgumentEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chooseImage.showOpenDialog(null);
-                System.out.println(chooseImage.getSelectedFile().getAbsolutePath());
+                
+                String path = chooseImage.getSelectedFile().getAbsolutePath();
+                System.out.println(path);
+                
+                if(path.length() > 10)
+                    path = "..." + path.substring(path.length() - 10);
+                
+                openChooser.setText(path);
             }
         });
+        
         label = new JLabel();
     }
 

@@ -1,6 +1,7 @@
 package engine;
 
 import engine.commands.*;
+import java.util.HashMap;
 import java.util.TreeMap;
 import org.opencv.core.Mat;
 
@@ -14,6 +15,7 @@ public final class Engine
     
     private final TreeMap<String, ICommand> CMDS = new TreeMap<>();
     private final TreeMap<String, Mat> IMGS = new TreeMap<>();
+    private final HashMap<String, Object> STRUCTS = new HashMap<>();
     // singleton pattern
     private Engine() {
 	registerCommand(new CmdImgCapture());
@@ -73,6 +75,8 @@ public final class Engine
         registerCommand(new CmdFilter2D());
         registerCommand(new CmdImgResize());
         registerCommand(new CmdBitwiseNot());
+        registerCommand(new CmdDrawCircle());
+        registerCommand(new CmdDrawHoughCircles());
     }
     
     public static Engine getInstance() {
@@ -128,5 +132,17 @@ public final class Engine
     // removes an image from memory
     public void deallocImage(String imageName) {
 	IMGS.remove(imageName);
+    }
+    //puts a structure into memory
+    public void allocStructs(String structName, Object struct) {
+	STRUCTS.put(structName, struct);
+    }
+    //get a structure by name
+    public Object getStruct(String structName) {
+	return STRUCTS.get(structName);
+    }
+    //removes a structure from memory
+   public void deallocStruct(String structName) {
+	STRUCTS.remove(structName);
     }
 }   

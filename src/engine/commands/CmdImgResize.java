@@ -39,7 +39,7 @@ public class CmdImgResize extends AbstractCommand{
 
     @Override
     public String getName() {
-        return "Resize";
+        return "resize";
     }
 
     @Override

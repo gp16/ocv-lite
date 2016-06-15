@@ -43,7 +43,7 @@ public class CmdMaximum extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Maximum";
+         return "maximum";
     }
 
     @Override

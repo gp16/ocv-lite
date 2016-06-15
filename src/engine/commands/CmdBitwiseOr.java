@@ -40,7 +40,7 @@ public class CmdBitwiseOr extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Bitwise_Or";
+         return "bitwise_Or";
     }
 
     @Override

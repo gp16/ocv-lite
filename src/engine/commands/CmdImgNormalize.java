@@ -40,7 +40,7 @@ public class CmdImgNormalize extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Normalize";
+         return "normalize";
     }
 
     @Override

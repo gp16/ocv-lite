@@ -43,7 +43,7 @@ public class CmdBitwiseXor extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Bitwise_Xor";
+         return "bitwise_Xor";
     }
 
     @Override

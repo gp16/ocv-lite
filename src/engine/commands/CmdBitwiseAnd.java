@@ -43,7 +43,7 @@ public class CmdBitwiseAnd extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Bitwise_And";
+         return "bitwise_And";
     }
 
     @Override

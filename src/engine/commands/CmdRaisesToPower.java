@@ -40,7 +40,7 @@ public class CmdRaisesToPower extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Raises To Power";
+         return "raisesToPower";
     }
 
     @Override

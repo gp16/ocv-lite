@@ -43,7 +43,7 @@ public class CmdMinimum extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Minimum";
+         return "minimum";
     }
 
     @Override

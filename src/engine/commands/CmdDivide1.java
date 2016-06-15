@@ -40,7 +40,7 @@ public class CmdDivide1 extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Divide1";
+         return "divide1";
     }
 
     @Override

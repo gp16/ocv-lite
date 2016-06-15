@@ -43,7 +43,7 @@ public class CmdMultiply2 extends AbstractCommand {
     @Override
     public String getName() 
     {
-         return "Multiply 2";
+         return "multiply 2";
     }
 
     @Override

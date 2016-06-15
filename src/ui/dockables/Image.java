@@ -38,7 +38,8 @@ public class Image extends JPanel implements Dockable {
     private JLabel xLabel = new JLabel("X: ");
     private JLabel yLabel = new JLabel("Y: ");
     private JButton refresh;
-
+    private int scaledImageWidth = 0;
+    private int scaledImageHeight = 0;
     
     public Image() {
 
@@ -80,8 +81,14 @@ public class Image extends JPanel implements Dockable {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                xLabel.setText("X: " + e.getX());
-                yLabel.setText("Y: " + e.getY());
+                int realImageWidth = ((BufferedImage)imageIcon.getImage()).getWidth();
+                int realImageHeight = ((BufferedImage)imageIcon.getImage()).getWidth();
+                
+                int relativeX = (int) (e.getX() * (double)realImageWidth / (double)scaledImageWidth);
+                int relativeY = (int) (e.getY() * (double)realImageHeight / (double)scaledImageHeight);
+
+                xLabel.setText("X: " + relativeX);
+                yLabel.setText("Y: " + relativeY);
             }
         });
         refresh = new JButton("refresh");
@@ -111,19 +118,23 @@ public class Image extends JPanel implements Dockable {
         BufferedImage image = (BufferedImage)imageIcon.getImage();
         
         if(image.getWidth() <= getWidth() && image.getHeight() <= getHeight()) {
-            g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+            scaledImageWidth = image.getWidth();
+            scaledImageHeight = image.getHeight();
         }
         else {
             double hscale = (double)getWidth() / image.getWidth();
             double wscale = (double)getHeight() / image.getHeight();
 
             if(hscale < wscale) {
-                g.drawImage(image, 0, 0, getWidth(), (int) (hscale*image.getHeight()), null);
+                scaledImageWidth = getWidth();
+                scaledImageHeight = (int) (hscale*image.getHeight());                
             }
             else if(wscale <= hscale) {
-                g.drawImage(image, 0, 0, (int) (wscale*image.getWidth()), getHeight(), null);
+                scaledImageWidth = (int) (wscale*image.getWidth());
+                scaledImageHeight = getHeight();
             }
         }
+        g.drawImage(image, 0, 0, scaledImageWidth, scaledImageHeight, null);
     }
     /**
      * Convert a mat to buffered image

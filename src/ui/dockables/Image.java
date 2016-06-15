@@ -1,10 +1,8 @@
 package ui.dockables;
 
 import engine.Engine;
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -25,9 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
-import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
 import ui.api.Dockable;
 
 /**
@@ -42,10 +38,10 @@ public class Image extends JPanel implements Dockable {
     private JLabel xLabel = new JLabel("X: ");
     private JLabel yLabel = new JLabel("Y: ");
     private JButton refresh;
-    private JPanel panel = new JPanel();
 
+    
     public Image() {
-        add(panel, BorderLayout.WEST);
+
         ImageSelector = new JComboBox();
         String imagesNames[] = Engine.getInstance().getImagesNames();
         ImageSelector.addItem("Choose");
@@ -67,22 +63,21 @@ public class Image extends JPanel implements Dockable {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 try {
-                    panel.removeAll();
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         if (ImageSelector.getSelectedItem() != "Choose") {
                             Image = Engine.getInstance().getImage(e.getItem().toString());
                             imageIcon = new ImageIcon(Convert_To_Buffer(Image));
-                            panel.add(new JLabel(imageIcon));
                         }
                     }
-                    panel.revalidate();
-                    panel.repaint();
+                    
+                    repaint();
                 } catch (IOException ex) {
                     Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        panel.addMouseListener(new MouseAdapter() {
+        
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 xLabel.setText("X: " + e.getX());
@@ -93,24 +88,43 @@ public class Image extends JPanel implements Dockable {
         refresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Mat resizedIMG = new Mat();
-                    panel.removeAll();
                         if (ImageSelector.getSelectedItem() != "Choose") {
-                    Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
-                    Imgproc.resize(Image, resizedIMG, new Size(panel.getParent().getWidth(),panel.getParent().getHeight()));
-                    imageIcon = new ImageIcon(Convert_To_Buffer(resizedIMG));
-                    panel.add(new JLabel(imageIcon));
+                            Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
+                            imageIcon = new ImageIcon(Convert_To_Buffer(Image));
                         }
-                    
-                    panel.revalidate();
-                    panel.repaint();
+                        
+                        repaint();
                 } catch (IOException ex) {
                     Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
+    
+    @Override
+    public void paint(Graphics g) {
+        super.paintComponent(g);
+        
+        if(imageIcon == null)
+            return;
+        
+        BufferedImage image = (BufferedImage)imageIcon.getImage();
+        
+        if(image.getWidth() <= getWidth() && image.getHeight() <= getHeight()) {
+            g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+        }
+        else {
+            double hscale = (double)getWidth() / image.getWidth();
+            double wscale = (double)getHeight() / image.getHeight();
 
+            if(hscale < wscale) {
+                g.drawImage(image, 0, 0, getWidth(), (int) (hscale*image.getHeight()), null);
+            }
+            else if(wscale < hscale) {
+                g.drawImage(image, 0, 0, (int) (wscale*image.getWidth()), getHeight(), null);
+            }
+        }
+    }
     /**
      * Convert a mat to buffered image
      */

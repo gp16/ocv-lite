@@ -120,7 +120,7 @@ public class Image extends JPanel implements Dockable {
             if(hscale < wscale) {
                 g.drawImage(image, 0, 0, getWidth(), (int) (hscale*image.getHeight()), null);
             }
-            else if(wscale < hscale) {
+            else if(wscale <= hscale) {
                 g.drawImage(image, 0, 0, (int) (wscale*image.getWidth()), getHeight(), null);
             }
         }

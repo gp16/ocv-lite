@@ -62,7 +62,7 @@ public class CmdHoughCircles extends AbstractCommand
         int minRadius=getArgInt("minRadius", 0);
         int maxRadius=getArgInt("maxRadius", 0);
         Imgproc.HoughCircles(src, circles, method, dp, minDist, param1, param2, minRadius, maxRadius);
-        Engine.getInstance().allocImage(Circles, circles);
+        Engine.getInstance().allocStructs(Circles, circles);
         return null;
     }
 

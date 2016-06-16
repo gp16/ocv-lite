@@ -77,6 +77,7 @@ public final class Engine
         registerCommand(new CmdBitwiseNot());
         registerCommand(new CmdDrawCircle());
         registerCommand(new CmdDrawHoughCircles());
+        registerCommand(new CmdScharr());
     }
     
     public static Engine getInstance() {

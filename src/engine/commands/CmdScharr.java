@@ -18,9 +18,11 @@ public class CmdScharr extends AbstractCommand {
             new Parameter("ddepth",Type.INT, -1, Integer.MAX_VALUE, "the output"
                     + " image depth (-1 to use src.depth()).", false, false),
             new Parameter("dx", Type.INT, 0, Integer.MAX_VALUE, "order"
-                    + " of the derivative x.", false,false),
+                    + " of the derivative x. dx must be bigger than"
+                    + "equals 0 , dx+dy = 1", false,false),
             new Parameter("dy", Type.INT, 0, Integer.MAX_VALUE, "order "
-                    + "of the derivative y.", false ,false)
+                    + "of the derivative y. dx must be bigger than"
+                    + "equals 0 , dx+dy = 1", false ,false)
         };
     }
 

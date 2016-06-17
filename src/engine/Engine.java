@@ -28,7 +28,7 @@ public final class Engine
         registerCommand(new CmdMan());
         registerCommand(new CmdThreshold());
         registerCommand(new CmdBlur());
-        registerCommand(new CmdImgCanny());
+        registerCommand(new CmdCanny());
         registerCommand(new CmdHistogram());
         registerCommand(new CmdEqualize());
         registerCommand(new CmdPyr());

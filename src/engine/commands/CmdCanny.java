@@ -18,7 +18,7 @@ import org.opencv.imgproc.Imgproc;
  * @version 1.0
  * @since 2015
  */
-public class CmdImgCanny extends AbstractCommand{
+public class CmdCanny extends AbstractCommand{
 
     @Override
     /**
@@ -30,16 +30,21 @@ public class CmdImgCanny extends AbstractCommand{
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
-            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false)};
+            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false),
+            new Parameter("Threshold1", Type.INT, 1, 255, "threshold value", false, false),
+            new Parameter("Threshold2", Type.INT, 1, 255, "threshold value", false, false),
+        };
     }
 
     @Override
     protected Object executeSafe() {
         String Source = getArgImgId("Source", 0);
         String Destination = getArgImgId("Destination", 0);
+        int Threshold1 = getArgInt("Threshold1", 0);
+        int Threshold2 = getArgInt("Threshold2", 0);
         Mat Source_Mat = Engine.getInstance().getImage(Source);
         Mat Destination_Mat = new Mat();
-        Imgproc.Canny(Source_Mat, Destination_Mat, 10, 100, 3, false);
+        Imgproc.Canny(Source_Mat, Destination_Mat, Threshold1, Threshold2);
         Engine.getInstance().allocImage(Destination, Destination_Mat);  
         return null;
     }

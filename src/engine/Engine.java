@@ -40,7 +40,7 @@ public final class Engine
         registerCommand(new Cmdaccumulate());
         registerCommand(new CmdSubtract());
         registerCommand(new CmdLoadCmd());
-        registerCommand(new Cmdresize());
+        registerCommand(new CmdResize());
         registerCommand(new CmdmatchTemplate());
         registerCommand(new CmdLaplacian());
         registerCommand(new CmdPutText());

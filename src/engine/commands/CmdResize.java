@@ -17,7 +17,7 @@ import org.opencv.imgproc.Imgproc;
  *
  * @author Amr_Ayman
  */
-public class Cmdresize extends AbstractCommand
+public class CmdResize extends AbstractCommand
 {
 
     @Override

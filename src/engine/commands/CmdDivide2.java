@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
  *
  * @author Elmohand Haroon
  */
-public class CmdDivide1 extends AbstractCommand {
+public class CmdDivide2 extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() 

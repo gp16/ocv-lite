@@ -67,13 +67,12 @@ public final class Engine
         registerCommand(new CmdMultiply2());
         registerCommand(new CmdMinimum());
         registerCommand(new CmdMaximum());
-        registerCommand(new CmdDivide1());
+        registerCommand(new CmdDivide2());
         registerCommand(new CmdDivide3());
         registerCommand(new CmdBitwiseAnd());
         registerCommand(new CmdBitwiseOr());
         registerCommand(new CmdBitwiseXor());
         registerCommand(new CmdFilter2D());
-        registerCommand(new CmdImgResize());
         registerCommand(new CmdBitwiseNot());
         registerCommand(new CmdDrawCircle());
         registerCommand(new CmdDrawHoughCircles());

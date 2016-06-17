@@ -59,7 +59,7 @@ public class CmdFaceDetection extends AbstractCommand{
 
     @Override
     public String getName() {
-        return "detect";
+        return "face detection";
     }
 
     @Override

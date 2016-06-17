@@ -12,10 +12,10 @@ public class CmdThreshold extends AbstractCommand {
     @Override
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
-            new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
-            new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false),
-            new Parameter("Thresh", Type.INT, 1, 255, "threshold value", false, false),
-            new Parameter("Max", Type.INT, 1, 255, "threshold maximum value", false, false),
+            new Parameter("Source", Type.MAT_ID, 1, null, "input array (single-channel, 8-bit or 32-bit floating point).", false, false),
+            new Parameter("Destination", Type.MAT_ID, 1, null, "output array of the same size and type as src.", false, false),
+            new Parameter("Thresh", Type.INT, 1, 255, "threshold value.", false, false),
+            new Parameter("Max", Type.INT, 1, 255, "maximum value to use with the THRESH_BINARY and THRESH_BINARY_INV thresholding types.", false, false),
             new Parameter("Type", Type.INT, 0, 4, "Threshold type : 0: Binary\n" +
                     "     1: Binary Inverted\n" +
                     "     2: Threshold Truncated\n" +
@@ -49,7 +49,7 @@ public class CmdThreshold extends AbstractCommand {
     
     @Override
     public String getMan() {
-        return "Thresholding enables to achieve image segmentation in the easiest way";
+        return "Applies a fixed-level threshold to each array element.";
     }
     
 }

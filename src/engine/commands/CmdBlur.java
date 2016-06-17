@@ -9,62 +9,55 @@ import engine.AbstractCommand;
 import engine.Engine;
 import engine.Parameter;
 import engine.Type;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.objdetect.CascadeClassifier;
-
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 /**
- *This command gets an image from the memory, detect face on it ,
+ *This command gets an image from the memory, convert it to blur ,
  * then saves it in the memory.
  * @author AmrGamal
  * @version 1.0
  * @since 2015
  */
-public class CmdImgDetect extends AbstractCommand{
+public class CmdBlur extends AbstractCommand{
 
     @Override
     /**
     * @return returns array of n objects of type Parameter.
     * first is an image name from memory.
-    * second is an image name that will be detected then saves it 
+    * second is an image name that the blur image will be saved with 
     * in the memory.
     */
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
             new Parameter("Source", Type.MAT_ID, 1, null, "image name to get from memory", false, false),
             new Parameter("Destination", Type.MAT_ID, 1, null, "image name to save into memory", false, false),
-            new Parameter("Classifier", Type.SYS_PATH, 1, null, "Name of the file from which the classifier is loaded.", false, false)	
-	};
+            new Parameter("Width", Type.INT, 1, 100, "image width", false,false),
+            new Parameter("Height", Type.INT, 1, 100, "image height", false ,false)
+        };
     }
 
     @Override
     protected Object executeSafe() {
         String Source = getArgImgId("Source", 0);
         String Destination = getArgImgId("Destination", 0);
-	String classifier = getArgPath("Classifier", 0);
-        CascadeClassifier faceDetector = new CascadeClassifier(classifier);
+        int width = getArgInt("Width", 0);
+        int height = getArgInt("Height", 0);
         Mat Source_Mat = Engine.getInstance().getImage(Source);
-        MatOfRect faceDetections = new MatOfRect();
-        faceDetector.detectMultiScale(Source_Mat, faceDetections);
-        for (Rect rect : faceDetections.toArray()) {
-        Core.rectangle(Source_Mat, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
-            }
-        Engine.getInstance().allocImage(Destination, Source_Mat);
-        return true;
+        Mat Destination_Mat = new Mat();
+        Imgproc.blur(Source_Mat, Destination_Mat, new Size(width, height));
+        Engine.getInstance().allocImage(Destination, Destination_Mat);  
+        return null;
     }
 
     @Override
     public String getName() {
-        return "detect";
+        return "blur";
     }
 
     @Override
     public String getMan() {
-        return "Detect Image";
+        return "Blur Image";
     }
-    
+
 }

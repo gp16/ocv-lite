@@ -11,12 +11,12 @@ import org.opencv.core.Mat;
  *
  * @author AmrGamal
  */
-public class CmdDivide2 extends AbstractCommand {
+public class CmdMultiply extends AbstractCommand {
 
     @Override
     protected Parameter[] getParamsOnce() {
         return new Parameter[]{
-           new Parameter("Source", Type.MAT_ID, 1, null, "First image name to get from memory", false, false),
+            new Parameter("Source", Type.MAT_ID, 1, null, "First image name to get from memory", false, false),
             new Parameter("Destination", Type.MAT_ID, 1, null, "Second image name to get from memory", false, false),
             new Parameter("Result", Type.MAT_ID, 1, null, "Result image name that will be saved in memory", false, false)};
     }
@@ -29,19 +29,19 @@ public class CmdDivide2 extends AbstractCommand {
         Mat Source_Mat = Engine.getInstance().getImage(Source);
         Mat Destination_Mat = Engine.getInstance().getImage(Destination);
         Mat result_Mat = new Mat();
-        Core.divide(Source_Mat, Destination_Mat, result_Mat);
+        Core.multiply(Source_Mat, Destination_Mat, result_Mat);
         Engine.getInstance().allocImage(Result, result_Mat);
         return null;
     }
 
     @Override
     public String getName() {
-        return "divide";
+        return "multiply 1";
     }
 
     @Override
     public String getMan() {
-        return "divide two images.";
+        return "multiply two images.";
     }
 
 }

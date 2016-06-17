@@ -24,10 +24,10 @@ public final class Engine
         registerCommand(new CmdImgSave());
         registerCommand(new CmdImgFlip());
         registerCommand(new CmdImgEdge());
-        registerCommand(new CmdImgDetect());
+        registerCommand(new CmdFaceDetection());
         registerCommand(new CmdMan());
         registerCommand(new CmdThreshold());
-        registerCommand(new CmdImgBlur());
+        registerCommand(new CmdBlur());
         registerCommand(new CmdImgCanny());
         registerCommand(new CmdHistogram());
         registerCommand(new CmdEqualize());
@@ -55,8 +55,8 @@ public final class Engine
         registerCommand(new CmdTranspose());
         registerCommand(new CmdInRange());
         registerCommand(new CmdaccumulateSquare());
-        registerCommand(new CmdMultiply1());
-        registerCommand(new CmdDivide2());
+        registerCommand(new CmdMultiply());
+        registerCommand(new CmdDivide());
         registerCommand(new CmdMedianBlur());
         registerCommand(new CmdBoxFilter());
         registerCommand(new CmdDistanceTransform());

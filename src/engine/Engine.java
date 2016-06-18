@@ -16,7 +16,6 @@ public final class Engine
     private final TreeMap<String, ICommand> CMDS = new TreeMap<>();
     private final TreeMap<String, Mat> IMGS = new TreeMap<>();
     private final HashMap<String, Object> STRUCTS = new HashMap<>();
-    private final TreeMap<String, Mat> History = new TreeMap<>();
     // singleton pattern
     private Engine() {
 	registerCommand(new CmdImgCapture());
@@ -145,19 +144,5 @@ public final class Engine
     //removes a structure from memory
    public void deallocStruct(String structName) {
 	STRUCTS.remove(structName);
-    }
-    // puts an image into memory
-    public void allocHistory(String imageName, Mat image) {
-	History.put(imageName, image);
-    }
-    public String[] getHistoryImagesNames() {
-	return History.keySet().toArray(new String[]{});
-    }
-    // removes an image from memory
-    public void deallocHistory(String imageName) {
-	History.remove(imageName);
-    }
-    public Mat getHistoryImage(String imageName) {
-	return History.get(imageName);
     }
 }   

@@ -33,7 +33,6 @@ import ui.api.Dockable;
 public class Image extends JPanel implements Dockable {
 
     private final JComboBox ImageSelector;
-    private final JComboBox history;
     private ImageIcon imageIcon;
     private Mat Image;
     private JLabel xLabel = new JLabel("X: ");
@@ -44,12 +43,12 @@ public class Image extends JPanel implements Dockable {
     
     public Image() {
 
-        ImageSelector = new JComboBox(Engine.getInstance().getImagesNames());
-        history = new JComboBox(Engine.getInstance().getHistoryImagesNames());
-        history.addItem("History");
+        ImageSelector = new JComboBox();
+        String imagesNames[] = Engine.getInstance().getImagesNames();
         ImageSelector.addItem("Choose");
-        refresh();
-        
+        for (int i = 0; i < imagesNames.length; i++) {
+            ImageSelector.addItem(imagesNames[i]);
+        }
         ImageSelector.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -61,21 +60,6 @@ public class Image extends JPanel implements Dockable {
                 }
             }
         });
-        
-        history.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                history.removeAllItems();
-                String imagesNames[] = Engine.getInstance().getHistoryImagesNames();
-                history.addItem("History");
-                for (int i = 0; i < imagesNames.length; i++) {
-                    history.addItem(imagesNames[i]);
-                }
-            }
-        });
-        
-        
-        
         ImageSelector.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -94,27 +78,6 @@ public class Image extends JPanel implements Dockable {
             }
         });
         
-        
-        history.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                try {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        if (history.getSelectedItem() != "History") {
-                            Image = Engine.getInstance().getHistoryImage(e.getItem().toString());
-                            imageIcon = new ImageIcon(Convert_To_Buffer(Image));
-                        }
-                    }
-                    repaint();
-                } catch (IOException ex) {
-                    Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        
-        
-        
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -128,10 +91,21 @@ public class Image extends JPanel implements Dockable {
                 yLabel.setText("Y: " + relativeY);
             }
         });
-        
-        
-        
-        
+        refresh = new JButton("refresh");
+        refresh.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                        if (ImageSelector.getSelectedItem() != "Choose") {
+                            Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
+                            imageIcon = new ImageIcon(Convert_To_Buffer(Image));
+                        }
+                        
+                        repaint();
+                } catch (IOException ex) {
+                    Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
     
     @Override
@@ -174,24 +148,6 @@ public class Image extends JPanel implements Dockable {
         return Final_Image;
 
     }
-    
-    private void refresh(){
-    refresh = new JButton("refresh");
-        refresh.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                        if (ImageSelector.getSelectedItem() != "Choose") {
-                            Image = Engine.getInstance().getImage(ImageSelector.getSelectedItem().toString());
-                            imageIcon = new ImageIcon(Convert_To_Buffer(Image));
-                        }
-                        
-                        repaint();
-                } catch (IOException ex) {
-                    Logger.getLogger(Image.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
 
     @Override
     public Component[] getNavigationComponents() {
@@ -200,9 +156,7 @@ public class Image extends JPanel implements Dockable {
             ImageSelector,
             refresh,
             xLabel = new JLabel("x: "),
-            yLabel,
-            history,
-        };
+            yLabel,};
     }
 
     @Override

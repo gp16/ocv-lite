@@ -46,8 +46,7 @@ public class CmdBlur extends AbstractCommand{
         Mat Source_Mat = Engine.getInstance().getImage(Source);
         Mat Destination_Mat = new Mat();
         Imgproc.blur(Source_Mat, Destination_Mat, new Size(width, height));
-        Engine.getInstance().allocImage(Destination, Destination_Mat);
-        Engine.getInstance().allocHistory(Destination +" "+ getName(), Destination_Mat);
+        Engine.getInstance().allocImage(Destination, Destination_Mat);  
         return null;
     }
 

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +28,7 @@ import org.jdesktop.swingx.MultiSplitLayout.Leaf;
 import org.jdesktop.swingx.MultiSplitLayout.Node;
 import org.jdesktop.swingx.MultiSplitLayout.Split;
 import ui.dockables.About;
+import ui.dockables.Camera;
 import ui.dockables.Command;
 import ui.dockables.Image;
 import ui.dockables.Terminal;
@@ -44,6 +44,7 @@ public class GenericWindowContainer extends JPanel {
         registerDockableClass(Command.class);
         registerDockableClass(Image.class);
         registerDockableClass(About.class);
+        registerDockableClass(Camera.class);
     }
 
     public GenericWindowContainer() {
